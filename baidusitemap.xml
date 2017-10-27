@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
-    <lastmod>2017-06-30T10:29:34.000Z</lastmod>
+    <loc>http://yoursite.com/2017/10/27/%E4%BD%A0%E5%A5%BD%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%96%E7%95%8C/</loc>
+    <lastmod>2017-10-27T08:34:04.000Z</lastmod>
     <data>
         <display>
-        <title>Git常用命令</title>
-        <pubTime>2017-06-28T16:00:00.000Z</pubTime>
+        <title>你好，这个世界!</title>
+        <pubTime>2017-10-27T08:31:19.000Z</pubTime>
         
         <tag>Git</tag>
          
@@ -24,21 +24,21 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/06/30/Git%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2017-06-30T10:29:34.000Z</lastmod>
+    <loc>http://yoursite.com/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2017-10-27T08:33:31.000Z</lastmod>
     <data>
         <display>
-        <title>Git常用命令(转)</title>
-        <pubTime>2017-06-29T16:00:00.000Z</pubTime>
+        <title>java23种设计模式</title>
+        <pubTime>2017-06-28T16:00:00.000Z</pubTime>
         
-        <tag>Git</tag>
+        <tag>Java</tag>
          
-        <tag>github</tag>
+        <tag>设计模式</tag>
          
          
            
              
-              <breadCrumb title="GIT" url="http://yoursite.com/categories/GIT/"/>
+              <breadCrumb title="Java" url="http://yoursite.com/categories/Java/"/>
           
         </display>
     </data>
@@ -47,7 +47,7 @@
     
   <url>
     <loc>http://yoursite.com/2017/06/28/hexo-nexT%E9%85%8D%E7%BD%AE%E8%AF%A6%E6%83%85/</loc>
-    <lastmod>2017-06-30T10:29:34.000Z</lastmod>
+    <lastmod>2017-10-27T08:33:18.000Z</lastmod>
     <data>
         <display>
         <title>Hexo之NexT主题配置</title>
@@ -68,21 +68,41 @@
 
     
   <url>
-    <loc>http://yoursite.com/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2017-06-30T10:29:34.000Z</lastmod>
+    <loc>http://yoursite.com/2017/06/30/Git%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2017-10-27T08:33:03.000Z</lastmod>
     <data>
         <display>
-        <title>java23种设计模式</title>
-        <pubTime>2017-06-28T16:00:00.000Z</pubTime>
+        <title>Git常用命令(转)</title>
+        <pubTime>2017-06-29T16:00:00.000Z</pubTime>
         
-        <tag>Java</tag>
+        <tag>Git</tag>
          
-        <tag>设计模式</tag>
+        <tag>github</tag>
          
          
            
              
-              <breadCrumb title="Java" url="http://yoursite.com/categories/Java/"/>
+              <breadCrumb title="GIT" url="http://yoursite.com/categories/GIT/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2017-10-27T08:32:46.000Z</lastmod>
+    <data>
+        <display>
+        <title>Git常用命令</title>
+        <pubTime>2017-06-28T16:00:00.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+         
+           
+             
+              <breadCrumb title="GIT" url="http://yoursite.com/categories/GIT/"/>
           
         </display>
     </data>
