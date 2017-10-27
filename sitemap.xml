@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/10/27/%E7%94%9F%E6%B4%BB/</loc>
+    
+    <lastmod>2017-10-27T12:26:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/10/27/%E7%AE%80%E5%8D%95%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/</loc>
     
     <lastmod>2017-10-27T09:28:24.000Z</lastmod>
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/baidu_verify_zBYi1Aga90.html</loc>
+    <loc>http://yoursite.com/404.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/404.html</loc>
+    <loc>http://yoursite.com/baidu_verify_zBYi1Aga90.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
@@ -100,14 +107,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/index.html</loc>
+    <loc>http://yoursite.com/page/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/page/index.html</loc>
+    <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
