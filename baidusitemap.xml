@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/10/27/%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E6%88%90%E4%BA%8C%E8%BF%9B%E5%88%B6/</loc>
+    <lastmod>2017-10-28T00:25:10.000Z</lastmod>
+    <data>
+        <display>
+        <title>十进制转换成二进制</title>
+        <pubTime>2017-10-27T09:13:05.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/10/27/%E4%BD%A0%E5%A5%BD%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%96%E7%95%8C/</loc>
     <lastmod>2017-10-27T12:29:21.000Z</lastmod>
     <data>
@@ -17,26 +37,6 @@
            
              
               <breadCrumb title="生活" url="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/10/27/%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E6%88%90%E4%BA%8C%E8%BF%9B%E5%88%B6/</loc>
-    <lastmod>2017-10-27T12:28:58.000Z</lastmod>
-    <data>
-        <display>
-        <title>十进制转换成二进制</title>
-        <pubTime>2017-10-27T09:13:05.000Z</pubTime>
-        
-        <tag>Python</tag>
-         
-         
-           
-             
-              <breadCrumb title="Python" url="http://yoursite.com/categories/Python/"/>
           
         </display>
     </data>
