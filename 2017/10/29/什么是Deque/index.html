@@ -15,20 +15,20 @@
 
 
 
-<meta name="description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。 要注意，即使deque可以拥有栈和队列的">
+<meta name="description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么是Deque">
 <meta property="og:url" content="http://www.adamzeng.site/2017/10/29/什么是Deque/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。 要注意，即使deque可以拥有栈和队列的">
+<meta property="og:description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。">
 <meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque/assets/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque.figure1-1.png">
 <meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.16.Deque%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/assets/3.16.Deque%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.table1.png">
 <meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.18.%E5%9B%9E%E6%96%87%E6%A3%80%E6%9F%A5/assets/3.18.%E5%9B%9E%E6%96%87%E6%A3%80%E6%9F%A5.figure2.png">
-<meta property="og:updated_time" content="2017-10-29T14:52:16.000Z">
+<meta property="og:updated_time" content="2017-10-29T14:53:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="什么是Deque">
-<meta name="twitter:description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。 要注意，即使deque可以拥有栈和队列的">
+<meta name="twitter:description" content="什么是Dequedeque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。">
 <meta name="twitter:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque/assets/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque.figure1-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -319,7 +319,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="什么是Deque"><a href="#什么是Deque" class="headerlink" title="什么是Deque"></a>什么是Deque</h1><p>deque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。</p>
+        <h1 id="什么是Deque"><a href="#什么是Deque" class="headerlink" title="什么是Deque"></a>什么是Deque</h1><p>deque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。<a id="more"></a></p>
 <p>要注意，即使deque可以拥有栈和队列的许多特性，它不需要由哪些数据结构强制的LIFO和FIFO排序。这取决于你如何持续添加和删除操作。</p>
 <p><img src="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque/assets/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque.figure1-1.png" alt="image"></p>
 <p><em>Figure 1</em></p>
@@ -358,7 +358,7 @@
         <p><span>本文标题:</span><a href="/2017/10/29/什么是Deque/">什么是Deque</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
         <p><span>发布时间:</span>2017-10-29, 22:14:57</p>
-        <p><span>最后更新:</span>2017-10-29, 22:52:16</p>
+        <p><span>最后更新:</span>2017-10-29, 22:53:19</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/10/29/什么是Deque/" title="什么是Deque">http://www.adamzeng.site/2017/10/29/什么是Deque/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.adamzeng.site/2017/10/29/什么是Deque/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

@@ -381,35 +381,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="什么是Deque"><a href="#什么是Deque" class="headerlink" title="什么是Deque"></a>什么是Deque</h1><p>deque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。</p>
-<p>要注意，即使deque可以拥有栈和队列的许多特性，它不需要由哪些数据结构强制的LIFO和FIFO排序。这取决于你如何持续添加和删除操作。</p>
-<p><img src="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque/assets/3.15.%E4%BB%80%E4%B9%88%E6%98%AFDeque.figure1-1.png" alt="image"></p>
-<p><em>Figure 1</em></p>
-<h3 id="Deque抽象数据类型"><a href="#Deque抽象数据类型" class="headerlink" title="Deque抽象数据类型"></a>Deque抽象数据类型</h3><p>deque抽象数据类型由以下结构和操作定义。如上所述，deque被构造为项的有序集合，其中项从首部或尾部的任一端添加和移除。下面给出了deque操作。</p>
-<ul>
-<li>Deque()创建一个空的新deque，它不需要参数，并返回空的deque。</li>
-<li>addFront(item)将一个新项添加到deque首部。它需要item参数，并不返回任何内容。</li>
-<li>addRear(item)将一个新项添加到deque尾部。它需要item参数，并不返回任何内容。</li>
-<li>removeFront() 从 deque 中删除首项。它不需要参数并返回 item。deque 被修改。</li>
-<li>removeRear() 从 deque 中删除尾项。它不需要参数并返回 item。deque 被修改。</li>
-<li>isEmpty() 测试 deque 是否为空。它不需要参数，并返回布尔值。</li>
-<li>size() 返回 deque 中的项数。它不需要参数，并返回一个整数。</li>
-</ul>
-<p>例如，我们假设 d 是已经创建并且当前为空的 deque，则 Table 1 展示了一系列 deque 操作的结果。注意，首部的内容列在右边。在将 item 移入和移出时，跟踪前面和后面是非常重要的，因为可能会有点混乱。</p>
-<p><img src="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.16.Deque%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/assets/3.16.Deque%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.table1.png" alt="image"></p>
-<p><em>Table 1</em></p>
-<h3 id="Python实现Deque"><a href="#Python实现Deque" class="headerlink" title="Python实现Deque"></a>Python实现Deque</h3><p>正如我们在前面的部分中所做的，我们将为抽象数据类型deque的实现创建一个新类。同样，Python列表将提供一组非常好的方法来构建deque的细节。我们的实现（Listing 1）将假定deque的尾部在列表中的位置为0。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Deque</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.items= []</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isEmpty</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.items==[]</div><div class="line">     </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addFront</span><span class="params">(self,item)</span>:</span></div><div class="line">        self.items.append(item)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addRear</span><span class="params">(self,item)</span>:</span></div><div class="line">        self.items.insert(<span class="number">0</span>,item)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeFront</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.items.pop()</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeRear</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.items.pop(<span class="number">0</span>)</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> len(self.items)</div></pre></td></tr></table></figure>
-<p><em>Listing 1</em></p>
-<p>在removeFront中，我们使用pop方法从列表中删除最后一个元素。但是，在removeRear中，pop(0)方法必须删除列表的第一个元素。同样，我们需要在addRear中使用insert方法（第12行），因为append方法在列表末尾添加一个新元素。</p>
-<p>你可以看到许多与栈和队列中描述的 Python 代码相似之处。你也可能观察到，在这个实现中，从前面添加和删除项是 O(1)，而从后面添加和删除是 O(n)。 考虑到添加和删除项是出现的常见操作，这是可预期的。 同样，重要的是要确定我们知道在实现中前后都分配在哪里。</p>
-<h3 id="回文检查"><a href="#回文检查" class="headerlink" title="回文检查"></a>回文检查</h3><p>使用 deque 数据结构可以容易地解决经典回文问题。回文是一个字符串，读取首尾相同的字符，例如，<code>radar toot madam</code>。 我们想构造一个算法输入一个字符串，并检查它是否是一个回文。</p>
-<p>该问题的解决方案将使用 deque 来存储字符串的字符。我们从左到右处理字符串，并将每个字符添加到 deque 的尾部。在这一点上，deque 像一个普通的队列。然而，我们现在可以利用 deque 的双重功能。 deque 的首部保存字符串的第一个字符，deque 的尾部保存最后一个字符（见 Figure 2）。</p>
-<p><img src="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.18.%E5%9B%9E%E6%96%87%E6%A3%80%E6%9F%A5/assets/3.18.%E5%9B%9E%E6%96%87%E6%A3%80%E6%9F%A5.figure2.png" alt="image"></p>
-<p><em>Figure 2</em></p>
-<p>我们可以直接删除并比较首尾字符，只有当它们匹配时才继续。如果可以持续匹配首尾字符，我们最终要么用完字符，要么留出大小为1的deque，取决于原始字符串的长度是偶数还是奇数。在任一情况下，字符串都是回文。回文检查的完整功能在ActiveCode1中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.deque <span class="keyword">import</span> Deque</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">palchecker</span><span class="params">(aString)</span>:</span></div><div class="line">    chardeque=Deque()</div><div class="line"></div><div class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> aString:</div><div class="line">        chardeque.addRear(ch)</div><div class="line"></div><div class="line">    stillEqual=<span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="keyword">while</span> chardeque.size()&gt;<span class="number">1</span> <span class="keyword">and</span> stillEqual:</div><div class="line">        first=chardeque.removeFront()</div><div class="line">        last=chardeque.removeRear()</div><div class="line">        <span class="keyword">if</span> first!=last:</div><div class="line">            stillEqual=<span class="keyword">False</span></div><div class="line">        </div><div class="line">            </div><div class="line">    <span class="keyword">return</span> stillEqual</div></pre></td></tr></table></figure>
-
+              <h1 id="什么是Deque"><a href="#什么是Deque" class="headerlink" title="什么是Deque"></a>什么是Deque</h1><p>deque（也称为双端队列）是与队列类似的项的有序集合。它有两个端部，首部和尾部，并且项在集合中保持不变。deque不同的地方是添加和删除项是非限制性的。可以在前面或后面添加新项。同样，可以从任一端移除现有项。在某种意义上，这种混合线性结构提供了单个数据结构中的栈和队列的所有能力。Figure 1展示了一个Python数据对象的deque。
+          
       
     </div>
     
@@ -426,6 +399,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2017/10/29/什么是Deque/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
