@@ -5,9 +5,9 @@
   <subtitle>start from zero</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://adamzeng.site/"/>
   <updated>2017-10-30T14:52:32.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://adamzeng.site/</id>
   
   <author>
     <name>AdamZeng</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>有序列表</title>
-    <link href="http://yoursite.com/2017/10/30/%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8/"/>
-    <id>http://yoursite.com/2017/10/30/有序列表/</id>
+    <link href="http://adamzeng.site/2017/10/30/%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8/"/>
+    <id>http://adamzeng.site/2017/10/30/有序列表/</id>
     <published>2017-10-30T14:15:17.000Z</published>
     <updated>2017-10-30T14:52:32.000Z</updated>
     
@@ -31,17 +31,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>列表</title>
-    <link href="http://yoursite.com/2017/10/30/%E5%88%97%E8%A1%A8/"/>
-    <id>http://yoursite.com/2017/10/30/列表/</id>
+    <link href="http://adamzeng.site/2017/10/30/%E5%88%97%E8%A1%A8/"/>
+    <id>http://adamzeng.site/2017/10/30/列表/</id>
     <published>2017-10-30T02:18:07.000Z</published>
     <updated>2017-10-30T14:12:58.000Z</updated>
     
@@ -53,17 +53,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>什么是Deque</title>
-    <link href="http://yoursite.com/2017/10/29/%E4%BB%80%E4%B9%88%E6%98%AFDeque/"/>
-    <id>http://yoursite.com/2017/10/29/什么是Deque/</id>
+    <link href="http://adamzeng.site/2017/10/29/%E4%BB%80%E4%B9%88%E6%98%AFDeque/"/>
+    <id>http://adamzeng.site/2017/10/29/什么是Deque/</id>
     <published>2017-10-29T14:14:57.000Z</published>
     <updated>2017-10-29T14:53:19.000Z</updated>
     
@@ -75,17 +75,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>什么是队列</title>
-    <link href="http://yoursite.com/2017/10/29/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%9F%E5%88%97/"/>
-    <id>http://yoursite.com/2017/10/29/什么是队列/</id>
+    <link href="http://adamzeng.site/2017/10/29/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%9F%E5%88%97/"/>
+    <id>http://adamzeng.site/2017/10/29/什么是队列/</id>
     <published>2017-10-29T10:41:28.000Z</published>
     <updated>2017-10-29T14:10:30.000Z</updated>
     
@@ -97,17 +97,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>生活</title>
-    <link href="http://yoursite.com/2017/10/27/%E7%94%9F%E6%B4%BB/"/>
-    <id>http://yoursite.com/2017/10/27/生活/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E7%94%9F%E6%B4%BB/"/>
+    <id>http://adamzeng.site/2017/10/27/生活/</id>
     <published>2017-10-27T12:23:08.000Z</published>
     <updated>2017-10-27T12:26:09.000Z</updated>
     
@@ -119,17 +119,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://adamzeng.site/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="生活" scheme="http://yoursite.com/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://adamzeng.site/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
     <title>中缀前缀和后缀表达式</title>
-    <link href="http://yoursite.com/2017/10/27/%E4%B8%AD%E7%BC%80%E5%89%8D%E7%BC%80%E5%92%8C%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/10/27/中缀前缀和后缀表达式/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E4%B8%AD%E7%BC%80%E5%89%8D%E7%BC%80%E5%92%8C%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://adamzeng.site/2017/10/27/中缀前缀和后缀表达式/</id>
     <published>2017-10-27T09:13:24.000Z</published>
     <updated>2017-10-27T12:28:28.000Z</updated>
     
@@ -141,17 +141,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>十进制转换成二进制</title>
-    <link href="http://yoursite.com/2017/10/27/%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E6%88%90%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
-    <id>http://yoursite.com/2017/10/27/十进制转换成二进制/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E6%88%90%E4%BA%8C%E8%BF%9B%E5%88%B6/"/>
+    <id>http://adamzeng.site/2017/10/27/十进制转换成二进制/</id>
     <published>2017-10-27T09:13:05.000Z</published>
     <updated>2017-10-28T00:25:10.000Z</updated>
     
@@ -163,17 +163,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>简单与复杂括号匹配</title>
-    <link href="http://yoursite.com/2017/10/27/%E7%AE%80%E5%8D%95%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/"/>
-    <id>http://yoursite.com/2017/10/27/简单与复杂括号匹配/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E7%AE%80%E5%8D%95%E4%B8%8E%E5%A4%8D%E6%9D%82%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/"/>
+    <id>http://adamzeng.site/2017/10/27/简单与复杂括号匹配/</id>
     <published>2017-10-27T09:12:47.000Z</published>
     <updated>2017-10-27T12:27:35.000Z</updated>
     
@@ -185,17 +185,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>基本数据结构之一</title>
-    <link href="http://yoursite.com/2017/10/27/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%B8%80/"/>
-    <id>http://yoursite.com/2017/10/27/基本数据结构之一/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%B8%80/"/>
+    <id>http://adamzeng.site/2017/10/27/基本数据结构之一/</id>
     <published>2017-10-27T09:12:26.000Z</published>
     <updated>2017-10-27T12:27:50.000Z</updated>
     
@@ -207,17 +207,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>Python数据结构的字典</title>
-    <link href="http://yoursite.com/2017/10/27/Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%AD%97%E5%85%B8/"/>
-    <id>http://yoursite.com/2017/10/27/Python数据结构的字典/</id>
+    <link href="http://adamzeng.site/2017/10/27/Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%AD%97%E5%85%B8/"/>
+    <id>http://adamzeng.site/2017/10/27/Python数据结构的字典/</id>
     <published>2017-10-27T09:12:00.000Z</published>
     <updated>2017-10-27T12:28:05.000Z</updated>
     
@@ -229,17 +229,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>python数据结构的性能</title>
-    <link href="http://yoursite.com/2017/10/27/python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E6%80%A7%E8%83%BD/"/>
-    <id>http://yoursite.com/2017/10/27/python数据结构的性能/</id>
+    <link href="http://adamzeng.site/2017/10/27/python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E6%80%A7%E8%83%BD/"/>
+    <id>http://adamzeng.site/2017/10/27/python数据结构的性能/</id>
     <published>2017-10-27T09:11:41.000Z</published>
     <updated>2017-10-27T12:28:39.000Z</updated>
     
@@ -251,17 +251,17 @@
     
     </summary>
     
-      <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/categories/Python/"/>
     
     
-      <category term="Python" scheme="http://yoursite.com/tags/Python/"/>
+      <category term="Python" scheme="http://adamzeng.site/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>你好，这个世界!</title>
-    <link href="http://yoursite.com/2017/10/27/%E4%BD%A0%E5%A5%BD%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%96%E7%95%8C/"/>
-    <id>http://yoursite.com/2017/10/27/你好，这个世界/</id>
+    <link href="http://adamzeng.site/2017/10/27/%E4%BD%A0%E5%A5%BD%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%96%E7%95%8C/"/>
+    <id>http://adamzeng.site/2017/10/27/你好，这个世界/</id>
     <published>2017-10-27T08:31:19.000Z</published>
     <updated>2017-10-27T12:29:21.000Z</updated>
     
@@ -273,17 +273,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://adamzeng.site/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="生活" scheme="http://yoursite.com/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://adamzeng.site/tags/%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
     <title>Git常用命令(转)</title>
-    <link href="http://yoursite.com/2017/06/30/Git%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
-    <id>http://yoursite.com/2017/06/30/Git详细教程/</id>
+    <link href="http://adamzeng.site/2017/06/30/Git%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
+    <id>http://adamzeng.site/2017/06/30/Git详细教程/</id>
     <published>2017-06-29T16:00:00.000Z</published>
     <updated>2017-10-27T08:33:03.000Z</updated>
     
@@ -295,19 +295,19 @@
     
     </summary>
     
-      <category term="GIT" scheme="http://yoursite.com/categories/GIT/"/>
+      <category term="GIT" scheme="http://adamzeng.site/categories/GIT/"/>
     
     
-      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
+      <category term="Git" scheme="http://adamzeng.site/tags/Git/"/>
     
-      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+      <category term="github" scheme="http://adamzeng.site/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>java23种设计模式</title>
-    <link href="http://yoursite.com/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/06/29/java设计模式/</id>
+    <link href="http://adamzeng.site/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://adamzeng.site/2017/06/29/java设计模式/</id>
     <published>2017-06-28T16:00:00.000Z</published>
     <updated>2017-10-27T08:33:31.000Z</updated>
     
@@ -320,19 +320,19 @@
     
     </summary>
     
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
+      <category term="Java" scheme="http://adamzeng.site/categories/Java/"/>
     
     
-      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+      <category term="Java" scheme="http://adamzeng.site/tags/Java/"/>
     
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+      <category term="设计模式" scheme="http://adamzeng.site/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>Git常用命令</title>
-    <link href="http://yoursite.com/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2017/06/29/Git常用命令/</id>
+    <link href="http://adamzeng.site/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://adamzeng.site/2017/06/29/Git常用命令/</id>
     <published>2017-06-28T16:00:00.000Z</published>
     <updated>2017-10-27T08:32:46.000Z</updated>
     
@@ -349,17 +349,17 @@
     
     </summary>
     
-      <category term="GIT" scheme="http://yoursite.com/categories/GIT/"/>
+      <category term="GIT" scheme="http://adamzeng.site/categories/GIT/"/>
     
     
-      <category term="Git" scheme="http://yoursite.com/tags/Git/"/>
+      <category term="Git" scheme="http://adamzeng.site/tags/Git/"/>
     
   </entry>
   
   <entry>
     <title>Hexo之NexT主题配置</title>
-    <link href="http://yoursite.com/2017/06/28/hexo-nexT%E9%85%8D%E7%BD%AE%E8%AF%A6%E6%83%85/"/>
-    <id>http://yoursite.com/2017/06/28/hexo-nexT配置详情/</id>
+    <link href="http://adamzeng.site/2017/06/28/hexo-nexT%E9%85%8D%E7%BD%AE%E8%AF%A6%E6%83%85/"/>
+    <id>http://adamzeng.site/2017/06/28/hexo-nexT配置详情/</id>
     <published>2017-06-27T16:00:00.000Z</published>
     <updated>2017-10-27T08:33:18.000Z</updated>
     
@@ -375,12 +375,12 @@
     
     </summary>
     
-      <category term="HEXO" scheme="http://yoursite.com/categories/HEXO/"/>
+      <category term="HEXO" scheme="http://adamzeng.site/categories/HEXO/"/>
     
     
-      <category term="hext" scheme="http://yoursite.com/tags/hext/"/>
+      <category term="hext" scheme="http://adamzeng.site/tags/hext/"/>
     
-      <category term="next" scheme="http://yoursite.com/tags/next/"/>
+      <category term="next" scheme="http://adamzeng.site/tags/next/"/>
     
   </entry>
   
