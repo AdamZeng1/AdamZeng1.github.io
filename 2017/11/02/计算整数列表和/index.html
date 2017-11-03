@@ -14,19 +14,29 @@
 <meta name="author" content="AdamZeng" />
 
 
-    
-    
 
-
-<meta name="description" content="Python与web相关分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="AdamZeng">
-<meta property="og:url" content="http://adamzeng.site/index.html">
+<meta name="description" content="计算整数列表和我们将以一个简单的问题开始，你已经知道如何不使用递归解决。 假设你想计算整数列表的总和，例如：[1,3,5,7,9]。 计算总和的迭代函数见ActiveCode 1。函数使用累加器变量（theSum）来计算列表中所有整数的和，从 0 开始，加上列表中的每个数字。 1234567def listsum(numList):    theSum = 0    for i in numLis">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算整数列表和">
+<meta property="og:url" content="http://adamzeng.site/2017/11/02/计算整数列表和/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="Python与web相关分享">
+<meta property="og:description" content="计算整数列表和我们将以一个简单的问题开始，你已经知道如何不使用递归解决。 假设你想计算整数列表的总和，例如：[1,3,5,7,9]。 计算总和的迭代函数见ActiveCode 1。函数使用累加器变量（theSum）来计算列表中所有整数的和，从 0 开始，加上列表中的每个数字。 1234567def listsum(numList):    theSum = 0    for i in numLis">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.1.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.2.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.3.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.4.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.figure1.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.figure2.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.5.%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2/assets/4.5.%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2.figure3.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.5.%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2/assets/4.5.%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2.figure4.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.6.%E6%A0%88%E5%B8%A7%EF%BC%9A%E5%AE%9E%E7%8E%B0%E9%80%92%E5%BD%92/assets/4.6.%E6%A0%88%E5%B8%A7%EF%BC%9A%E5%AE%9E%E7%8E%B0%E9%80%92%E5%BD%92.figure5.png">
+<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.6.%E6%A0%88%E5%B8%A7%EF%BC%9A%E5%AE%9E%E7%8E%B0%E9%80%92%E5%BD%92/assets/4.6.%E6%A0%88%E5%B8%A7%EF%BC%9A%E5%AE%9E%E7%8E%B0%E9%80%92%E5%BD%92.figure6.png">
+<meta property="og:updated_time" content="2017-11-03T08:23:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AdamZeng">
-<meta name="twitter:description" content="Python与web相关分享">
+<meta name="twitter:title" content="计算整数列表和">
+<meta name="twitter:description" content="计算整数列表和我们将以一个简单的问题开始，你已经知道如何不使用递归解决。 假设你想计算整数列表的总和，例如：[1,3,5,7,9]。 计算总和的迭代函数见ActiveCode 1。函数使用累加器变量（theSum）来计算列表中所有整数的和，从 0 开始，加上列表中的每个数字。 1234567def listsum(numList):    theSum = 0    for i in numLis">
+<meta name="twitter:image" content="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C/assets/4.3.%E8%AE%A1%E7%AE%97%E6%95%B4%E6%95%B0%E5%88%97%E8%A1%A8%E5%92%8C.1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -54,13 +64,11 @@
 <link rel="stylesheet" href="/css/style.css">
 
 
-    <style> .article { opacity: 0;} </style>
-
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>AdamZeng</title>
+<title>计算整数列表和 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -69,8 +77,8 @@
     var yiliaConfig = {
         fancybox: true,
         animate: true,
-        isHome: true,
-        isPost: false,
+        isHome: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -276,85 +284,7 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-hexo-nexT配置详情" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/28/hexo-nexT配置详情/" class="article-date">
-      <time datetime="2017-06-27T16:00:00.000Z" itemprop="datePublished">2017-06-28</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/28/hexo-nexT配置详情/">Hexo之NexT主题配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="hexo之next主题个性化配置详细教程"><a href="#hexo之next主题个性化配置详细教程" class="headerlink" title="hexo之next主题个性化配置详细教程"></a><strong><center>hexo之next主题个性化配置详细教程</center></strong></h1><h2 id="1-在右上角或者左上角实现fork-me-on-github"><a href="#1-在右上角或者左上角实现fork-me-on-github" class="headerlink" title="1.在右上角或者左上角实现fork me on github"></a><strong>1.在右上角或者左上角实现fork me on github</strong></h2><p><strong>实现的效果图</strong></p>
-<blockquote>
-<p><img src="http://os94ofsac.bkt.clouddn.com/hexo-next-blog/peizhifork-me-on-github.png" alt=""></p>
-</blockquote>
-<p><strong>具体实现方法</strong><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-        <div class="article-pop-out tagcloud">
-          <a class="">置顶</a>
-        </div>
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/HEXO/">HEXO</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hext/">hext</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/next/">next</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/28/hexo-nexT配置详情/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-计算整数列表和" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-计算整数列表和" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/11/02/计算整数列表和/" class="article-date">
@@ -372,12 +302,27 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/02/计算整数列表和/">计算整数列表和</a>
+    <h1 class="article-title" itemprop="name">
+      计算整数列表和
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -446,244 +391,135 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Vue-js的数据" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/02/Vue-js的数据/" class="article-date">
-      <time datetime="2017-11-02T14:08:40.000Z" itemprop="datePublished">2017-11-02</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/02/Vue-js的数据/">Vue.js的数据</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>v-on click:点击某个地方，让数据发生变动。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click</span>=<span class="string">"doSomething"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>使用v-if,v-else实现屏蔽</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment"</span> <span class="attr">v-if</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span> <span class="attr">class</span>=<span class="string">"comment"</span>&gt;</span></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Vue-js/">Vue.js</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue-js/">Vue.js</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-有序列表" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/30/有序列表/" class="article-date">
-      <time datetime="2017-10-30T14:15:17.000Z" itemprop="datePublished">2017-10-30</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/30/有序列表/">有序列表</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="有序列表抽象数据结构"><a href="#有序列表抽象数据结构" class="headerlink" title="有序列表抽象数据结构"></a>有序列表抽象数据结构</h1><p>我们现在将考虑一种称为有序列表的列表类型。例如，如果上面所示的整数列表是有序列表（升序），则它可以写为<code>17,26,31,54,77和93</code>。由于17是最小项，它占据第一位置。同样，由于93是最大的，它占据最后的位置。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/30/有序列表/#more">阅读全文 >></a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/11/02/计算整数列表和/">计算整数列表和</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
+        <p><span>发布时间:</span>2017-11-02, 23:42:08</p>
+        <p><span>最后更新:</span>2017-11-03, 16:23:52</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/02/计算整数列表和/" title="计算整数列表和">http://adamzeng.site/2017/11/02/计算整数列表和/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/02/计算整数列表和/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/30/列表/" class="article-date">
-      <time datetime="2017-10-30T02:18:07.000Z" itemprop="datePublished">2017-10-30</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/30/列表/">列表</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><p>在对基本数据结构的讨论中，我们使用Python列表来实现所呈现的抽象数据类型。列表是一个强大但简单的收集机制，为程序员提供了各种各样的操作。然而，不是所有的编程语言都包括列表集合、在这些情况下，列表的概念必须由程序员实现。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/30/列表/#more">阅读全文 >></a>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
-      
-      <div class="clearfix"></div>
     </div>
-    
-  </div>
-  
-</article>
 
 
 
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/11/02/Vue-js的数据/">
+                    Vue.js的数据
+                </a>
+            </div>
+        
     </nav>
+
   
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#计算整数列表和"><span class="toc-number">1.</span> <span class="toc-text">计算整数列表和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#递归的三定律"><span class="toc-number">1.0.1.</span> <span class="toc-text">递归的三定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数转换为任意进制字符串"><span class="toc-number">1.0.2.</span> <span class="toc-text">整数转换为任意进制字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈帧：实现递归"><span class="toc-number">1.0.3.</span> <span class="toc-text">栈帧：实现递归</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"计算整数列表和　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2147425';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/11/02/Vue-js的数据/" title="下一篇: Vue.js的数据">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/计算整数列表和/">计算整数列表和</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/Vue-js的数据/">Vue.js的数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/有序列表/">有序列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/列表/">列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是Deque/">什么是Deque</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是队列/">什么是队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/生活/">生活</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/中缀前缀和后缀表达式/">中缀前缀和后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/十进制转换成二进制/">十进制转换成二进制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/简单与复杂括号匹配/">简单与复杂括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/基本数据结构之一/">基本数据结构之一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Python数据结构的字典/">Python数据结构的字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/python数据结构的性能/">python数据结构的性能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/你好，这个世界/">你好，这个世界!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Git详细教程/">Git常用命令(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/java设计模式/">java23种设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/Git常用命令/">Git常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/hexo-nexT配置详情/">Hexo之NexT主题配置</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
