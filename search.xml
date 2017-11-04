@@ -72,7 +72,7 @@
     <entry>
       <title><![CDATA[谢尔宾斯基三角形]]></title>
       <url>/2017/11/03/%E8%B0%A2%E5%B0%94%E5%AE%BE%E6%96%AF%E5%9F%BA%E4%B8%89%E8%A7%92%E5%BD%A2/</url>
-      <content type="html"><![CDATA[<h1 id="谢尔宾斯基三角形"><a href="#谢尔宾斯基三角形" class="headerlink" title="谢尔宾斯基三角形"></a>谢尔宾斯基三角形</h1><p>另外一个展现自相似性的分形是谢尔宾斯基三角形。Figure 3是一个示例。谢尔宾斯基三角形阐明了三路递归算法。用手绘制谢尔宾斯三角形的过程很简答。从一个大三角形开始。通过连接每一边的中点，将这个大三角形分成四个新的三角形。忽略刚刚创建的中间三角形，对三个三角形中的每一个应用相同的过程。每一次创建一组新的三角形时，都会将此过程递归应用于三个较小的角三角形。如果你有足够的铅笔，你可以无限重复这个过程。在继续阅读之前，你可以尝试运用所描述的方法自己绘制谢尔宾斯基三角形。</p>
+      <content type="html"><![CDATA[<h1 id="谢尔宾斯基三角形"><a href="#谢尔宾斯基三角形" class="headerlink" title="谢尔宾斯基三角形"></a>谢尔宾斯基三角形</h1><p>另外一个展现自相似性的分形是谢尔宾斯基三角形。<a id="more"></a>Figure 3是一个示例。谢尔宾斯基三角形阐明了三路递归算法。用手绘制谢尔宾斯三角形的过程很简答。从一个大三角形开始。通过连接每一边的中点，将这个大三角形分成四个新的三角形。忽略刚刚创建的中间三角形，对三个三角形中的每一个应用相同的过程。每一次创建一组新的三角形时，都会将此过程递归应用于三个较小的角三角形。如果你有足够的铅笔，你可以无限重复这个过程。在继续阅读之前，你可以尝试运用所描述的方法自己绘制谢尔宾斯基三角形。</p>
 <p><img src="https://facert.gitbooks.io/python-data-structure-cn/4.%E9%80%92%E5%BD%92/4.8.%E8%B0%A2%E5%B0%94%E5%AE%BE%E6%96%AF%E5%9F%BA%E4%B8%89%E8%A7%92%E5%BD%A2/assets/4.8.%E8%B0%A2%E5%B0%94%E5%AE%BE%E6%96%AF%E5%9F%BA%E4%B8%89%E8%A7%92%E5%BD%A2.figure3.png" alt="image"></p>
 <p><em>Figure 3</em></p>
 <p>因为我们可以无限地应用算法，什么是基本情况？我们将看到，基本情况被任意设置为我们想要将三角形划分成块的次数。有时我们把这个数字称为分形的“度”。每次我们进行递归调用时，我们从度中减去1，直到0。当我们达到0度时，我们停止递归。在Figure3中生成谢尔宾斯基三角形的代码见ActiveCode 1。</p>
@@ -98,7 +98,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">moveDisk</span><span class="params">(fp,tp)</span>:</span></div><div class="line">    print(<span class="string">"moving disk from"</span>,fp,<span class="string">"to"</span>,tp)</div></pre></td></tr></table></figure>
 <p><em>Listing 2</em></p>
 <p>现在你已经看到了 <code>moveTower</code> 和 <code>moveDisk</code> 的代码，你可能会想知道为什么我们没有明确记录什么盘子在什么杆上的数据结构。这里有一个提示：如果你要明确地跟踪盘子，你会使用三个 Stack 对象，每个杆一个。 答案是 Python 提供了我们需要调用的隐含的栈。</p>
-<h3 id="探索迷宫"><a href="#探索迷宫" class="headerlink" title="探索迷宫"></a>探索迷宫</h3>]]></content>
+<p>### </p>
+]]></content>
       
         
     </entry>
