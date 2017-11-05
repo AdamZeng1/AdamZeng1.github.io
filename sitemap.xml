@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adamzeng.site/2017/11/05/%E6%8E%A2%E7%B4%A2%E8%BF%B7%E5%AE%AB/</loc>
+    
+    <lastmod>2017-11-05T14:23:41.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://adamzeng.site/2017/11/03/%E8%B0%A2%E5%B0%94%E5%AE%BE%E6%96%AF%E5%9F%BA%E4%B8%89%E8%A7%92%E5%BD%A2/</loc>
     
     <lastmod>2017-11-04T13:16:50.000Z</lastmod>
@@ -184,14 +191,14 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/page/index.html</loc>
+    <loc>http://adamzeng.site/tags/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adamzeng.site/tags/index.html</loc>
+    <loc>http://adamzeng.site/page/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
