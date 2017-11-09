@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://adamzeng.site/2017/11/07/%E6%8E%92%E5%BA%8F%E5%92%8C%E6%90%9C%E7%B4%A2/</loc>
+    <lastmod>2017-11-09T09:12:20.000Z</lastmod>
+    <data>
+        <display>
+        <title>排序和搜索</title>
+        <pubTime>2017-11-07T07:09:27.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://adamzeng.site/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2017/11/09/getitem-and-setitem/</loc>
+    <lastmod>2017-11-09T09:08:48.000Z</lastmod>
+    <data>
+        <display>
+        <title>__getitem__ and __setitem__</title>
+        <pubTime>2017-11-09T09:06:28.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://adamzeng.site/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://adamzeng.site/2017/11/06/leetcode371/</loc>
     <lastmod>2017-11-06T12:30:39.000Z</lastmod>
     <data>

@@ -1,3 +1,3 @@
+http://adamzeng.site/2017/11/09/getitem-and-setitem/
+http://adamzeng.site/2017/11/07/排序和搜索/
 http://adamzeng.site/2017/11/06/leetcode371/
-http://adamzeng.site/2017/11/06/TCP-IP与HTTP的关系/
-http://adamzeng.site/2017/11/05/动态规划/

