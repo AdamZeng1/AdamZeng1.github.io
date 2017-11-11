@@ -3,6 +3,319 @@
   
     
     <entry>
+      <title><![CDATA[正则表达式]]></title>
+      <url>/2017/11/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<h3 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h3><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。<a id="more"></a></p>
+<p>非Python独有，re模块实现。</p>
+<p>有一句总结：</p>
+<p><em>尽量使用泛匹配模式，使用括号得到匹配目标，尽量使用非贪婪模式、有换行符就用re.S</em> 。</p>
+<h3 id="正则表达式中常用的字符含义"><a href="#正则表达式中常用的字符含义" class="headerlink" title="正则表达式中常用的字符含义"></a>正则表达式中常用的字符含义</h3><p>####<strong>1、普通字符和11个元字符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>普通字符</th>
+<th>匹配自身</th>
+<th>abc</th>
+<th>abc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>匹配任意除换行符”\n”外的字符(在DOTALL模式中也能匹配换行符</td>
+<td>a.c</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\</td>
+<td>转义字符，使后一个字符改变原来的意思</td>
+<td>a.c;a\c</td>
+<td>a.c;a\c</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配前一个字符0或多次</td>
+<td>abc*</td>
+<td>ab;abccc</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配前一个字符1次或无限次</td>
+<td>abc+</td>
+<td>abc;abccc</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配一个字符0次或1次</td>
+<td>abc?</td>
+<td>ab;abc</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串开头。在多行模式中匹配每一行的开头</td>
+<td>^abc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串末尾，在多行模式中匹配每一行的末尾</td>
+<td>abc$</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>或。匹配\</td>
+<td>左右表达式任意一个，从左到右匹配，如果\</td>
+<td>没有包括在()中，则它的范围是整个正则表达式</td>
+<td>abc\</td>
+<td>def</td>
+<td>abcdef</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>{m}匹配前一个字符m次，{m,n}匹配前一个字符m至n次，若省略n，则匹配m至无限次</td>
+<td>ab{1,2}c</td>
+<td>abcabbc</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>字符集。对应的位置可以是字符集中任意字符。字符集中的字符可以逐个列出，也可以给出范围，如[abc]或[a-c]。[^abc]表示取反，即非abc。所有特殊字符在字符集中都失去其原有的特殊含义。用\反斜杠转义恢复特殊字符的特殊含义。</td>
+<td>a[bcd]e</td>
+<td>abeaceade</td>
+</tr>
+<tr>
+<td>()</td>
+<td>被括起来的表达式将作为分组，从表达式左边开始没遇到一个分组的左括号“（”，编号+1.分组表达式作为一个整体，可以后接数量词。表达式中的\</td>
+<td>仅在该组中有效。</td>
+<td>(abc){2}a(123\</td>
+<td>456)c</td>
+<td>abcabca456c</td>
+</tr>
+</tbody>
+</table>
+<p>这里需要强调一下反斜杠\的作用：</p>
+<ul>
+<li>反斜杠后边跟元字符去除特殊功能；（即将特殊字符转义成普通字符）</li>
+<li>反斜杠后边跟普通字符实现特殊功能；（即预定义字符）</li>
+<li>引用序号对应的字组所匹配的字符串。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a=re.search(<span class="string">r'(tina)(fei)haha\2'</span>,<span class="string">'tinafeihahafei tinafeihahatina'</span>).group()</div><div class="line">print(a)</div><div class="line">结果：</div><div class="line">tinafeihahafei</div></pre></td></tr></table></figure>
+<h4 id="2、预定义字符集（可以写在字符集-…-中）"><a href="#2、预定义字符集（可以写在字符集-…-中）" class="headerlink" title="2、预定义字符集（可以写在字符集[…]中） "></a><strong>2、预定义字符集（可以写在字符集[…]中） </strong></h4><table>
+<thead>
+<tr>
+<th>\d</th>
+<th>数字:[0-9]</th>
+<th>a\bc</th>
+<th>a1c</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\D</td>
+<td>非数字:[^\d]</td>
+<td>a\Dc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配任何空白字符:[&lt;空格&gt;\t\r\n\f\v]</td>
+<td>a\sc</td>
+<td>a c</td>
+</tr>
+<tr>
+<td>\S</td>
+<td>非空白字符:[^\s]</td>
+<td>a\Sc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配包括下划线在内的任何字字符:[A-Za-z0-9_]</td>
+<td>a\wc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配非字母字符，即匹配特殊字符</td>
+<td>a\Wc</td>
+<td>a c</td>
+</tr>
+<tr>
+<td>\A</td>
+<td>仅匹配字符串开头,同^</td>
+<td>\Aabc</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\Z</td>
+<td>仅匹配字符串结尾，同$</td>
+<td>abc\Z</td>
+<td>abc</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>匹配\w和\W之间，即匹配单词边界匹配一个单词边界，也就是指单词和空格间的位置。例如， ‘er\b’ 可以匹配”never” 中的 ‘er’，但不能匹配 “verb” 中的 ‘er’。</td>
+<td>\babc\ba\b!bc</td>
+<td>空格abc空格a!bc</td>
+</tr>
+<tr>
+<td>\B</td>
+<td>[^\b]</td>
+<td>a\Bbc</td>
+<td>abc</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3、特殊分组用法：</strong></p>
+<table>
+<thead>
+<tr>
+<th>(?P<name>)</name></th>
+<th>分组，除了原有的编号外再指定一个额外的别名</th>
+<th>(?P<id>abc){2}</id></th>
+<th>abcabc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(?P=name)</td>
+<td>引用别名为<name>的分组匹配到字符串</name></td>
+<td>(?P<id>\d)abc(?P=id)</id></td>
+<td>1abc15abc5</td>
+</tr>
+<tr>
+<td>\<number></number></td>
+<td>引用编号为<number>的分组匹配到字符串</number></td>
+<td>(\d)abc\1</td>
+<td>1abc15abc5</td>
+</tr>
+</tbody>
+</table>
+<p>###Python中re模块</p>
+<p><strong>1、compile()</strong></p>
+<p>编译正则表达式模式，返回一个对象的模式。（可以把那些常用的正则表达式编译成正则表达式对象，这样可以提高一点效率。）</p>
+<p>格式：</p>
+<p>re.compile(pattern,flags=0)</p>
+<p>pattern: 编译时用的表达式字符串。</p>
+<p>flags 编译标志位，用于修改正则表达式的匹配方式，如：是否区分大小写，多行匹配等。常用的flags有：</p>
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.S(DOTALL)</td>
+<td>使.匹配包括换行在内的所有字符</td>
+</tr>
+<tr>
+<td>re.I（IGNORECASE）</td>
+<td>使匹配对大小写不敏感</td>
+</tr>
+<tr>
+<td>re.L（LOCALE）</td>
+<td>做本地化识别（locale-aware)匹配，法语等<img src="file:///C:/Users/tina/AppData/Local/YNote/data/heoffer@126.com/15ef610b4afd4cf0aea99402f970595e/19c23298f53f40f1b1d0168871156605.jpg" alt="img"></td>
+</tr>
+<tr>
+<td>re.M(MULTILINE)</td>
+<td>多行匹配，影响^和$</td>
+</tr>
+<tr>
+<td>re.X(VERBOSE)</td>
+<td>该标志通过给予更灵活的格式以便将正则表达式写得更易于理解</td>
+</tr>
+<tr>
+<td>re.U</td>
+<td>根据Unicode字符集解析字符，这个标志影响\w,\W,\b,\B</td>
+</tr>
+</tbody>
+</table>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;</div><div class="line">rr = re.compile(r&apos;\w*oo\w*&apos;)</div><div class="line">print(rr.findall(tt))   #查找所有包含&apos;oo&apos;的单词</div><div class="line">执行结果如下：</div><div class="line">[&apos;good&apos;, &apos;cool&apos;]</div></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><strong>2、match()</strong></p>
+<p>决定RE是否在字符串刚开始的位置匹配。//注：这个方法并不是完全匹配。当pattern结束时若string还有剩余字符，仍然视为成功。想要完全匹配，可以在表达式末尾加上边界匹配符’$’</p>
+<p>格式：</p>
+<p>re.match(pattern, string, flags=0)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(re.match(&apos;com&apos;,&apos;comwww.runcomoob&apos;).group())</div><div class="line">print(re.match(&apos;com&apos;,&apos;Comwww.runcomoob&apos;,re.I).group())</div><div class="line">执行结果如下：</div><div class="line">com</div><div class="line">com</div></pre></td></tr></table></figure>
+<p><strong>3、search()</strong></p>
+<p> 格式：</p>
+<p>re.search(pattern, string, flags=0)</p>
+<p>re.search函数会在字符串内查找模式匹配,只要找到第一个匹配然后返回，如果字符串没有匹配，则返回None。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(re.search(&apos;\dcom&apos;,&apos;www.4comrunoob.5com&apos;).group())</div><div class="line">执行结果如下：</div><div class="line">4com</div></pre></td></tr></table></figure>
+<p>*注：match和search一旦匹配成功，就是一个match object对象，而match object对象有以下方法：</p>
+<ul>
+<li>group() 返回被 RE 匹配的字符串</li>
+<li>start() 返回匹配开始的位置</li>
+<li>end() 返回匹配结束的位置</li>
+<li>span() 返回一个元组包含匹配 (开始,结束) 的位置</li>
+<li>group() 返回re整体匹配的字符串，可以一次输入多个组号，对应组号匹配的字符串。</li>
+</ul>
+<p>a. group（）返回re整体匹配的字符串，<br>b. group (n,m) 返回组号为n，m所匹配的字符串，如果组号不存在，则返回indexError异常<br>c.groups（）groups() 方法返回一个包含正则表达式中所有小组字符串的元组，从 1 到所含的小组号，通常groups()不需要参数，返回一个元组，元组中的元就是正则表达式中定义的组。 </p>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">a = &quot;123abc456&quot;</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(0))   #123abc456,返回整体</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(1))   #123</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(2))   #abc</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(3))   #456</div><div class="line">###group(1) 列出第一个括号匹配部分，group(2) 列出第二个括号匹配部分，group(3) 列出第三个括号匹配部分。###</div></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><strong>4、findall()</strong></p>
+<p>re.findall遍历匹配，可以获取字符串中所有匹配的字符串，返回一个列表。</p>
+<p> 格式：</p>
+<p>re.findall(pattern, string, flags=0)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">p = re.compile(r&apos;\d+&apos;)</div><div class="line">print(p.findall(&apos;o1n2m3k4&apos;))</div><div class="line">执行结果如下：</div><div class="line">[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;]</div></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;</div><div class="line">rr = re.compile(r&apos;\w*oo\w*&apos;)</div><div class="line">print(rr.findall(tt))</div><div class="line">print(re.findall(r&apos;(\w)*oo(\w)&apos;,tt))#()表示子表达式 </div><div class="line">执行结果如下：</div><div class="line">[&apos;good&apos;, &apos;cool&apos;]</div><div class="line">[(&apos;g&apos;, &apos;d&apos;), (&apos;c&apos;, &apos;l&apos;)]</div></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><strong>5、finditer()</strong></p>
+<p> 搜索string，返回一个顺序访问每一个匹配结果（Match对象）的迭代器。找到 RE 匹配的所有子串，并把它们作为一个迭代器返回。</p>
+<p>格式：</p>
+<p>re.finditer(pattern, string, flags=0)</p>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">iter = re.finditer(r&apos;\d+&apos;,&apos;12 drumm44ers drumming, 11 ... 10 ...&apos;)</div><div class="line">for i in iter:</div><div class="line">    print(i)</div><div class="line">    print(i.group())</div><div class="line">    print(i.span())</div><div class="line">执行结果如下：</div><div class="line">&lt;_sre.SRE_Match object; span=(0, 2), match=&apos;12&apos;&gt;</div><div class="line">12</div><div class="line">(0, 2)</div><div class="line">&lt;_sre.SRE_Match object; span=(8, 10), match=&apos;44&apos;&gt;</div><div class="line">44</div><div class="line">(8, 10)</div><div class="line">&lt;_sre.SRE_Match object; span=(24, 26), match=&apos;11&apos;&gt;</div><div class="line">11</div><div class="line">(24, 26)</div><div class="line">&lt;_sre.SRE_Match object; span=(31, 33), match=&apos;10&apos;&gt;</div><div class="line">10</div><div class="line">(31, 33)</div></pre></td></tr></table></figure>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><strong>6、split()</strong></p>
+<p>按照能够匹配的子串将string分割后返回列表。</p>
+<p>可以使用re.split来分割字符串，如：re.split(r’\s+’, text)；将字符串按空格分割成一个单词列表。</p>
+<p>格式：</p>
+<p>re.split(pattern, string[, maxsplit])</p>
+<p>maxsplit用于指定最大分割次数，不指定将全部分割。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(re.split(&apos;\d+&apos;,&apos;one1two2three3four4five5&apos;))</div><div class="line">执行结果如下：</div><div class="line">[&apos;one&apos;, &apos;two&apos;, &apos;three&apos;, &apos;four&apos;, &apos;five&apos;, &apos;&apos;]</div></pre></td></tr></table></figure>
+<p><strong>7、sub()</strong></p>
+<p>使用re替换string中每一个匹配的子串后返回替换后的字符串。</p>
+<p>格式：</p>
+<p>re.sub(pattern, repl, string, count)</p>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;</div><div class="line">print(re.sub(r&apos;\s+&apos;, &apos;-&apos;, text))</div><div class="line">执行结果如下：</div><div class="line">JGood-is-a-handsome-boy,-he-is-cool,-clever,-and-so-on...</div></pre></td></tr></table></figure>
+<p>其中第二个函数是替换后的字符串；本例中为’-‘</p>
+<p>第四个参数指替换个数。默认为0，表示每个匹配项都替换。</p>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p>re.sub还允许使用函数对匹配项的替换进行复杂的处理。</p>
+<p>如：re.sub(r’\s’, lambda m: ‘[‘ + m.group(0) + ‘]’, text, 0)；将字符串中的空格’ ‘替换为’[ ]’。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;</div><div class="line">print(re.sub(r&apos;\s+&apos;, lambda m:&apos;[&apos;+m.group(0)+&apos;]&apos;, text,0))</div><div class="line">执行结果如下：</div><div class="line">JGood[ ]is[ ]a[ ]handsome[ ]boy,[ ]he[ ]is[ ]cool,[ ]clever,[ ]and[ ]so[ ]on...</div></pre></td></tr></table></figure>
+<p><strong>8、subn()</strong></p>
+<p> 返回替换次数</p>
+<p>格式：</p>
+<p>subn(pattern, repl, string, count=0, flags=0)</p>
+<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">print(re.subn(&apos;[1-2]&apos;,&apos;A&apos;,&apos;123456abcdef&apos;))</div><div class="line">print(re.sub(&quot;g.t&quot;,&quot;have&quot;,&apos;I get A,  I got B ,I gut C&apos;))</div><div class="line">print(re.subn(&quot;g.t&quot;,&quot;have&quot;,&apos;I get A,  I got B ,I gut C&apos;))</div><div class="line">执行结果如下：</div><div class="line">(&apos;AA3456abcdef&apos;, 2)</div><div class="line">I have A,  I have B ,I have C</div><div class="line">(&apos;I have A,  I have B ,I have C&apos;, 3)</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 正则表达式 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 正则表达式 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[__getitem__ and __setitem__]]></title>
       <url>/2017/11/09/getitem-and-setitem/</url>
       <content type="html"><![CDATA[<p>使用一个例子来解释python之 <strong>getattr</strong>、<strong>getattr</strong>、<strong>getitem</strong>、<strong>setitem</strong> 使用：<a id="more"></a></p>
@@ -1750,6 +2063,65 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[java23种设计模式]]></title>
       <url>/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
@@ -1892,65 +2264,6 @@
             <tag> Java </tag>
             
             <tag> 设计模式 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
             
         </tags>
         
