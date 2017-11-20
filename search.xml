@@ -28,8 +28,21 @@
     <entry>
       <title><![CDATA[最近的生活总结]]></title>
       <url>/2017/11/18/%E6%9C%80%E8%BF%91%E7%9A%84%E7%94%9F%E6%B4%BB%E6%80%BB%E7%BB%93/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<p>这段时间里，<a id="more"></a>除了日常工作，我对于Pyquery，beautifulSoup，Requests，有了更深的理解，还有就是IP的代理池的架构，我在很多细节上面都还没有弄懂，但是我会反复的去消化理解其中的精髓的地方，其实在代理池的实现上，用到了很多较为高深的知识，例如元类，当然很多时候去捕捉错误，防止出错导致程序停止，这已经成为了家常便饭，但目前我对redis与MongoDB的理解仅限于能够用Python去连接和使用它们，还没有对这两个数据库有很深的了解，也不清楚这两个数据库应该传什么样的数据。</p>
+]]></content>
       
+        <categories>
+            
+            <category> 生活 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 生活 </tag>
+            
+        </tags>
         
     </entry>
     
