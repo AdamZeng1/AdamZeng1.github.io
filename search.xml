@@ -3,6 +3,111 @@
   
     
     <entry>
+      <title><![CDATA[未来打算]]></title>
+      <url>/2017/11/18/%E6%9C%AA%E6%9D%A5%E6%89%93%E7%AE%97/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[最近的生活总结]]></title>
+      <url>/2017/11/18/%E6%9C%80%E8%BF%91%E7%9A%84%E7%94%9F%E6%B4%BB%E6%80%BB%E7%BB%93/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[爬虫动态代理池]]></title>
+      <url>/2017/11/18/%E7%88%AC%E8%99%AB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%B1%A0/</url>
+      <content type="html"><![CDATA[<p>#这是整个代理池的架构：</p>
+<p>##获取器—过滤器—代理队列（API)—定时检测器</p>
+<p>许多网站有专门的反爬虫措施，可能遇到封IP等问题。互联网上公开了大量免费代理，利用好资源。通过定时检测维护同样可以得到多个可用代理。<a id="more"></a></p>
+<p>代理池要求：多站抓取，异步检测，通过代理请求百度页面。定时筛选，持续更新。提供接口，易于提取。</p>
+<ul>
+<li>网上的免费代理很有可能不能够继续使用，这时需要定时检测器，进行测试，将不可用代理剔除，将可用代理存入代理队列。</li>
+<li>实现API，将存在数据库中的可用代理，通过Web，将接口放在网上，方便我们提取使用。</li>
+<li>获取器，从各大网站平台上将代理抓取下来，临时存在一个数据结构当中。</li>
+<li><p>使用过滤器将代理进行筛选，使用代理对网站（例如百度）进行请求，返回正确请求即为可用代理，放置入代理队列中。</p>
+<p>详解大才哥的代理池的源码：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line"></div><div class="line">  print(<span class="string">'Ip processing running'</span>)</div><div class="line"></div><div class="line">  valid_process=Process(target=Schedule.valid_proxy)</div><div class="line"></div><div class="line">  check_process=Process(target=Schedule.check_pool)</div><div class="line"></div><div class="line">  valid_process.start()</div><div class="line"></div><div class="line">  check_process.start()</div></pre></td></tr></table></figure>
+<p>定义了两个process，两个进程，调用start，让这两个进程同时运行。</p>
+<p>valid_proxy为定时检测器，定时检测ip是否有效。在Schedule类下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">valid_proxy</span><span class="params">(cycle=VALID_CHECK_CYCLE)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Get half of proxies which in redis</div><div class="line">    """</div><div class="line">    conn = RedisClient()<span class="comment">#redis连接的对象</span></div><div class="line">    tester = ValidityTester()</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        print(<span class="string">'Refreshing ip'</span>)</div><div class="line">        count = int(<span class="number">0.5</span> * conn.queue_len)</div><div class="line">        <span class="keyword">if</span> count == <span class="number">0</span>:</div><div class="line">            print(<span class="string">'Waiting for adding'</span>)</div><div class="line">            time.sleep(cycle)</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        raw_proxies = conn.get(count)</div><div class="line">        tester.set_raw_proxies(raw_proxies)</div><div class="line">        tester.test()</div><div class="line">        time.sleep(cycle)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">db.py</div><div class="line"></div><div class="line"><span class="keyword">import</span> redis</div><div class="line"><span class="keyword">from</span> proxypool.error <span class="keyword">import</span> PoolEmptyError</div><div class="line"><span class="keyword">from</span> proxypool.setting <span class="keyword">import</span> HOST, PORT, PASSWORD</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisClient</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host=HOST, port=PORT)</span>:</span></div><div class="line">        <span class="keyword">if</span> PASSWORD:</div><div class="line">            self._db = redis.Redis(host=host, port=port, password=PASSWORD)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            self._db = redis.Redis(host=host, port=port)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, count=<span class="number">1</span>)</span>:</span><span class="comment">#获取代理从redis</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get proxies from redis</div><div class="line">        """</div><div class="line">        proxies = self._db.lrange(<span class="string">"proxies"</span>, <span class="number">0</span>, count - <span class="number">1</span>)<span class="comment">#lrange从左侧拿出代理</span></div><div class="line">        self._db.ltrim(<span class="string">"proxies"</span>, count, <span class="number">-1</span>)<span class="comment">#将代理放在右侧</span></div><div class="line">        <span class="keyword">return</span> proxies</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, proxy)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        add proxy to right top</div><div class="line">        """</div><div class="line">        self._db.rpush(<span class="string">"proxies"</span>, proxy)<span class="comment">#将代理放到右侧</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span><span class="comment">#供API使用，将可用代理从右侧拿出。</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get proxy from right.</div><div class="line">        """</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self._db.rpop(<span class="string">"proxies"</span>).decode(<span class="string">'utf-8'</span>)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">raise</span> PoolEmptyError</div><div class="line"></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">queue_len</span><span class="params">(self)</span>:</span><span class="comment">#整个队列的长度</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get length from queue.</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> self._db.llen(<span class="string">"proxies"</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flush</span><span class="params">(self)</span>:</span><span class="comment">#刷新整个代理队列</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        flush db</div><div class="line">        """</div><div class="line">        self._db.flushall()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    conn = RedisClient()</div><div class="line">    print(conn.pop())</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PoolAdder</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    add proxy to pool</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, threshold)</span>:</span></div><div class="line">        self._threshold = threshold</div><div class="line">        self._conn = RedisClient()</div><div class="line">        self._tester = ValidityTester()</div><div class="line">        self._crawler = FreeProxyGetter()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_over_threshold</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        judge if count is overflow.</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> self._conn.queue_len &gt;= self._threshold:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_to_queue</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'PoolAdder is working'</span>)</div><div class="line">        proxy_count = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.is_over_threshold():</div><div class="line">            <span class="keyword">for</span> callback_label <span class="keyword">in</span> range(self._crawler.__CrawlFuncCount__):</div><div class="line">                callback = self._crawler.__CrawlFunc__[callback_label]</div><div class="line">                raw_proxies = self._crawler.get_raw_proxies(callback)</div><div class="line">                <span class="comment"># test crawled proxies</span></div><div class="line">                self._tester.set_raw_proxies(raw_proxies)</div><div class="line">                self._tester.test()</div><div class="line">                proxy_count += len(raw_proxies)</div><div class="line">                <span class="keyword">if</span> self.is_over_threshold():</div><div class="line">                    print(<span class="string">'IP is enough, waiting to be used'</span>)</div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> proxy_count == <span class="number">0</span>:</div><div class="line">                <span class="keyword">raise</span> ResourceDepletionError</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 爬虫 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[BeautifulSoup]]></title>
+      <url>/2017/11/11/BeautifulSoup/</url>
+      <content type="html"><![CDATA[<h3 id="BeautifulSoup"><a href="#BeautifulSoup" class="headerlink" title="BeautifulSoup"></a>BeautifulSoup</h3><h4 id="解析库"><a href="#解析库" class="headerlink" title="解析库"></a>解析库<a id="more"></a></h4><table>
+<thead>
+<tr>
+<th style="text-align:left">解析器</th>
+<th style="text-align:left">使用方法</th>
+<th style="text-align:left">优势</th>
+<th style="text-align:left">劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Python标准库</td>
+<td style="text-align:left">BeautifulSoup(markup,”html.parser”)</td>
+<td style="text-align:left">Python的内置标准库、执行速度适中，文档容错能力强</td>
+<td style="text-align:left">Python2.7.3 or 3.2.2）前版本中文容错能力差</td>
+</tr>
+<tr>
+<td style="text-align:left">lxml HTML 解析器</td>
+<td style="text-align:left">BeautifulSoup(markup，’lxml’)</td>
+<td style="text-align:left">速度快，文档容错能力强</td>
+<td style="text-align:left">需要安装C语言库</td>
+</tr>
+<tr>
+<td style="text-align:left">lxml XML解析器</td>
+<td style="text-align:left">BeautifulSoup(markup,’xml’)</td>
+<td style="text-align:left">速度快，唯一支持XML的解析器</td>
+<td style="text-align:left">需要安装C语言库</td>
+</tr>
+<tr>
+<td style="text-align:left">html5lib</td>
+<td style="text-align:left">BeautifulSoup(markup,’html5lib’)</td>
+<td style="text-align:left">最好的容错性，以浏览器的方式解析文档、生成HTML5格式的文档</td>
+<td style="text-align:left">速度慢，不依赖外部扩展</td>
+</tr>
+</tbody>
+</table>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>推荐使用lxml解析库，必要时使用html_parser</li>
+<li>标签选择筛选功能弱但是速度快</li>
+<li>建议使用find(),find_all()查询匹配单个结果或者多个结果</li>
+<li>如果对CSS选择器熟悉建议使用select()</li>
+<li>记住常用的获取属性和文本值的方法</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[正则表达式]]></title>
       <url>/2017/11/10/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h3 id="什么是正则表达式"><a href="#什么是正则表达式" class="headerlink" title="什么是正则表达式"></a>什么是正则表达式</h3><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。<a id="more"></a></p>
@@ -233,9 +338,9 @@
 </tr>
 </tbody>
 </table>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;</div><div class="line">rr = re.compile(r&apos;\w*oo\w*&apos;)</div><div class="line">print(rr.findall(tt))   #查找所有包含&apos;oo&apos;的单词</div><div class="line">执行结果如下：</div><div class="line">[&apos;good&apos;, &apos;cool&apos;]</div></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <p><strong>2、match()</strong></p>
 <p>决定RE是否在字符串刚开始的位置匹配。//注：这个方法并不是完全匹配。当pattern结束时若string还有剩余字符，仍然视为成功。想要完全匹配，可以在表达式末尾加上边界匹配符’$’</p>
 <p>格式：</p>
@@ -255,24 +360,24 @@
 <li>group() 返回re整体匹配的字符串，可以一次输入多个组号，对应组号匹配的字符串。</li>
 </ul>
 <p>a. group（）返回re整体匹配的字符串，<br>b. group (n,m) 返回组号为n，m所匹配的字符串，如果组号不存在，则返回indexError异常<br>c.groups（）groups() 方法返回一个包含正则表达式中所有小组字符串的元组，从 1 到所含的小组号，通常groups()不需要参数，返回一个元组，元组中的元就是正则表达式中定义的组。 </p>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">a = &quot;123abc456&quot;</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(0))   #123abc456,返回整体</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(1))   #123</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(2))   #abc</div><div class="line"> print(re.search(&quot;([0-9]*)([a-z]*)([0-9]*)&quot;,a).group(3))   #456</div><div class="line">###group(1) 列出第一个括号匹配部分，group(2) 列出第二个括号匹配部分，group(3) 列出第三个括号匹配部分。###</div></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <p><strong>4、findall()</strong></p>
 <p>re.findall遍历匹配，可以获取字符串中所有匹配的字符串，返回一个列表。</p>
 <p> 格式：</p>
 <p>re.findall(pattern, string, flags=0)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">p = re.compile(r&apos;\d+&apos;)</div><div class="line">print(p.findall(&apos;o1n2m3k4&apos;))</div><div class="line">执行结果如下：</div><div class="line">[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;]</div></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">tt = &quot;Tina is a good girl, she is cool, clever, and so on...&quot;</div><div class="line">rr = re.compile(r&apos;\w*oo\w*&apos;)</div><div class="line">print(rr.findall(tt))</div><div class="line">print(re.findall(r&apos;(\w)*oo(\w)&apos;,tt))#()表示子表达式 </div><div class="line">执行结果如下：</div><div class="line">[&apos;good&apos;, &apos;cool&apos;]</div><div class="line">[(&apos;g&apos;, &apos;d&apos;), (&apos;c&apos;, &apos;l&apos;)]</div></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <p><strong>5、finditer()</strong></p>
 <p> 搜索string，返回一个顺序访问每一个匹配结果（Match对象）的迭代器。找到 RE 匹配的所有子串，并把它们作为一个迭代器返回。</p>
 <p>格式：</p>
 <p>re.finditer(pattern, string, flags=0)</p>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">iter = re.finditer(r&apos;\d+&apos;,&apos;12 drumm44ers drumming, 11 ... 10 ...&apos;)</div><div class="line">for i in iter:</div><div class="line">    print(i)</div><div class="line">    print(i.group())</div><div class="line">    print(i.span())</div><div class="line">执行结果如下：</div><div class="line">&lt;_sre.SRE_Match object; span=(0, 2), match=&apos;12&apos;&gt;</div><div class="line">12</div><div class="line">(0, 2)</div><div class="line">&lt;_sre.SRE_Match object; span=(8, 10), match=&apos;44&apos;&gt;</div><div class="line">44</div><div class="line">(8, 10)</div><div class="line">&lt;_sre.SRE_Match object; span=(24, 26), match=&apos;11&apos;&gt;</div><div class="line">11</div><div class="line">(24, 26)</div><div class="line">&lt;_sre.SRE_Match object; span=(31, 33), match=&apos;10&apos;&gt;</div><div class="line">10</div><div class="line">(31, 33)</div></pre></td></tr></table></figure>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <p><strong>6、split()</strong></p>
 <p>按照能够匹配的子串将string分割后返回列表。</p>
 <p>可以使用re.split来分割字符串，如：re.split(r’\s+’, text)；将字符串按空格分割成一个单词列表。</p>
@@ -284,11 +389,11 @@
 <p>使用re替换string中每一个匹配的子串后返回替换后的字符串。</p>
 <p>格式：</p>
 <p>re.sub(pattern, repl, string, count)</p>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;</div><div class="line">print(re.sub(r&apos;\s+&apos;, &apos;-&apos;, text))</div><div class="line">执行结果如下：</div><div class="line">JGood-is-a-handsome-boy,-he-is-cool,-clever,-and-so-on...</div></pre></td></tr></table></figure>
 <p>其中第二个函数是替换后的字符串；本例中为’-‘</p>
 <p>第四个参数指替换个数。默认为0，表示每个匹配项都替换。</p>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <p>re.sub还允许使用函数对匹配项的替换进行复杂的处理。</p>
 <p>如：re.sub(r’\s’, lambda m: ‘[‘ + m.group(0) + ‘]’, text, 0)；将字符串中的空格’ ‘替换为’[ ]’。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">text = &quot;JGood is a handsome boy, he is cool, clever, and so on...&quot;</div><div class="line">print(re.sub(r&apos;\s+&apos;, lambda m:&apos;[&apos;+m.group(0)+&apos;]&apos;, text,0))</div><div class="line">执行结果如下：</div><div class="line">JGood[ ]is[ ]a[ ]handsome[ ]boy,[ ]he[ ]is[ ]cool,[ ]clever,[ ]and[ ]so[ ]on...</div></pre></td></tr></table></figure>
@@ -296,7 +401,7 @@
 <p> 返回替换次数</p>
 <p>格式：</p>
 <p>subn(pattern, repl, string, count=0, flags=0)</p>
-<p><a href="javascript:void(0" target="_blank" rel="external"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
+<p><a href="javascript:void(0" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a>;)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">print(re.subn(&apos;[1-2]&apos;,&apos;A&apos;,&apos;123456abcdef&apos;))</div><div class="line">print(re.sub(&quot;g.t&quot;,&quot;have&quot;,&apos;I get A,  I got B ,I gut C&apos;))</div><div class="line">print(re.subn(&quot;g.t&quot;,&quot;have&quot;,&apos;I get A,  I got B ,I gut C&apos;))</div><div class="line">执行结果如下：</div><div class="line">(&apos;AA3456abcdef&apos;, 2)</div><div class="line">I have A,  I have B ,I have C</div><div class="line">(&apos;I have A,  I have B ,I have C&apos;, 3)</div></pre></td></tr></table></figure>
 ]]></content>
       
@@ -490,7 +595,7 @@
       <url>/2017/11/06/leetcode371/</url>
       <content type="html"><![CDATA[<h1 id="leetcode371题389题401题461题645题"><a href="#leetcode371题389题401题461题645题" class="headerlink" title="leetcode371题389题401题461题645题"></a>leetcode371题389题401题461题645题</h1><h3 id="371题"><a href="#371题" class="headerlink" title="371题"></a>371题</h3><p>Calculate the sum of two integers <em>a</em> and <em>b</em>, but you are <strong>not allowed</strong> to use the operator <code>+</code> and <code>-</code>.<a id="more"></a></p>
 <p><strong>Example:</strong><br>Given <em>a</em> = 1 and <em>b</em> = 2, return 3.</p>
-<p><strong>Credits:</strong><br>Special thanks to <a href="https://discuss.leetcode.com/user/fujiaozhu" target="_blank" rel="external">@fujiaozhu</a> for adding this problem and creating all test cases.</p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://discuss.leetcode.com/user/fujiaozhu" target="_blank" rel="noopener">@fujiaozhu</a> for adding this problem and creating all test cases.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getSum</span><span class="params">(self, a, b)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type a: int</div><div class="line">        :type b: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        <span class="string">"""</span></div><div class="line">        两个数的二进制形式：如5 = 0b101 ,3 = 0b011 ,两个二进制位如果一个为0,一个为1，则加之后为1,如果都为0，则加之后为0,如果都为1，则加之后为0，且向前进位，需要进位的位置为两个数的逻辑与</div><div class="line">        因为Python的整数不是固定的32位，所以需要做一些特殊的处理，具体见代码吧。</div><div class="line">代码里的将一个数对0x100000000取模（注意：Python的取模运算结果恒为非负数），是希望该数的二进制表示从第32位开始到更高的位都同是0（最低位是第0位），以在0-31位上模拟一个32位的int</div><div class="line">        """</div><div class="line">        <span class="keyword">while</span> b:</div><div class="line">            carry = a &amp; b</div><div class="line">            a = (a ^ b) % <span class="number">0x100000000</span></div><div class="line">            b = (carry &lt;&lt; <span class="number">1</span>) % <span class="number">0x100000000</span></div><div class="line">        <span class="keyword">return</span> a <span class="keyword">if</span> a &lt;= <span class="number">0x7FFFFFFF</span> <span class="keyword">else</span> a | (~<span class="number">0x100000000</span>+<span class="number">1</span>)</div></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getSum</span><span class="params">(self, a, b)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type a: int</div><div class="line">        :type b: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> sum([a,b])</div></pre></td></tr></table></figure>
 <h3 id="389题"><a href="#389题" class="headerlink" title="389题"></a>389题</h3><p>Given two strings <strong>s</strong> and <strong>t</strong> which consist of only lowercase letters.</p>
@@ -527,7 +632,7 @@
 <p>​    For example:<br>​    例如：</p>
 <p>​    The Hamming distance between 1011101 and 1001001 is 2.<br>​    The Hamming distance between 2143896 and 2233796 is 3.<br>​    The Hamming distance between “toned” and “roses” is 3.<br>​    1011101 与 1001001 之间的汉明距离是 2。<br>​    2143896 与 2233796 之间的汉明距离是 3。<br>​    “toned” 与 “roses” 之间的汉明距离是 3。</p>
 <hr>
-<p>The <a href="https://en.wikipedia.org/wiki/Hamming_distance" target="_blank" rel="external">Hamming distance</a> between two integers is the number of positions at which the corresponding bits are different.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Hamming_distance" target="_blank" rel="noopener">Hamming distance</a> between two integers is the number of positions at which the corresponding bits are different.</p>
 <p>Given two integers <code>x</code> and <code>y</code>, calculate the Hamming distance.</p>
 <p><strong>Note:</strong><br>0 ≤ <code>x</code>, <code>y</code> &lt; 231.</p>
 <p><strong>Example:</strong></p>
@@ -590,7 +695,7 @@
 <p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-06%20%E4%B8%8A%E5%8D%8811.25.22.png" alt="image"></p>
 <h3 id="各种协议与HTTP协议的关系"><a href="#各种协议与HTTP协议的关系" class="headerlink" title="各种协议与HTTP协议的关系"></a>各种协议与HTTP协议的关系</h3><p>学习了和HTTP协议密不可分的TCP/IP协议族中的各种协议后，我们再通过这张图来了解下IP协议、TCP协议和DNS服务在使用HTTP协议的通信过程中各自发挥了哪些作用。</p>
 <p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-06%20%E4%B8%8A%E5%8D%8811.28.17.png" alt="image"></p>
-<h3 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h3><p>与URI（统一资源标识符）相比，我们更熟悉URL（Uniform Resource Locator，统一资源定位符）。URL正是使用Web浏览器等访问Web页面时需要输入的网页地址。比如，下图的<a href="http://hackr.jp/就是URL。" target="_blank" rel="external">http://hackr.jp/就是URL。</a></p>
+<h3 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h3><p>与URI（统一资源标识符）相比，我们更熟悉URL（Uniform Resource Locator，统一资源定位符）。URL正是使用Web浏览器等访问Web页面时需要输入的网页地址。比如，下图的<a href="http://hackr.jp/就是URL。" target="_blank" rel="noopener">http://hackr.jp/就是URL。</a></p>
 <p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-06%20%E4%B8%8A%E5%8D%8811.35.05.png" alt="image"></p>
 <h3 id="统一资源标识符"><a href="#统一资源标识符" class="headerlink" title="统一资源标识符"></a>统一资源标识符</h3><p>URI是Uniform Resource Identifier的缩写。RFC2396分别对这3个单词进行了如下定义。</p>
 <h4 id="Uniform"><a href="#Uniform" class="headerlink" title="Uniform"></a>Uniform</h4><p>规定统一的格式可方便处理多种不同类型的资源，而不用根据上下文环境来识别资源指定的访问方式。另外，加入新增的协议方案（如http:或ftp:)也更容易。</p>
@@ -600,7 +705,7 @@
 <p>采用HTTP协议时，协议方案就是http。除此之外，还有ftp、mailto、telnet、file等。标准的URI协议方案有30种左右，由隶属于国际互联网管理的非营利社团ICANN（Internet Corporation for Assigned Names and  Numbers,互联网名称与数字地址分配机构）的IANA（Internet Assigned Numbers Authority，互联网号码分配局）管理颁布。</p>
 <ul>
 <li><p>IANA-Uniform Resource Identifier（URI）SCHEMES（统一资源标识符方案）</p>
-<p><a href="http://www.iana.org/assignments/uri-schemes" target="_blank" rel="external">http://www.iana.org/assignments/uri-schemes</a></p>
+<p><a href="http://www.iana.org/assignments/uri-schemes" target="_blank" rel="noopener">http://www.iana.org/assignments/uri-schemes</a></p>
 <p>URI用字符串标识某一互联网资源，而URL表示资源的地点（互联网上所处的位置）。可见URL是URI的子集。</p>
 <p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-06%20%E4%B8%8A%E5%8D%8811.50.24.png" alt="image"></p>
 <p>​</p>
@@ -801,27 +906,27 @@
       <content type="html"><![CDATA[<h1 id="leetcode190题131题191题231题342题"><a href="#leetcode190题131题191题231题342题" class="headerlink" title="leetcode190题131题191题231题342题"></a>leetcode190题131题191题231题342题</h1><h3 id="190Reverse-Bits"><a href="#190Reverse-Bits" class="headerlink" title="190Reverse Bits"></a>190Reverse Bits</h3><p>Reverse bits of a given 32 bits unsigned integer.<a id="more"></a></p>
 <p>For example, given input 43261596 (represented in binary as <strong>00000010100101000001111010011100</strong>), return 964176192 (represented in binary as <strong>00111001011110000010100101000000</strong>).</p>
 <p><strong>Follow up</strong>:<br>If this function is called many times, how would you optimize it?</p>
-<p>Related problem: <a href="https://leetcode.com/problems/reverse-integer/" target="_blank" rel="external">Reverse Integer</a></p>
-<p><strong>Credits:</strong><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts" target="_blank" rel="external">@ts</a> for adding this problem and creating all test cases.</p>
+<p>Related problem: <a href="https://leetcode.com/problems/reverse-integer/" target="_blank" rel="noopener">Reverse Integer</a></p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts" target="_blank" rel="noopener">@ts</a> for adding this problem and creating all test cases.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="comment"># @param n, an integer</span></div><div class="line">    <span class="comment"># @return an integer</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseBits</span><span class="params">(self, n)</span>:</span></div><div class="line">        </div><div class="line">        result = <span class="number">0</span></div><div class="line">        </div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">32</span>):</div><div class="line">            bit = n%<span class="number">2</span></div><div class="line">            result = result*<span class="number">2</span> + bit</div><div class="line">            n = n/<span class="number">2</span></div><div class="line">        </div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
 <h3 id="131Single-Number"><a href="#131Single-Number" class="headerlink" title="131Single Number"></a>131Single Number</h3><p>Given an array of integers, every element appears <em>twice</em> except for one. Find that single one.</p>
 <p><strong>Note:</strong><br>Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> operator</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">singleNumber</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> reduce(operator.xor,nums)</div></pre></td></tr></table></figure>
-<h3 id="191Number-of-1-Bits"><a href="#191Number-of-1-Bits" class="headerlink" title="191Number of 1 Bits"></a>191Number of 1 Bits</h3><p>Write a function that takes an unsigned integer and returns the number of ’1’ bits it has (also known as the <a href="https://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="external">Hamming weight</a>).</p>
+<h3 id="191Number-of-1-Bits"><a href="#191Number-of-1-Bits" class="headerlink" title="191Number of 1 Bits"></a>191Number of 1 Bits</h3><p>Write a function that takes an unsigned integer and returns the number of ’1’ bits it has (also known as the <a href="https://en.wikipedia.org/wiki/Hamming_weight" target="_blank" rel="noopener">Hamming weight</a>).</p>
 <p>For example, the 32-bit integer ’11’ has binary representation <code>00000000000000000000000000001011</code>, so the function should return 3.</p>
-<p><strong>Credits:</strong><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts" target="_blank" rel="external">@ts</a> for adding this problem and creating all test cases.</p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts" target="_blank" rel="noopener">@ts</a> for adding this problem and creating all test cases.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hammingWeight</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        times=<span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">32</span>):</div><div class="line">            bit=n%<span class="number">2</span></div><div class="line">            <span class="keyword">if</span> bit==<span class="number">1</span>:</div><div class="line">                times=times+<span class="number">1</span></div><div class="line">            n=n/<span class="number">2</span></div><div class="line">        <span class="keyword">return</span> times</div></pre></td></tr></table></figure>
 <p>sorry啦！性能只超过了40%，看了最优化的答案：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hammingWeight</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        res = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">            res += (n &amp; <span class="number">1</span>)</div><div class="line">            n &gt;&gt;= <span class="number">1</span></div><div class="line">        <span class="keyword">return</span> res</div></pre></td></tr></table></figure>
 <p>想了一下，其实是把每一位移到最后一位，与1进行&amp;运算，就可以判断该位是否存在1。</p>
 <h3 id="231Power-of-Two"><a href="#231Power-of-Two" class="headerlink" title="231Power of Two"></a>231Power of Two</h3><p>Given an integer, write a function to determine if it is a power of two.</p>
-<p><strong>Credits:</strong><br>Special thanks to <a href="https://leetcode.com/discuss/user/jianchao.li.fighter" target="_blank" rel="external">@jianchao.li.fighter</a> for adding this problem and creating all test cases.</p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://leetcode.com/discuss/user/jianchao.li.fighter" target="_blank" rel="noopener">@jianchao.li.fighter</a> for adding this problem and creating all test cases.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPowerOfTwo</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: bool</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> n&lt;=<span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> (n&amp;(n<span class="number">-1</span>))==<span class="number">0</span></div></pre></td></tr></table></figure>
 <p>对于一个二进制数而言，例如10000，它减去1以后的数是1111，再进行&amp;运算，必须是零，这是所有power of two，也就是2的次方数（1024等）的特点。</p>
 <h3 id="342Power-of-Four"><a href="#342Power-of-Four" class="headerlink" title="342Power of Four"></a>342Power of Four</h3><p>Given an integer (signed 32 bits), write a function to check whether it is a power of 4.</p>
 <p><strong>Example:</strong><br>Given num = 16, return true. Given num = 5, return false.</p>
 <p><strong>Follow up</strong>: Could you solve it without loops/recursion?</p>
-<p><strong>Credits:</strong><br>Special thanks to <a href="https://leetcode.com/discuss/user/yukuairoy" target="_blank" rel="external">@yukuairoy </a>for adding this problem and creating all test cases.</p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://leetcode.com/discuss/user/yukuairoy" target="_blank" rel="noopener">@yukuairoy </a>for adding this problem and creating all test cases.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPowerOfFour</span><span class="params">(self, num)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type num: int</div><div class="line">        :rtype: bool</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> num==<span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">while</span> num%<span class="number">4</span>==<span class="number">0</span>:</div><div class="line">            num/=<span class="number">4</span></div><div class="line">        <span class="keyword">return</span> num==<span class="number">1</span></div></pre></td></tr></table></figure>
 ]]></content>
       
@@ -1611,7 +1716,7 @@
 <p>Figure 4 展示了 Listing6 的结果。你可以看到字典一直更快。 对于最小的列表大小为10,000个元素，字典是列表的89.4倍。对于最大的列表大小为990,000 个元素。字典是列表的11,603倍！你还可以看到列表上的contains运算符所花费的时间与列表的大小成线性增长。这验证了列表上的contains运算符是 O(n) 的断言。还可以看出，字典中的 contains 运算符的时间是恒定的，即使字典大小不断增长。事实上，对于字典大小为10,000个元素，contains操作占用0.004毫秒，对于字典大小为990,000个元素，它也占用0.004毫秒。</p>
 <p><img src="https://facert.gitbooks.io/python-data-structure-cn/2.%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/2.7.%E5%AD%97%E5%85%B8/assets/2.7.%E5%AD%97%E5%85%B8.figure4.png" alt="image"></p>
 <p><em>Figure 4</em></p>
-<p>由于 Python 是一种不断发展的语言，底层总是有变化的。 有关 Python 数据结构性能的最新信息可以在 Python 网站上找到。 在撰写本文时，Python wiki有一个很好的时间复杂性页面，可以在 <a href="https://wiki.python.org/moin/TimeComplexity" target="_blank" rel="external">Time Complexity Wiki</a> 中找到。</p>
+<p>由于 Python 是一种不断发展的语言，底层总是有变化的。 有关 Python 数据结构性能的最新信息可以在 Python 网站上找到。 在撰写本文时，Python wiki有一个很好的时间复杂性页面，可以在 <a href="https://wiki.python.org/moin/TimeComplexity" target="_blank" rel="noopener">Time Complexity Wiki</a> 中找到。</p>
 ]]></content>
       
         <categories>
@@ -1845,7 +1950,7 @@
 <p><img src="http://oc5bjv3gr.bkt.clouddn.com/bea1d16ab729a3e2798b49af12a54057.jpg" alt=""></p>
 <p>目前，在GitHub上的这个testgit仓库还是空的，GitHub告诉我们，可以从这个仓库克隆出新的仓库，也可以把一个已有的本地仓库与之关联，然后，把本地仓库的内容推送到GitHub仓库。</p>
 <p>现在，我们根据GitHub的提示，在本地的testgit仓库下运行命令：</p>
-<p>git remote add origin <a href="https://github.com/tugenhua0707/testgit.git" target="_blank" rel="external">https://github.com/tugenhua0707/testgit.git</a></p>
+<p>git remote add origin <a href="https://github.com/tugenhua0707/testgit.git" target="_blank" rel="noopener">https://github.com/tugenhua0707/testgit.git</a></p>
 <p>所有的如下：</p>
 <p><img src="http://oc5bjv3gr.bkt.clouddn.com/b72192a4d47c40161a80aa58275ab67a.jpg" alt=""></p>
 <p>把本地库的内容推送到远程，使用 git<br>push命令，实际上是把当前分支master推送到远程。</p>
@@ -2026,9 +2131,9 @@
 <p>   git reflog       查看历史记录的版本号id</p>
 <p>   git checkout — XX  把XX文件在工作区的修改全部撤销。</p>
 <p>   git rm XX          删除XX文件</p>
-<p>   git remote add<br>origin <a href="https://github.com/tugenhua0707/testgit" target="_blank" rel="external">https://github.com/tugenhua0707/testgit</a> 关联一个远程库</p>
+<p>   git remote add<br>origin <a href="https://github.com/tugenhua0707/testgit" target="_blank" rel="noopener">https://github.com/tugenhua0707/testgit</a> 关联一个远程库</p>
 <p>   git push –u(第一次要用-u 以后不需要) origin master<br>把当前master分支推送到远程库</p>
-<p>   git clone <a href="https://github.com/tugenhua0707/testgit" target="_blank" rel="external">https://github.com/tugenhua0707/testgit</a>  从远程库中克隆</p>
+<p>   git clone <a href="https://github.com/tugenhua0707/testgit" target="_blank" rel="noopener">https://github.com/tugenhua0707/testgit</a>  从远程库中克隆</p>
 <p>   git checkout –b dev  创建dev分支 并切换到dev分支上</p>
 <p>   git branch  查看当前所有的分支</p>
 <p>   git checkout master 切换回master分支</p>
@@ -2057,65 +2162,6 @@
             <tag> Git </tag>
             
             <tag> github </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
             
         </tags>
         
@@ -2270,6 +2316,65 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hexo之NexT主题配置]]></title>
       <url>/2017/06/28/hexo-nexT%E9%85%8D%E7%BD%AE%E8%AF%A6%E6%83%85/</url>
       <content type="html"><![CDATA[<h1 id="hexo之next主题个性化配置详细教程"><a href="#hexo之next主题个性化配置详细教程" class="headerlink" title="hexo之next主题个性化配置详细教程"></a><strong><center>hexo之next主题个性化配置详细教程</center></strong></h1><h2 id="1-在右上角或者左上角实现fork-me-on-github"><a href="#1-在右上角或者左上角实现fork-me-on-github" class="headerlink" title="1.在右上角或者左上角实现fork me on github"></a><strong>1.在右上角或者左上角实现fork me on github</strong></h2><p><strong>实现的效果图</strong></p>
@@ -2278,7 +2383,7 @@
 </blockquote>
 <p><strong>具体实现方法</strong><br><a id="more"></a></p>
 <blockquote>
-<p>点击<a href="https://github.com/blog/273-github-ribbons" target="_blank" rel="external">传送门&gt;&gt;</a><br>挑选自己喜欢的样式，并复制代码。 例如，我是复制如下代码：<img src="http://os94ofsac.bkt.clouddn.com/hexo-next-blog/peizhifork-me-on-github-demo.png" alt=""></p>
+<p>点击<a href="https://github.com/blog/273-github-ribbons" target="_blank" rel="noopener">传送门&gt;&gt;</a><br>挑选自己喜欢的样式，并复制代码。 例如，我是复制如下代码：<img src="http://os94ofsac.bkt.clouddn.com/hexo-next-blog/peizhifork-me-on-github-demo.png" alt=""></p>
 <p>然后粘贴刚才复制的代码到<br>themes/next/layout/_layout.swig<br>文件中<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"headband"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 </blockquote>
 <p>的下面，并把href改为你的github地址!<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/wongzeqi"</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -2345,7 +2450,7 @@ zIndex: 背景的z-index属性，css属性用于控制所在层的位置, 默认
 </code></pre><blockquote>
 <p>实现点击出现桃心效果</p>
 </blockquote>
-<p>在网址输入如下<br>     <a href="http://7u2ss1.com1.z0.glb.clouddn.com/love.js" target="_blank" rel="external">http://7u2ss1.com1.z0.glb.clouddn.com/love.js</a><br>    然后将里面的代码copy一下，新建love.js文件并且将代码复制进去，然后保存。<br>    将love.js文件放到路径/themes/next/source/js/src里面，<br>    然后打开\themes\next\layout_layout.swig文件,在末尾（在前面引用会出现找不到的bug）<br>    添加以下代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 页面点击小红心 --&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"/js/src/love.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>在网址输入如下<br>     <a href="http://7u2ss1.com1.z0.glb.clouddn.com/love.js" target="_blank" rel="noopener">http://7u2ss1.com1.z0.glb.clouddn.com/love.js</a><br>    然后将里面的代码copy一下，新建love.js文件并且将代码复制进去，然后保存。<br>    将love.js文件放到路径/themes/next/source/js/src里面，<br>    然后打开\themes\next\layout_layout.swig文件,在末尾（在前面引用会出现找不到的bug）<br>    添加以下代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 页面点击小红心 --&gt;</div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"/js/src/love.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
 <h2 id="4-修改文章内链接文本样式"><a href="#4-修改文章内链接文本样式" class="headerlink" title="4. 修改文章内链接文本样式"></a><strong>4. 修改文章内链接文本样式</strong></h2><blockquote>
 <p><strong>实现效果图</strong></p>
 </blockquote>
