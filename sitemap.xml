@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adamzeng.site/2017/11/25/Python%E4%B8%AD%E7%9A%84-arg%E5%92%8C-kwarg/</loc>
+    
+    <lastmod>2017-11-25T09:12:06.541Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://adamzeng.site/2017/11/25/classmethod%E5%92%8Cstaticmethod/</loc>
     
     <lastmod>2017-11-25T08:44:45.945Z</lastmod>

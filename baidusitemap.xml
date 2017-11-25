@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://adamzeng.site/2017/11/25/Python%E4%B8%AD%E7%9A%84-arg%E5%92%8C-kwarg/</loc>
+    <lastmod>2017-11-25T09:12:06.541Z</lastmod>
+    <data>
+        <display>
+        <title>Python中的*arg和**kwarg</title>
+        <pubTime>2017-11-25T09:05:32.000Z</pubTime>
+        
+        <tag>Python</tag>
+         
+         
+           
+             
+              <breadCrumb title="Python" url="http://adamzeng.site/categories/Python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://adamzeng.site/2017/11/25/classmethod%E5%92%8Cstaticmethod/</loc>
     <lastmod>2017-11-25T08:44:45.945Z</lastmod>
     <data>

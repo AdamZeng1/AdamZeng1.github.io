@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="最近身体很不舒服，博客也有很久没有更新过了。">
-<meta name="keywords" content="生活">
+<meta name="description" content="一个简单的函数首先我们可以定一个简单的函数, 函数内部只考虑required_arg这一个形参(位置参数)">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="未来打算">
-<meta property="og:url" content="http://adamzeng.site/2017/11/18/未来打算/index.html">
+<meta property="og:title" content="Python中的*arg和**kwarg">
+<meta property="og:url" content="http://adamzeng.site/2017/11/25/Python中的-arg和-kwarg/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="最近身体很不舒服，博客也有很久没有更新过了。">
+<meta property="og:description" content="一个简单的函数首先我们可以定一个简单的函数, 函数内部只考虑required_arg这一个形参(位置参数)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511196253513&di=aed23efed01d0e1f201cfc710ff4fbbf&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fa1ec08fa513d26975a1d10b757fbb2fb4216d809.jpg">
-<meta property="og:updated_time" content="2017-11-20T14:01:07.040Z">
+<meta property="og:updated_time" content="2017-11-25T09:12:06.541Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="未来打算">
-<meta name="twitter:description" content="最近身体很不舒服，博客也有很久没有更新过了。">
-<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1511196253513&di=aed23efed01d0e1f201cfc710ff4fbbf&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fa1ec08fa513d26975a1d10b757fbb2fb4216d809.jpg">
+<meta name="twitter:title" content="Python中的*arg和**kwarg">
+<meta name="twitter:description" content="一个简单的函数首先我们可以定一个简单的函数, 函数内部只考虑required_arg这一个形参(位置参数)">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>未来打算 | AdamZeng</title>
+<title>Python中的*arg和**kwarg | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -283,11 +281,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-未来打算" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Python中的-arg和-kwarg" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/18/未来打算/" class="article-date">
-      <time datetime="2017-11-18T03:35:38.000Z" itemprop="datePublished">2017-11-18</time>
+      <a href="/2017/11/25/Python中的-arg和-kwarg/" class="article-date">
+      <time datetime="2017-11-25T09:05:32.000Z" itemprop="datePublished">2017-11-25</time>
 </a>
 
 
@@ -302,7 +300,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      未来打算
+      Python中的*arg和**kwarg
     </h1>
   
 
@@ -311,13 +309,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/生活/">生活</a>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -327,10 +325,25 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近身体很不舒服，博客也有很久没有更新过了。<a id="more"></a>经过这次生病，让我对以后的规划产生了一些想法，首先是对于我的身体，是一个比较弱的身体，很多时候都会为身体的种种毛病而纠结烦恼，但是我仍然希望我能有一个比较好的身体，让我能够没有后顾之忧的开心的钻研自己喜欢的事情，让我也明白一个道理，钱固然很重要，但身体的健康，精神的健康更是可贵，希望奋斗在开发一线的朋友，在面对一个个屏幕时，能够适当的停下脚步，多去注意自己的身体，多去关心自己的家人。</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1511196253513&amp;di=aed23efed01d0e1f201cfc710ff4fbbf&amp;imgtype=0&amp;src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fa1ec08fa513d26975a1d10b757fbb2fb4216d809.jpg" alt="image"></p>
-<p>一直要注意的是，在面对人生一个个当口的时候，很多时候我们都是很无力的状态，但我们从没想到过放弃，我觉得专注地做一件事非常的难能可贵，能够静下心来思考自己的人生就更不容易了，我只想活得更快乐更自在一些。</p>
-
+        <h1 id="一个简单的函数"><a href="#一个简单的函数" class="headerlink" title="一个简单的函数"></a>一个简单的函数</h1><p>首先我们可以定一个简单的函数, 函数内部只考虑<code>required_arg</code>这一个形参(<strong>位置参数</strong>)<a id="more"></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exmaple</span><span class="params">(required_arg)</span>:</span></div><div class="line">    <span class="keyword">print</span> required_arg</div><div class="line"></div><div class="line">exmaple(<span class="string">"Hello, World!"</span>)</div><div class="line"></div><div class="line">&gt;&gt; Hello, World!</div></pre></td></tr></table></figure>
+<p>那么，如果我们调用函数式传入了<strong>不止一个位置参数</strong>会出现什么情况？当然是会报错！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">exmaple(<span class="string">"Hello, World!"</span>, <span class="string">"another string"</span>)</div><div class="line"></div><div class="line">&gt;&gt; TypeError: exmaple() takes exactly <span class="number">1</span> argument (<span class="number">2</span> given)</div></pre></td></tr></table></figure>
+<h1 id="定义函数时，使用arg和-kwarg"><a href="#定义函数时，使用arg和-kwarg" class="headerlink" title="定义函数时，使用arg和*kwarg"></a>定义函数时，使用<em>arg和*</em>kwarg</h1><p><em>arg和*</em>kwarg 可以帮助我们处理上面这种情况，允许我们在调用函数的时候传入多个实参</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exmaple2</span><span class="params">(required_arg, *arg, **kwarg)</span>:</span></div><div class="line">    <span class="keyword">if</span> arg:</div><div class="line">        <span class="keyword">print</span> <span class="string">"arg: "</span>, arg</div><div class="line"></div><div class="line">    <span class="keyword">if</span> kwarg:</div><div class="line">        <span class="keyword">print</span> <span class="string">"kwarg: "</span>, kwarg</div><div class="line"></div><div class="line">exmaple2(<span class="string">"Hi"</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, keyword1 = <span class="string">"bar"</span>, keyword2 = <span class="string">"foo"</span>)</div><div class="line"></div><div class="line">&gt;&gt; arg:  (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</div><div class="line">&gt;&gt; kwarg:  &#123;<span class="string">'keyword2'</span>: <span class="string">'foo'</span>, <span class="string">'keyword1'</span>: <span class="string">'bar'</span>&#125;</div></pre></td></tr></table></figure>
+<p>从上面的例子可以看到，当我传入了更多实参的时候</p>
+<ul>
+<li>*arg会把多出来的位置参数转化为<code>tuple</code></li>
+<li>**kwarg会把关键字参数转化为<code>dict</code></li>
+</ul>
+<p>再举个例子，一个不设定参数个数的加法函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">(*arg)</span>:</span></div><div class="line">    res = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> arg:</div><div class="line">        res += e</div><div class="line">    <span class="keyword">return</span> res</div><div class="line"></div><div class="line"><span class="keyword">print</span> sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="keyword">print</span> sum(<span class="number">1</span>, <span class="number">1</span>)</div><div class="line">&gt;&gt; <span class="number">10</span></div><div class="line">&gt;&gt; <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>当然，如果想控制关键字参数，可以单独使用一个*，作为特殊分隔符号。限于<code>Python 3</code>，下面例子中限定了只能有两个关键字参数，而且参数名为<code>keyword1</code>和<code>keyword2</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def person(required_arg, *, keyword1, keyword2):</div><div class="line">    print(required_arg, keyword1, keyword2)</div><div class="line"></div><div class="line">person(&quot;Hi&quot;, keyword1=&quot;bar&quot;, keyword2=&quot;foo&quot;)</div><div class="line">&gt;&gt; Hi bar foo</div></pre></td></tr></table></figure>
+<p>如果不传入参数名<code>keyword1</code>和<code>keyword2</code>会报错，因为都会看做<strong>位置参数</strong>！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">person(&quot;Hi&quot;, &quot;bar&quot;, &quot;foo&quot;)</div><div class="line"></div><div class="line">&gt;&gt; TypeError: person() takes 1 positional argument but 3 were given</div></pre></td></tr></table></figure>
+<h1 id="调用函数时使用arg和-kwarg"><a href="#调用函数时使用arg和-kwarg" class="headerlink" title="调用函数时使用arg和*kwarg"></a>调用函数时使用<em>arg和*</em>kwarg</h1><p>直接上例子，跟上面的情况十分类似。反向思维。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">(a, b, c)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b + c</div><div class="line"></div><div class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="comment"># the * unpack list a </span></div><div class="line"><span class="keyword">print</span> sum(*a)</div><div class="line">&gt;&gt; <span class="number">6</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum</span><span class="params">(a, b, c)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b + c</div><div class="line"></div><div class="line">a = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: <span class="number">2</span>, <span class="string">'c'</span>: <span class="number">3</span>&#125;</div><div class="line"></div><div class="line"><span class="comment"># the ** unpack dict a</span></div><div class="line"><span class="keyword">print</span> sum(**a)</div><div class="line">&gt;&gt; <span class="number">6</span></div></pre></td></tr></table></figure>
       
     </div>
     
@@ -338,13 +351,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/18/未来打算/">未来打算</a></p>
+        <p><span>本文标题:</span><a href="/2017/11/25/Python中的-arg和-kwarg/">Python中的*arg和**kwarg</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-11-18, 11:35:38</p>
-        <p><span>最后更新:</span>2017-11-20, 22:01:07</p>
+        <p><span>发布时间:</span>2017-11-25, 17:05:32</p>
+        <p><span>最后更新:</span>2017-11-25, 17:12:06</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/18/未来打算/" title="未来打算">http://adamzeng.site/2017/11/18/未来打算/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/18/未来打算/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/25/Python中的-arg和-kwarg/" title="Python中的*arg和**kwarg">http://adamzeng.site/2017/11/25/Python中的-arg和-kwarg/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/25/Python中的-arg和-kwarg/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -356,16 +369,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/11/22/动态Cookies池/">
-                    动态Cookies池
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/11/18/最近的生活总结/">
-                    最近的生活总结
+                <a href="/2017/11/25/classmethod和staticmethod/">
+                    classmethod和staticmethod
                 </a>
             </div>
         
@@ -377,7 +384,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一个简单的函数"><span class="toc-number">1.</span> <span class="toc-text">一个简单的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义函数时，使用arg和-kwarg"><span class="toc-number">2.</span> <span class="toc-text">定义函数时，使用arg和*kwarg</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#调用函数时使用arg和-kwarg"><span class="toc-number">3.</span> <span class="toc-text">调用函数时使用arg和*kwarg</span></a></li></ol>
         
     </div>
     <style>
@@ -413,7 +420,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"未来打算　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Python中的*arg和**kwarg　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -449,15 +456,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/22/动态Cookies池/" title="上一篇: 动态Cookies池">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/11/18/最近的生活总结/" title="下一篇: 最近的生活总结">
+            <a href="/2017/11/25/classmethod和staticmethod/" title="下一篇: classmethod和staticmethod">
                 <i class="fa fa-angle-right"></i>
             </a>
         
