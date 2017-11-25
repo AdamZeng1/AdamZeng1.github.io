@@ -3,6 +3,95 @@
   
     
     <entry>
+      <title><![CDATA[classmethod和staticmethod]]></title>
+      <url>/2017/11/25/classmethod%E5%92%8Cstaticmethod/</url>
+      <content type="html"><![CDATA[<p>类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。<a id="more"></a></p>
+<p>举一个例子，一个基本的实例方法就向下面这个：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">printd</span><span class="params">(self)</span>:</span></div><div class="line">    print(self.data)</div><div class="line">ik1=Kls(<span class="string">'arun'</span>)</div><div class="line">ik2=Kls(<span class="string">'seema'</span>)</div><div class="line">ik1.printd()</div><div class="line">ik2.printd()</div></pre></td></tr></table></figure>
+<p>这会给出如下的输出：<br>arun</p>
+<p>seema</p>
+<p><img src="https://pic4.zhimg.com/50/a2173bce20299607befc10abf8c7041b_hd.jpg" alt="image"></p>
+<p>然后看一下代码和示例图片：</p>
+<ul>
+<li>1，2参数传递给方法。</li>
+<li>3 self参数指向当前实例自身。</li>
+<li>4 我们不需要传递实例自身给方法，Python解释器自己会做这些操作。</li>
+</ul>
+<p>如果现在我们想写一些仅仅与类交互而不是和实例交互的方法会怎么样呢？我们可以在类外面写一个简单的方法来做这些，但是这样做就扩散了类代码的关系到类定义的外面。如果像下面这样写就会导致以后代码维护的困难：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_no_of_instances</span><span class="params">(cls_obj)</span>:</span></div><div class="line">  <span class="keyword">return</span> cls_obj.no_inst</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line">print(get_no_of_instances(Kls))</div></pre></td></tr></table></figure>
+<p>输出：</p>
+<p>2</p>
+<p>@classmethod</p>
+<p>我们要写一个只在类中运行而不在实例中运行的方法。如果我们想让方法不在实例中运行，可以这么做：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">iget_no_of_instance</span><span class="params">(ins_obj)</span>:</span></div><div class="line">  <span class="keyword">return</span> ins_obj.__class__.no_inst</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line"><span class="keyword">print</span> iget_no_of_instance(ik1)</div></pre></td></tr></table></figure>
+<p>输出</p>
+<p>2</p>
+<p>Python2.2以后可以使用@classmethod装饰器来创建类方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_no_instance</span><span class="params">(cls_obj)</span>:</span></div><div class="line">      <span class="keyword">return</span> cls_obj.no_inst</div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line">print(ik1.get_no_of_instance())</div><div class="line">print(Kls.get_no_of_instance())</div></pre></td></tr></table></figure>
+<p>输出：<br>2</p>
+<p>2</p>
+<p>这样的好处是：不管这个方式是从实例调用还是从类调用，它都用第一个参数把类传递过来。</p>
+<p>@staticmethod</p>
+<p>经常有一些跟类有关系的功能但在运行时又不需要实例和类参与的情况下需要用到静态方法。比如更改环境变量或者修改其他类的属性等能用到静态方法。这种情况可以直接用函数解决，但这样同样会扩散类内部的代码，造成维护困难。</p>
+<p>比如这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">IND=<span class="string">'ON'</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkind</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">return</span> (IND==<span class="string">'ON'</span>)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_reset</span><span class="params">(self)</span>:</span></div><div class="line">  <span class="keyword">if</span> checkind():</div><div class="line">    print(<span class="string">'Reset done for:'</span>,self.data)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_db</span><span class="params">(self)</span>:</span></div><div class="line">  <span class="keyword">if</span> checkind():</div><div class="line">    self.db=<span class="string">'new db connection'</span></div><div class="line">    print(<span class="string">'DB connection made for:'</span>,self.data)</div><div class="line">ik1=Kls(<span class="number">12</span>)</div><div class="line">ik1.do_rest</div><div class="line">ik1.set_db()</div></pre></td></tr></table></figure>
+<p>输出：</p>
+<p>Reset done for:12</p>
+<p>DB connection made for:12</p>
+<p>如果使用@staticmethod就能把相关代码放到对应的位置了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">IND=<span class="string">'ON'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkind</span><span class="params">()</span>:</span></div><div class="line">      <span class="keyword">return</span> (IND==<span class="string">'ON'</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">de_reset</span><span class="params">(self)</span>:</span></div><div class="line">      <span class="keyword">if</span> self.checkind():</div><div class="line">        print(<span class="string">'Reset done for:'</span>,self.data)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_db</span><span class="params">(self)</span>:</span></div><div class="line">      <span class="keyword">if</span> self.checkind():</div><div class="line">        self.db=<span class="string">'New db connection'</span></div><div class="line">        print(<span class="string">'DB connection made for:'</span>,self.data)</div><div class="line">ik1=Kls(<span class="number">12</span>)</div><div class="line">ik1.do_reset()</div><div class="line">ik1.set_db()</div></pre></td></tr></table></figure>
+<p>输出：</p>
+<p>Reset done for:12</p>
+<p>DB connection made for:12</p>
+<p>下面这个更全面的代码和图示来展示这两种方法的不同</p>
+<p>@staticmethod和@classmethod的不同</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Kls(object):</div><div class="line">  def __init__(self,data):</div><div class="line">    self.data=data</div><div class="line">  def printd(self):</div><div class="line">    print(self.data)</div><div class="line">  @staticmethod</div><div class="line">  def smethod(*arg):</div><div class="line">    print('Static:',arg)</div><div class="line">  @classmethod</div><div class="line">  def cmethod(*arg):</div><div class="line">    print('Class',arg)</div><div class="line">    </div><div class="line">&gt;&gt;&gt; ik = Kls(23)</div><div class="line">&gt;&gt;&gt; ik.printd()</div><div class="line">23</div><div class="line">&gt;&gt;&gt; ik.smethod()</div><div class="line">Static: ()</div><div class="line">&gt;&gt;&gt; ik.cmethod()</div><div class="line">Class: (&lt;class '__main__.Kls'&gt;,)</div><div class="line">&gt;&gt;&gt; Kls.printd()</div><div class="line">TypeError: unbound method printd() must be called with Kls instance as first argument (got nothing instead)</div><div class="line">&gt;&gt;&gt; Kls.smethod()</div><div class="line">Static: ()</div><div class="line">&gt;&gt;&gt; Kls.cmethod()</div><div class="line">Class: (&lt;class '__main__.Kls'&gt;,)</div></pre></td></tr></table></figure>
+<p>下面这个图解释了以上代码是怎么运行的:<br><img src="https://pic3.zhimg.com/50/8a82a7f295c855c39b0d21f5bb1352c2_hd.jpg" alt="image"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[scrapy了解]]></title>
+      <url>/2017/11/24/scrapy%E4%BA%86%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<p>官方提供的爬取网站：quotes.toscrape.com</p>
+<p>主要提供一些名人名言。</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[动态Cookies池]]></title>
+      <url>/2017/11/22/%E5%8A%A8%E6%80%81Cookies%E6%B1%A0/</url>
+      <content type="html"><![CDATA[<h1 id="为什么要用Cookies池？"><a href="#为什么要用Cookies池？" class="headerlink" title="为什么要用Cookies池？"></a>为什么要用Cookies池？</h1><p>答：网站需要登录才可爬取，例如新浪微博，爬取过程中如果频率过高会导致封号，如果我想要抓取这样的网站，不能够去弄特别多的账号，分别登录去抓取。而是在请求头中加入Cookies完成请求，所以建一个Cookies池。</p>
+<p>Cookies池的要求：</p>
+<ul>
+<li>大量账号，存在数据库当中，拿出来，自动登录更新。</li>
+<li>定时验证筛选，拿出Cookies能够请求页面，就依然放在池子中，已经过时失效了就去除。</li>
+<li>提供外部接口，做到模块的分离。</li>
+</ul>
+<p>Cookies池的架构：账号队列——生成器——Cookies队列（API)——定时检测器</p>
+<p>新浪微博账号存储在redis当中，存储两方面，账号密码，该账号密码的Cookies，</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[未来打算]]></title>
       <url>/2017/11/18/%E6%9C%AA%E6%9D%A5%E6%89%93%E7%AE%97/</url>
       <content type="html"><![CDATA[<p>最近身体很不舒服，博客也有很久没有更新过了。<a id="more"></a>经过这次生病，让我对以后的规划产生了一些想法，首先是对于我的身体，是一个比较弱的身体，很多时候都会为身体的种种毛病而纠结烦恼，但是我仍然希望我能有一个比较好的身体，让我能够没有后顾之忧的开心的钻研自己喜欢的事情，让我也明白一个道理，钱固然很重要，但身体的健康，精神的健康更是可贵，希望奋斗在开发一线的朋友，在面对一个个屏幕时，能够适当的停下脚步，多去注意自己的身体，多去关心自己的家人。</p>

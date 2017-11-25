@@ -1,3 +1,3 @@
-http://adamzeng.site/2017/11/18/未来打算/
-http://adamzeng.site/2017/11/18/最近的生活总结/
-http://adamzeng.site/2017/11/18/爬虫动态代理池/
+http://adamzeng.site/2017/11/25/classmethod和staticmethod/
+http://adamzeng.site/2017/11/24/scrapy了解/
+http://adamzeng.site/2017/11/22/动态Cookies池/
