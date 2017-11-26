@@ -105,10 +105,184 @@
     <entry>
       <title><![CDATA[scrapy了解]]></title>
       <url>/2017/11/24/scrapy%E4%BA%86%E8%A7%A3/</url>
-      <content type="html"><![CDATA[<p>官方提供的爬取网站：quotes.toscrape.com</p>
-<p>主要提供一些名人名言。</p>
+      <content type="html"><![CDATA[<h3 id="Scrapy结构"><a href="#Scrapy结构" class="headerlink" title="Scrapy结构"></a>Scrapy结构<a id="more"></a></h3><p><img src="http://scrapy-chs.readthedocs.io/zh_CN/0.24/_images/scrapy_architecture.png" alt="image"></p>
+<p>上图为scrapy的整个组成结构。</p>
+<p>首先，简单了解一下Scrapy框架中的各个组件，如表2-1所示。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENGINE</td>
+<td>引擎，框架的核心，其他所有组件在其控制下协同工作</td>
+<td>内部组件</td>
+</tr>
+<tr>
+<td>SCHEDULER</td>
+<td>调度器，负责对SPIDER提交的下载请求进行调度</td>
+<td>内部组件</td>
+</tr>
+<tr>
+<td>DOWNLOADER</td>
+<td>下载器，负责下载页面（发送HTTP请求/接收HTTP响应）</td>
+<td>内部组件</td>
+</tr>
+<tr>
+<td>SPIDER</td>
+<td>爬虫，负责提取页面中的数据，并产生对新页面的下载请求</td>
+<td>用户实现</td>
+</tr>
+<tr>
+<td>MIDDLEWARE</td>
+<td>中间件，负责对Request对象和Response对象进行处理</td>
+<td>可选组件</td>
+</tr>
+<tr>
+<td>ITEM PIPELINE</td>
+<td>数据管道，负责对爬取到的数据进行处理</td>
+<td>可选组件</td>
+</tr>
+</tbody>
+</table>
+<p>对于用户来说，Spider是最核心的组件，Scrapy爬虫开发是围绕实现Spider展开的。</p>
+<p>接下来，看一下在框架中的数据流，有表2-2所示的3种对象。</p>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQUEST</td>
+<td>Scrapy中的HTTP请求对象</td>
+</tr>
+<tr>
+<td>RESPONSE</td>
+<td>Scrapy中的HTTP响应对象</td>
+</tr>
+<tr>
+<td>ITEM</td>
+<td>从页面中爬取的一项数据</td>
+</tr>
+</tbody>
+</table>
+<p>Request和Response是HTTP协议中的术语，即HTTP请求和HTTP响应，Scrapy框架中定义了相应的Request和Response类，这里的Item代表Spider从页面中爬取的一项数据。</p>
+<p>最后，我们来说明以上几种对象在框架中的流动过程。</p>
+<ul>
+<li>当SPIDER要爬取某URL地址的页面时，需使用该URL构建一个Request对象，提交给ENGINE。</li>
+<li>Request对象随后进入SCHEDULER按某种算法进行排队，之后的某个时刻SCHEDULER将其出队，送往DOWNLOADER。</li>
+<li>DOWNLOADER根据Request对象中的URL地址发送依次HTTP请求到网站服务器，之后用服务器返回的HTTP响应构造出一个Response对象，其中包含页面的HTML文本。</li>
+<li>Response对象最终会被递送给SPIDER的页面解析函数（构造Request对象时指定）进行处理，页面解析函数从页面中提取数据，封装成Item后提交给ENGINE，Item之后被送往ITEM PIPELINES进行处理，最终可能由EXPORTER以某种数据格式写入文件（csv，json）；另一方面，页面解析函数还从页面中提取连接（URL），构造出新的Request对象提交给ENGINE。</li>
+</ul>
+<p>理解了框架中的数据流，也就理解了Scrapy爬虫的工作原理。如果把框架中的组件比作人体的各个器官，Request和Response对象便是血液，Item则是代谢产物。</p>
+<h3 id="Request和Response对象"><a href="#Request和Response对象" class="headerlink" title="Request和Response对象"></a>Request和Response对象</h3><p>Request对象用来描述一个HTTP请求，下面是其构造器方法的参数列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Request(url[,callback,method=<span class="string">'GET'</span>,headers,body,cookies,meta,</div><div class="line">           encoding=<span class="string">'utf-8'</span>,priority=<span class="number">0</span>,dont_filter=<span class="keyword">False</span>,errback])</div></pre></td></tr></table></figure>
+<ul>
+<li><p>url(必选)</p>
+<p>请求页面的url地址，bytes或str类型，如’<a href="http://www.python.org/doc" target="_blank" rel="noopener">http://www.python.org/doc</a>‘.</p>
+</li>
+<li><p>callback</p>
+<p>页面解析函数，Callable类型，Request对象请求的页面下载完成后，由该参数指定的页面解析函数被调用。如果未传递该参数，某认调用Spider的parse方法。</p>
+</li>
+<li><p>method</p>
+<p>HTTP的请求方法，默认为’GET’。</p>
+</li>
+<li><p>headers</p>
+<p>HTTP请求1的头部字典，dict类型，例如{‘Accept’:’text/html,’User-Agent’:Mozilla/5.0’}。如果其中某项的值为None，就表示不发送该项HTTP头部，例如{‘Cookie’:None},禁止发送Cookie。</p>
+</li>
+<li><p>body</p>
+<p>HTTP请求的正文，bytes或str类型。</p>
+</li>
+<li><p>cookies</p>
+<p>Cookie信息字典，dict类型，例如{‘currency’:’USD’,’country’:’UY’}。</p>
+</li>
+<li><p>meta</p>
+<p>Request的元数据字典，dict类型，用于给框架中其他组件传递信息，比如中间件ItemPipeline。其他组件可以使用Request对象的meta属性访问该元数据字典（request.meta），也用于给响应处理函数传递信息，详见Response的meta属性。</p>
+</li>
+<li><p>encoding</p>
+<p>url和body参数的编码默认为’utf-8’。如果传入的url或body参数是str类型，就使用该参数进行编码。</p>
+</li>
+<li><p>priority</p>
+<p>请求的优先级默认值为0，优先级高的请求优先下载。</p>
+</li>
+<li><p>dont_filter</p>
+<p>默认情况下，（dont_filter=False),对同一个url地址多次提交下载请求，后面的请求会被去重过滤器过滤（避免重复下载）。如果将该参数置为True，可以使请求避免被过滤，强制下载。例如，在多次爬取一个内容随时间而变化的页面时（每次使用相同的url），可以将该参数置为True。</p>
+</li>
+<li><p>errback</p>
+<p>请求出现异常或者出现HTTP错误时（如404页面不存在）的回调函数。</p>
+<p>虽然参数很多，但除了url参数外，其他都带有默认值。在构造Request对象时，通常我们只需传递一个url参数或再加一个callback参数，其他使用默认值即可。</p>
+</li>
+</ul>
+<h3 id="Response对象"><a href="#Response对象" class="headerlink" title="Response对象"></a>Response对象</h3><p>Response对象用来描述一个HTTP响应，Response只是一个基类，根据响应内容的不同有如下子类：</p>
+<ul>
+<li>TextResponse</li>
+<li>HtmlResponse</li>
+<li>XmlResponse</li>
+</ul>
+<p>当一个页面下载完成时，下载器依据HTTP响应头部中的Content-Type信息创建某个Response的子类对象。我们通常爬取的网页，其内容是HTML文本，创建的便是HtmlResponse对象，其中HtmlResponse和XmlResponse是TextResponse的子类。实际上，这3个子类只有细微的差别，这里以HtmlResponse为例进行讲解。</p>
+<p>下面介绍HtmlResponse对象的属性及方法。</p>
+<ul>
+<li>url</li>
+</ul>
+<p>​      HTTP响应的url地址，str类型。</p>
+<ul>
+<li><p>status</p>
+<p>HTTP响应的状态码，int类型，例如200，404。</p>
+</li>
+<li><p>headers</p>
+<p>HTTP响应的头部，类字典类型，可以调用get或getlist方法对其进行访问，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">response.headers.get(<span class="string">'Content-Type'</span>)</div><div class="line">response.headers.getlist(<span class="string">'Set-Cookie'</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>body</p>
+<p>HTTP响应正文，bytes类型。</p>
+</li>
+<li><p>text</p>
+<p>文本形式的HTTP响应正文，str类型，它是由response.body使用response.encoding解码得到的，即</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.text=response.body.decode(response.encoding)</div></pre></td></tr></table></figure>
+</li>
+<li><p>encoding</p>
+<p>HTTP响应正文的编码，它的值可能是从HTTP响应头部或正文中解析出来的。</p>
+</li>
+<li><p>request</p>
+<p>产生该HTTP响应的Request对象。</p>
+</li>
+<li><p>meta</p>
+<p>即response.request.meta,在构造Request对象时，可将要传递给响应处理函数的信息通过meta参数传入；响应处理函数处理响应时，通过response.meta将信息取出。</p>
+</li>
+<li><p>selector</p>
+<p>Selector对象用于在Response中提取数据（选择器相关话题在后面章节详细讲解）。</p>
+</li>
+<li><p>xpath（query）</p>
+<p>使用XPath选择器在Response中提取数据，实际上它是response.selector.xpath方法的快捷方式。</p>
+</li>
+<li><p>css（query）</p>
+<p>使用CSS选择器在Response中提取数据，实际上它是response.selector.css方法的快捷方式。</p>
+</li>
+<li><p>urljoin(url)</p>
+<p>用于构造绝对url。当传入的url参数是一个相对地址时，根据response.url计算出相应的绝对url。例如，response.url为<a href="http://www.example.com/a，url为b/index.html，调用response.urljoin(url)的结果为http://www.example.com/a/b/index.html。" target="_blank" rel="noopener">http://www.example.com/a，url为b/index.html，调用response.urljoin(url)的结果为http://www.example.com/a/b/index.html。</a></p>
+</li>
+</ul>
 ]]></content>
       
+        <categories>
+            
+            <category> 爬虫 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
         
     </entry>
     

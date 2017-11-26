@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://adamzeng.site/2017/11/24/scrapy%E4%BA%86%E8%A7%A3/</loc>
+    <lastmod>2017-11-26T11:46:27.609Z</lastmod>
+    <data>
+        <display>
+        <title>scrapy了解</title>
+        <pubTime>2017-11-24T04:02:44.000Z</pubTime>
+        
+        <tag>爬虫</tag>
+         
+         
+           
+             
+              <breadCrumb title="爬虫" url="http://adamzeng.site/categories/%E7%88%AC%E8%99%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://adamzeng.site/2017/11/25/Python%E4%B8%AD%E7%9A%84-arg%E5%92%8C-kwarg/</loc>
     <lastmod>2017-11-25T09:12:06.541Z</lastmod>
     <data>
@@ -38,21 +58,6 @@
              
               <breadCrumb title="Python" url="http://adamzeng.site/categories/Python/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://adamzeng.site/2017/11/24/scrapy%E4%BA%86%E8%A7%A3/</loc>
-    <lastmod>2017-11-24T04:04:21.714Z</lastmod>
-    <data>
-        <display>
-        <title>scrapy了解</title>
-        <pubTime>2017-11-24T04:02:44.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
