@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[mysql学习笔记一]]></title>
       <url>/2017/12/19/mysql%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</url>
-      <content type="html"><![CDATA[<h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库，</p>
+      <content type="html"><![CDATA[<h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库，<a id="more"></a></p>
 <p>每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。</p>
 <p>我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。</p>
 <p>所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。</p>
