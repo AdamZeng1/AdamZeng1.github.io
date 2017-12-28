@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="#这是整个代理池的架构： ##获取器—过滤器—代理队列（API)—定时检测器 许多网站有专门的反爬虫措施，可能遇到封IP等问题。互联网上公开了大量免费代理，利用好资源。通过定时检测维护同样可以得到多个可用代理。">
-<meta name="keywords" content="爬虫">
+<meta name="description" content="什么是数据库？数据库（Database）是按照数据结构来组织、存储和管理数据的仓库， 每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。 我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。 所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓">
+<meta name="keywords" content="Mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爬虫动态代理池">
-<meta property="og:url" content="http://adamzeng.site/2017/11/18/爬虫动态代理池/index.html">
+<meta property="og:title" content="mysql学习笔记一">
+<meta property="og:url" content="http://adamzeng.site/2017/12/19/mysql学习笔记一/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="#这是整个代理池的架构： ##获取器—过滤器—代理队列（API)—定时检测器 许多网站有专门的反爬虫措施，可能遇到封IP等问题。互联网上公开了大量免费代理，利用好资源。通过定时检测维护同样可以得到多个可用代理。">
+<meta property="og:description" content="什么是数据库？数据库（Database）是按照数据结构来组织、存储和管理数据的仓库， 每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。 我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。 所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-20T03:22:10.680Z">
+<meta property="og:updated_time" content="2017-12-28T04:06:52.501Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爬虫动态代理池">
-<meta name="twitter:description" content="#这是整个代理池的架构： ##获取器—过滤器—代理队列（API)—定时检测器 许多网站有专门的反爬虫措施，可能遇到封IP等问题。互联网上公开了大量免费代理，利用好资源。通过定时检测维护同样可以得到多个可用代理。">
+<meta name="twitter:title" content="mysql学习笔记一">
+<meta name="twitter:description" content="什么是数据库？数据库（Database）是按照数据结构来组织、存储和管理数据的仓库， 每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。 我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。 所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>爬虫动态代理池 | AdamZeng</title>
+<title>mysql学习笔记一 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -281,11 +281,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-爬虫动态代理池" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mysql学习笔记一" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/18/爬虫动态代理池/" class="article-date">
-      <time datetime="2017-11-18T03:31:56.000Z" itemprop="datePublished">2017-11-18</time>
+      <a href="/2017/12/19/mysql学习笔记一/" class="article-date">
+      <time datetime="2017-12-19T14:28:28.000Z" itemprop="datePublished">2017-12-19</time>
 </a>
 
 
@@ -300,7 +300,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      爬虫动态代理池
+      mysql学习笔记一
     </h1>
   
 
@@ -309,13 +309,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/爬虫/">爬虫</a>
+    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -325,24 +325,37 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>#这是整个代理池的架构：</p>
-<p>##获取器—过滤器—代理队列（API)—定时检测器</p>
-<p>许多网站有专门的反爬虫措施，可能遇到封IP等问题。互联网上公开了大量免费代理，利用好资源。通过定时检测维护同样可以得到多个可用代理。<a id="more"></a></p>
-<p>代理池要求：多站抓取，异步检测，通过代理请求百度页面。定时筛选，持续更新。提供接口，易于提取。</p>
+        <h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库，</p>
+<p>每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。</p>
+<p>我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。</p>
+<p>所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。</p>
+<p>RDBMS即关系数据库管理系统（Relational Database Management System）的特点：</p>
+<ol>
+<li>数据以表格的形式出现</li>
+<li>每行为各种记录名称</li>
+<li>每列为记录名称所对应的数据域</li>
+<li>许多的行和列组成一张表单</li>
+<li>若干的表单组成database</li>
+</ol>
+<h4 id="RDBMS-术语"><a href="#RDBMS-术语" class="headerlink" title="RDBMS 术语"></a>RDBMS 术语</h4><p>在我们开始学习MySQL数据库前，让我们先了解一下RDBMS的一些术语：</p>
 <ul>
-<li>网上的免费代理很有可能不能够继续使用，这时需要定时检测器，进行测试，将不可用代理剔除，将可用代理存入代理队列。</li>
-<li>实现API，将存在数据库中的可用代理，通过Web，将接口放在网上，方便我们提取使用。</li>
-<li>获取器，从各大网站平台上将代理抓取下来，临时存在一个数据结构当中。</li>
-<li><p>使用过滤器将代理进行筛选，使用代理对网站（例如百度）进行请求，返回正确请求即为可用代理，放置入代理队列中。</p>
-<p>详解大才哥的代理池的源码：</p>
-</li>
+<li>数据库：数据库是一些关联表的集合。</li>
+<li>数据表：表是数据的矩阵。在一个数据库中的表看起来像一个简单的电子表格。</li>
+<li>列：一行（=元祖，或记录）是一组相关的数据，例如一条用户订阅的数据。</li>
+<li>冗余：存储两倍数据，冗余可以使系统速度更快。</li>
+<li>主键：主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。</li>
+<li>外键：外键用于关联两个表。</li>
+<li>复合键:复合键（组合键）将多个列作为一个索引键，一般用于复合索引。</li>
+<li>索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。</li>
+<li>参照完整性：参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line"></div><div class="line">  print(<span class="string">'Ip processing running'</span>)</div><div class="line"></div><div class="line">  valid_process=Process(target=Schedule.valid_proxy)</div><div class="line"></div><div class="line">  check_process=Process(target=Schedule.check_pool)</div><div class="line"></div><div class="line">  valid_process.start()</div><div class="line"></div><div class="line">  check_process.start()</div></pre></td></tr></table></figure>
-<p>定义了两个process，两个进程，调用start，让这两个进程同时运行。</p>
-<p>valid_proxy为定时检测器，定时检测ip是否有效。在Schedule类下。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">valid_proxy</span><span class="params">(cycle=VALID_CHECK_CYCLE)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Get half of proxies which in redis</div><div class="line">    """</div><div class="line">    conn = RedisClient()<span class="comment">#redis连接的对象</span></div><div class="line">    tester = ValidityTester()</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        print(<span class="string">'Refreshing ip'</span>)</div><div class="line">        count = int(<span class="number">0.5</span> * conn.queue_len)</div><div class="line">        <span class="keyword">if</span> count == <span class="number">0</span>:</div><div class="line">            print(<span class="string">'Waiting for adding'</span>)</div><div class="line">            time.sleep(cycle)</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        raw_proxies = conn.get(count)</div><div class="line">        tester.set_raw_proxies(raw_proxies)</div><div class="line">        tester.test()</div><div class="line">        time.sleep(cycle)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">db.py</div><div class="line"></div><div class="line"><span class="keyword">import</span> redis</div><div class="line"><span class="keyword">from</span> proxypool.error <span class="keyword">import</span> PoolEmptyError</div><div class="line"><span class="keyword">from</span> proxypool.setting <span class="keyword">import</span> HOST, PORT, PASSWORD</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RedisClient</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host=HOST, port=PORT)</span>:</span></div><div class="line">        <span class="keyword">if</span> PASSWORD:</div><div class="line">            self._db = redis.Redis(host=host, port=port, password=PASSWORD)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            self._db = redis.Redis(host=host, port=port)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, count=<span class="number">1</span>)</span>:</span><span class="comment">#获取代理从redis</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get proxies from redis</div><div class="line">        """</div><div class="line">        proxies = self._db.lrange(<span class="string">"proxies"</span>, <span class="number">0</span>, count - <span class="number">1</span>)<span class="comment">#lrange从左侧拿出代理</span></div><div class="line">        self._db.ltrim(<span class="string">"proxies"</span>, count, <span class="number">-1</span>)<span class="comment">#将代理放在右侧</span></div><div class="line">        <span class="keyword">return</span> proxies</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, proxy)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        add proxy to right top</div><div class="line">        """</div><div class="line">        self._db.rpush(<span class="string">"proxies"</span>, proxy)<span class="comment">#将代理放到右侧</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span><span class="comment">#供API使用，将可用代理从右侧拿出。</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get proxy from right.</div><div class="line">        """</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self._db.rpop(<span class="string">"proxies"</span>).decode(<span class="string">'utf-8'</span>)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">raise</span> PoolEmptyError</div><div class="line"></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">queue_len</span><span class="params">(self)</span>:</span><span class="comment">#整个队列的长度</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        get length from queue.</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> self._db.llen(<span class="string">"proxies"</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flush</span><span class="params">(self)</span>:</span><span class="comment">#刷新整个代理队列</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        flush db</div><div class="line">        """</div><div class="line">        self._db.flushall()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    conn = RedisClient()</div><div class="line">    print(conn.pop())</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">PoolAdder</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    add proxy to pool</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, threshold)</span>:</span></div><div class="line">        self._threshold = threshold</div><div class="line">        self._conn = RedisClient()</div><div class="line">        self._tester = ValidityTester()</div><div class="line">        self._crawler = FreeProxyGetter()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_over_threshold</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        judge if count is overflow.</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> self._conn.queue_len &gt;= self._threshold:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_to_queue</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'PoolAdder is working'</span>)</div><div class="line">        proxy_count = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.is_over_threshold():</div><div class="line">            <span class="keyword">for</span> callback_label <span class="keyword">in</span> range(self._crawler.__CrawlFuncCount__):</div><div class="line">                callback = self._crawler.__CrawlFunc__[callback_label]</div><div class="line">                raw_proxies = self._crawler.get_raw_proxies(callback)</div><div class="line">                <span class="comment"># test crawled proxies</span></div><div class="line">                self._tester.set_raw_proxies(raw_proxies)</div><div class="line">                self._tester.test()</div><div class="line">                proxy_count += len(raw_proxies)</div><div class="line">                <span class="keyword">if</span> self.is_over_threshold():</div><div class="line">                    print(<span class="string">'IP is enough, waiting to be used'</span>)</div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> proxy_count == <span class="number">0</span>:</div><div class="line">                <span class="keyword">raise</span> ResourceDepletionError</div></pre></td></tr></table></figure>
+<p>####规范化表格的规则：</p>
+<p><strong>1. 每行都具有相同数量的列。</strong><br>实际上，数据库系统不允许在不同的行里具有不同数量的列。但是如果某些列有时候为空，有时候不为空，或者如果我们将多个值放入一个字段里，我们可以调整下此规则。</p>
+<p>拿动物园数据库中的 <strong>diet</strong> 表格为例。我们将某个物种会吃的多种食物放入多行，而不是放在一行里。这样的话，汇总和比较时就操作简单多了。</p>
+<p><strong>2. 表格存在唯一键，一行里的所有内容都围绕该键展开。</strong><br>键可以是一列或多列。甚至可以是整行内容，就像 <strong>diet</strong> 表格一样。但是一个表格里没有重复的行。</p>
+<p>更重要的是，如果我们要存储不是唯一的内容，例如人们的姓名，我们就使用唯一标识符（例如序列号）区分它们。这样可以确保我们不会将两个姓名相同的人的分数或违规停车罚单汇总到一起。</p>
+<p><strong>3. 与唯一键不相关的内容放在其他表格中。</strong><br>例如 <strong>items</strong> 表格，里面有条目、它们的地点和地点的街道地址。地址不是关于条目的内容，它是关于地点的内容。将地址放到另一表格里可以节省空间，并避免造成混淆，我们始终可以使用 <strong>join</strong> 重新组成原始表格。</p>
+<p><strong>4. 表格不应该暗示不存在的关系。</strong><br>例如 <strong>job_skills</strong> 表格，一行列出某人的技术技能（例如“Linux”）和某个语言技能（例如“法语”）。这样看起来就好像 Linux 技能是特定于法语，反之亦然，但现实中不是这种情况。规范化这一情况需要将技术技能和工作技能放在不同的表格里。</p>
 
       
     </div>
@@ -351,13 +364,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/18/爬虫动态代理池/">爬虫动态代理池</a></p>
+        <p><span>本文标题:</span><a href="/2017/12/19/mysql学习笔记一/">mysql学习笔记一</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-11-18, 11:31:56</p>
-        <p><span>最后更新:</span>2017-11-20, 11:22:10</p>
+        <p><span>发布时间:</span>2017-12-19, 22:28:28</p>
+        <p><span>最后更新:</span>2017-12-28, 12:06:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/18/爬虫动态代理池/" title="爬虫动态代理池">http://adamzeng.site/2017/11/18/爬虫动态代理池/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/18/爬虫动态代理池/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/19/mysql学习笔记一/" title="mysql学习笔记一">http://adamzeng.site/2017/12/19/mysql学习笔记一/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/12/19/mysql学习笔记一/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -369,16 +382,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/11/18/最近的生活总结/">
-                    最近的生活总结
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/11/11/BeautifulSoup/">
-                    BeautifulSoup
+                <a href="/2017/12/03/命名-统计-字典/">
+                    命名 统计 字典
                 </a>
             </div>
         
@@ -390,7 +397,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是数据库？"><span class="toc-number">1.</span> <span class="toc-text">什么是数据库？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDBMS-术语"><span class="toc-number">2.</span> <span class="toc-text">RDBMS 术语</span></a></li></ol>
         
     </div>
     <style>
@@ -426,7 +433,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"爬虫动态代理池　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"mysql学习笔记一　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -462,15 +469,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/18/最近的生活总结/" title="上一篇: 最近的生活总结">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/11/11/BeautifulSoup/" title="下一篇: BeautifulSoup">
+            <a href="/2017/12/03/命名-统计-字典/" title="下一篇: 命名 统计 字典">
                 <i class="fa fa-angle-right"></i>
             </a>
         

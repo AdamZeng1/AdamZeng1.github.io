@@ -207,7 +207,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -345,6 +345,100 @@
         <p class="article-more-link">
           <a href="/2017/06/28/hexo-nexT配置详情/#more">阅读全文 >></a>
         </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-mysql学习笔记一" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/19/mysql学习笔记一/" class="article-date">
+      <time datetime="2017-12-19T14:28:28.000Z" itemprop="datePublished">2017-12-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/19/mysql学习笔记一/">mysql学习笔记一</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库，</p>
+<p>每个数据库都有一个或多个不同的API用于创建，访问，管理，搜索和复制所保存的数据。</p>
+<p>我们也可以将数据存储在文件中，但是在文件中读写数据速度相对相对较慢。</p>
+<p>所以，现在我们使用关系型数据库管理系统（RDBMS)来存储和管理的大数据量。所谓的关系型数据库，是建立在关系模型基础上的数据库，借助于集合代数等数学概念和方法来处理数据库中的数据。</p>
+<p>RDBMS即关系数据库管理系统（Relational Database Management System）的特点：</p>
+<ol>
+<li>数据以表格的形式出现</li>
+<li>每行为各种记录名称</li>
+<li>每列为记录名称所对应的数据域</li>
+<li>许多的行和列组成一张表单</li>
+<li>若干的表单组成database</li>
+</ol>
+<h4 id="RDBMS-术语"><a href="#RDBMS-术语" class="headerlink" title="RDBMS 术语"></a>RDBMS 术语</h4><p>在我们开始学习MySQL数据库前，让我们先了解一下RDBMS的一些术语：</p>
+<ul>
+<li>数据库：数据库是一些关联表的集合。</li>
+<li>数据表：表是数据的矩阵。在一个数据库中的表看起来像一个简单的电子表格。</li>
+<li>列：一行（=元祖，或记录）是一组相关的数据，例如一条用户订阅的数据。</li>
+<li>冗余：存储两倍数据，冗余可以使系统速度更快。</li>
+<li>主键：主键是唯一的。一个数据表中只能包含一个主键。你可以使用主键来查询数据。</li>
+<li>外键：外键用于关联两个表。</li>
+<li>复合键:复合键（组合键）将多个列作为一个索引键，一般用于复合索引。</li>
+<li>索引：使用索引可快速访问数据库表中的特定信息。索引是对数据库表中一列或多列的值进行排序的一种结构。类似于书籍的目录。</li>
+<li>参照完整性：参照的完整性要求关系中不允许引用不存在的实体。与实体完整性是关系模型必须满足的完整性约束条件，目的是保证数据的一致性。</li>
+</ul>
+<p>####规范化表格的规则：</p>
+<p><strong>1. 每行都具有相同数量的列。</strong><br>实际上，数据库系统不允许在不同的行里具有不同数量的列。但是如果某些列有时候为空，有时候不为空，或者如果我们将多个值放入一个字段里，我们可以调整下此规则。</p>
+<p>拿动物园数据库中的 <strong>diet</strong> 表格为例。我们将某个物种会吃的多种食物放入多行，而不是放在一行里。这样的话，汇总和比较时就操作简单多了。</p>
+<p><strong>2. 表格存在唯一键，一行里的所有内容都围绕该键展开。</strong><br>键可以是一列或多列。甚至可以是整行内容，就像 <strong>diet</strong> 表格一样。但是一个表格里没有重复的行。</p>
+<p>更重要的是，如果我们要存储不是唯一的内容，例如人们的姓名，我们就使用唯一标识符（例如序列号）区分它们。这样可以确保我们不会将两个姓名相同的人的分数或违规停车罚单汇总到一起。</p>
+<p><strong>3. 与唯一键不相关的内容放在其他表格中。</strong><br>例如 <strong>items</strong> 表格，里面有条目、它们的地点和地点的街道地址。地址不是关于条目的内容，它是关于地点的内容。将地址放到另一表格里可以节省空间，并避免造成混淆，我们始终可以使用 <strong>join</strong> 重新组成原始表格。</p>
+<p><strong>4. 表格不应该暗示不存在的关系。</strong><br>例如 <strong>job_skills</strong> 表格，一行列出某人的技术技能（例如“Linux”）和某个语言技能（例如“法语”）。这样看起来就好像 Linux 技能是特定于法语，反之亦然，但现实中不是这种情况。规范化这一情况需要将技术技能和工作技能放在不同的表格里。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+    </div>
+
       
       <div class="clearfix"></div>
     </div>
@@ -549,74 +643,6 @@
       
         <p class="article-more-link">
           <a href="/2017/11/25/Python中的-arg和-kwarg/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-classmethod和staticmethod" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/25/classmethod和staticmethod/" class="article-date">
-      <time datetime="2017-11-25T07:49:34.000Z" itemprop="datePublished">2017-11-25</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/25/classmethod和staticmethod/">classmethod和staticmethod</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/11/25/classmethod和staticmethod/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

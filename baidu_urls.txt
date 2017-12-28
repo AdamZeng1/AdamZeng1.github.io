@@ -1,3 +1,3 @@
+http://adamzeng.site/2017/12/19/mysql学习笔记一/
 http://adamzeng.site/2017/12/03/命名-统计-字典/
 http://adamzeng.site/2017/12/03/列表，字典，集合筛选数据/
-http://adamzeng.site/2017/11/25/Python中的-arg和-kwarg/
