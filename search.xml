@@ -3,6 +3,79 @@
   
     
     <entry>
+      <title><![CDATA[关于Python数据分析初解]]></title>
+      <url>/2017/12/28/%E5%85%B3%E4%BA%8EPython%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%88%9D%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<h1 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h1><ul>
+<li><p>Draw Conway perspective on data science:</p>
+<ul>
+<li>Hacking Skills</li>
+<li>Math and Statistics Knowledge</li>
+<li>Substantive Expertise</li>
+</ul>
+</li>
+<li><p>Other data science perspectives:</p>
+<ul>
+<li><p>Skepticism,experimentation,</p>
+<p>simulation,and replication</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Data science:</p>
+<ul>
+<li>Data Exploration and Preparation</li>
+<li>Data Representation and Transformation</li>
+<li>Computing with Data</li>
+<li>Data Modeling</li>
+<li>Data Visualization and Presentation</li>
+<li>Science about Data Science</li>
+</ul>
+<p>在课程中，讲师有一句强调的话，slicing is the core of Python language!也就是说切片是Python语言的核心，它是整个数据科学的基础。特别当你开始进行matrix的操作时。</p>
+<p>插入format版的代码更加易于使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sales_record=&#123;<span class="string">'price'</span>: <span class="number">3.24</span>,</div><div class="line">             <span class="string">'num_items'</span>: <span class="number">4</span>,</div><div class="line">             <span class="string">'person'</span>: <span class="string">'Chris'</span>&#125;</div><div class="line"></div><div class="line">sales_statement=<span class="string">'&#123;&#125; bought &#123;&#125; item(s) at price of &#123;&#125; each for a total of &#123;&#125;'</span></div><div class="line"></div><div class="line">print(sales_statement.format(sales_record[<span class="string">'person'</span>],</div><div class="line">                            sales_record[<span class="string">'num_items'</span>],</div><div class="line">                            sales_record[<span class="string">'price'</span>],</div><div class="line">                            sales_record[<span class="string">'num_items'</span>]*sales_record[<span class="string">'price'</span>]))</div></pre></td></tr></table></figure>
+<h3 id="关于时间与日期"><a href="#关于时间与日期" class="headerlink" title="关于时间与日期"></a>关于时间与日期</h3><p>在一定给定时间，找到销售平均次数，选择产品列表，来做资料数据挖掘，用在特定时期内的购买数据，或试图找到最活跃的时期在线上讨论论坛系统。</p>
+<p>用于存储日期最常用的传统方法之一，时间在网上交易系统是基于从纪元的偏移量，这个纪元是1970年1月1日。这里有很多历史记录，但并不罕见看到系统存储自该日期起的交易时间（用秒或毫秒）。所以如果你看到很大的数字，而你希望看到日期和时间，你需要转换它们，使数据变得有意义。</p>
+<p>在Python中，你可以获得从纪元计算来的目前时间，使用时间模组。然后，可以创建时间戳记，使用‘从时间戳记函数’在日期时间的物件。</p>
+<p>time module 中time.time()返回当前时间的时间戳（1970纪元后经过的浮点秒数）。</p>
+<h3 id="timestamp转换为datetime"><a href="#timestamp转换为datetime" class="headerlink" title="timestamp转换为datetime"></a>timestamp转换为datetime</h3><p>要把timestamp转换为<code>datetime</code>，使用<code>datetime</code>提供的<code>fromtimestamp()</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line">t=<span class="number">1429417200.0</span></div><div class="line">print(datetime.fromtimestamp(t))</div><div class="line"></div><div class="line"><span class="number">2015</span><span class="number">-04</span><span class="number">-19</span> <span class="number">12</span>:<span class="number">20</span>:<span class="number">00</span></div></pre></td></tr></table></figure>
+<h3 id="Advanced-Python-Objects-map"><a href="#Advanced-Python-Objects-map" class="headerlink" title="Advanced Python Objects,map()"></a>Advanced Python Objects,map()</h3><p>了解map函数的官方定义：</p>
+<p>map(function,iterable,…)</p>
+<p>Return an iterator that applies function to every item of iterable,yielding the results. If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel. With multiple iterables, the iterator stops when the shortest iterable is exhausted. For cases where the function inpits are already arranged into argument tuples, see itertools.starmap().</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">store1=[<span class="number">10.00</span>,<span class="number">11.00</span>,<span class="number">12.34</span>,<span class="number">2.34</span>]</div><div class="line">store2=[<span class="number">9.00</span>,<span class="number">11.10</span>,<span class="number">12.34</span>,<span class="number">2.01</span>]</div><div class="line">cheapest=map(min,store1,store2)</div><div class="line">cheapest</div><div class="line"></div><div class="line"></div><div class="line">&lt;map at <span class="number">0x7faf8c2c7240</span>&gt;</div></pre></td></tr></table></figure>
+<p>map是可以反复运算，就像列表和元组，因此我们可以使用for loop来迭代来查看map中的所有值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">people = [<span class="string">'Dr. Christopher Brooks'</span>, <span class="string">'Dr. Kevyn Collins-Thompson'</span>, <span class="string">'Dr. VG Vinod Vydiswaran'</span>, <span class="string">'Dr. Daniel Romero'</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_title_and_name</span><span class="params">(person)</span>:</span></div><div class="line">    titles=person.split(<span class="string">" "</span>)[<span class="number">0</span>]</div><div class="line">    last_names=person.split(<span class="string">" "</span>)[<span class="number">2</span>]</div><div class="line">    <span class="keyword">return</span> titles,last_names<span class="comment">#Your answer here</span></div><div class="line"></div><div class="line">print(list(map(split_title_and_name,people)))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">[(<span class="string">'Dr.'</span>, <span class="string">'Brooks'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Collins-Thompson'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Vinod'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Romero'</span>)]</div></pre></td></tr></table></figure>
+<h3 id="Advanced-Python-Lambda-and-List-Comprehensions"><a href="#Advanced-Python-Lambda-and-List-Comprehensions" class="headerlink" title="Advanced Python Lambda and List Comprehensions"></a>Advanced Python Lambda and List Comprehensions</h3><p>Lambda是Python的方法创建不具名函数。这些与其他函数相同，但没有名称，意图在于它们很简单或短暂使用，它容易，只需要在一行中就能够写出函数，而不必麻烦的去创建一个有名称函数，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">my_function=<span class="keyword">lambda</span> a, b, c : a + b</div><div class="line">my_function(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
+<p>相比完善的函数定义，lambda只能用于单个计算式，而且不能设默认值。</p>
+<p>但我认为在简单的小数据清理任务，它们是非常有用的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">people = [<span class="string">'Dr. Christopher Brooks'</span>, <span class="string">'Dr. Kevyn Collins-Thompson'</span>, <span class="string">'Dr. VG Vinod Vydiswaran'</span>, <span class="string">'Dr. Daniel Romero'</span>]</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_title_and_name</span><span class="params">(person)</span>:</span></div><div class="line">    <span class="keyword">return</span> person.split()[<span class="number">0</span>] + <span class="string">' '</span> + person.split()[<span class="number">-1</span>]</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># option 1</span></div><div class="line"><span class="keyword">for</span> person <span class="keyword">in</span> people:</div><div class="line">    print(split_title_and_name(person) == (<span class="keyword">lambda</span> x: x.split()[<span class="number">0</span>] + <span class="string">' '</span> + x.split()[<span class="number">-1</span>])(person))</div><div class="line"></div><div class="line">    <span class="comment"># option 2</span></div><div class="line">    <span class="comment"># list(map(split_title_and_name, people)) == list(map(???))</span></div><div class="line">print(list(map(split_title_and_name,people))==list(map(<span class="keyword">lambda</span> x: x.split()[<span class="number">0</span>]+<span class="string">' '</span>+x.split()[<span class="number">-1</span>],people)))</div><div class="line"></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>sequence(序列)是我们可以遍历的结构和往往我们创建这些经由loop或从一个文件当中读取数据资料。</p>
+<p>list comprehensions是类似lambda的浓缩格式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">my_list=[]</div><div class="line"><span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">1000</span>):</div><div class="line">    <span class="keyword">if</span> number % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">        my_list.append(number)</div><div class="line">    </div><div class="line">my_list</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">my_list=[number <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">1000</span>) <span class="keyword">if</span> number % <span class="number">2</span> ==<span class="number">0</span>]</div><div class="line">my_list</div></pre></td></tr></table></figure>
+<p>有一个例题：（我认为很有代表性）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">lowercase = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span></div><div class="line">digits = <span class="string">'0123456789'</span></div><div class="line"></div><div class="line">answer = [a+b+c+d <span class="keyword">for</span> a <span class="keyword">in</span> lowercase <span class="keyword">for</span> b <span class="keyword">in</span> lowercase <span class="keyword">for</span> c <span class="keyword">in</span> digits <span class="keyword">for</span> d <span class="keyword">in</span> digits]</div><div class="line"></div><div class="line">print(answer)</div></pre></td></tr></table></figure>
+<h3 id="Advance-Python-Demonstration-The-Numerical-Python-Library-Numpy"><a href="#Advance-Python-Demonstration-The-Numerical-Python-Library-Numpy" class="headerlink" title="Advance Python Demonstration: The Numerical Python Library(Numpy)"></a>Advance Python Demonstration: The Numerical Python Library(Numpy)</h3><p>Numpy使我们能够高效地工作在Python中的阵列（arrays)和矩阵（matrices)当中。</p>
+<p>这部分API通过文档了解更好。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 数据分析 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据分析 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[mysql学习笔记一]]></title>
       <url>/2017/12/19/mysql%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</url>
       <content type="html"><![CDATA[<h4 id="什么是数据库？"><a href="#什么是数据库？" class="headerlink" title="什么是数据库？"></a>什么是数据库？</h4><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库，<a id="more"></a></p>
