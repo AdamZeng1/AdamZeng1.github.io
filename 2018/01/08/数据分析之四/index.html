@@ -15,18 +15,20 @@
 
 
 
-<meta name="description" content="数据分析 Draw Conway perspective on data science:">
+<meta name="description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
 <meta name="keywords" content="数据分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Python数据分析初解">
-<meta property="og:url" content="http://adamzeng.site/2017/12/28/关于Python数据分析初解/index.html">
+<meta property="og:title" content="数据分析之四">
+<meta property="og:url" content="http://adamzeng.site/2018/01/08/数据分析之四/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="数据分析 Draw Conway perspective on data science:">
+<meta property="og:description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-30T15:38:47.541Z">
+<meta property="og:image" content="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png">
+<meta property="og:updated_time" content="2018-01-09T07:22:54.994Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于Python数据分析初解">
-<meta name="twitter:description" content="数据分析 Draw Conway perspective on data science:">
+<meta name="twitter:title" content="数据分析之四">
+<meta name="twitter:description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
+<meta name="twitter:image" content="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>关于Python数据分析初解 | AdamZeng</title>
+<title>数据分析之四 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -281,11 +283,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-关于Python数据分析初解" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-数据分析之四" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/12/28/关于Python数据分析初解/" class="article-date">
-      <time datetime="2017-12-28T14:54:21.000Z" itemprop="datePublished">2017-12-28</time>
+      <a href="/2018/01/08/数据分析之四/" class="article-date">
+      <time datetime="2018-01-08T12:17:07.000Z" itemprop="datePublished">2018-01-08</time>
 </a>
 
 
@@ -300,7 +302,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于Python数据分析初解
+      数据分析之四
     </h1>
   
 
@@ -325,59 +327,34 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h1><ul>
-<li><p>Draw Conway perspective on data science:<a id="more"></a></p>
-<ul>
-<li>Hacking Skills</li>
-<li>Math and Statistics Knowledge</li>
-<li>Substantive Expertise</li>
-</ul>
-</li>
-<li><p>Other data science perspectives:</p>
-<ul>
-<li><p>Skepticism,experimentation,</p>
-<p>simulation,and replication</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>Data science:</p>
-<ul>
-<li>Data Exploration and Preparation</li>
-<li>Data Representation and Transformation</li>
-<li>Computing with Data</li>
-<li>Data Modeling</li>
-<li>Data Visualization and Presentation</li>
-<li>Science about Data Science</li>
-</ul>
-<p>在课程中，讲师有一句强调的话，slicing is the core of Python language!也就是说切片是Python语言的核心，它是整个数据科学的基础。特别当你开始进行matrix的操作时。</p>
-<p>插入format版的代码更加易于使用：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sales_record=&#123;<span class="string">'price'</span>: <span class="number">3.24</span>,</div><div class="line">             <span class="string">'num_items'</span>: <span class="number">4</span>,</div><div class="line">             <span class="string">'person'</span>: <span class="string">'Chris'</span>&#125;</div><div class="line"></div><div class="line">sales_statement=<span class="string">'&#123;&#125; bought &#123;&#125; item(s) at price of &#123;&#125; each for a total of &#123;&#125;'</span></div><div class="line"></div><div class="line">print(sales_statement.format(sales_record[<span class="string">'person'</span>],</div><div class="line">                            sales_record[<span class="string">'num_items'</span>],</div><div class="line">                            sales_record[<span class="string">'price'</span>],</div><div class="line">                            sales_record[<span class="string">'num_items'</span>]*sales_record[<span class="string">'price'</span>]))</div></pre></td></tr></table></figure>
-<h3 id="关于时间与日期"><a href="#关于时间与日期" class="headerlink" title="关于时间与日期"></a>关于时间与日期</h3><p>在一定给定时间，找到销售平均次数，选择产品列表，来做资料数据挖掘，用在特定时期内的购买数据，或试图找到最活跃的时期在线上讨论论坛系统。</p>
-<p>用于存储日期最常用的传统方法之一，时间在网上交易系统是基于从纪元的偏移量，这个纪元是1970年1月1日。这里有很多历史记录，但并不罕见看到系统存储自该日期起的交易时间（用秒或毫秒）。所以如果你看到很大的数字，而你希望看到日期和时间，你需要转换它们，使数据变得有意义。</p>
-<p>在Python中，你可以获得从纪元计算来的目前时间，使用时间模组。然后，可以创建时间戳记，使用‘从时间戳记函数’在日期时间的物件。</p>
-<p>time module 中time.time()返回当前时间的时间戳（1970纪元后经过的浮点秒数）。</p>
-<h3 id="timestamp转换为datetime"><a href="#timestamp转换为datetime" class="headerlink" title="timestamp转换为datetime"></a>timestamp转换为datetime</h3><p>要把timestamp转换为<code>datetime</code>，使用<code>datetime</code>提供的<code>fromtimestamp()</code>方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line">t=<span class="number">1429417200.0</span></div><div class="line">print(datetime.fromtimestamp(t))</div><div class="line"></div><div class="line"><span class="number">2015</span><span class="number">-04</span><span class="number">-19</span> <span class="number">12</span>:<span class="number">20</span>:<span class="number">00</span></div></pre></td></tr></table></figure>
-<h3 id="Advanced-Python-Objects-map"><a href="#Advanced-Python-Objects-map" class="headerlink" title="Advanced Python Objects,map()"></a>Advanced Python Objects,map()</h3><p>了解map函数的官方定义：</p>
-<p>map(function,iterable,…)</p>
-<p>Return an iterator that applies function to every item of iterable,yielding the results. If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel. With multiple iterables, the iterator stops when the shortest iterable is exhausted. For cases where the function inpits are already arranged into argument tuples, see itertools.starmap().</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">store1=[<span class="number">10.00</span>,<span class="number">11.00</span>,<span class="number">12.34</span>,<span class="number">2.34</span>]</div><div class="line">store2=[<span class="number">9.00</span>,<span class="number">11.10</span>,<span class="number">12.34</span>,<span class="number">2.01</span>]</div><div class="line">cheapest=map(min,store1,store2)</div><div class="line">cheapest</div><div class="line"></div><div class="line"></div><div class="line">&lt;map at <span class="number">0x7faf8c2c7240</span>&gt;</div></pre></td></tr></table></figure>
-<p>map是可以反复运算，就像列表和元组，因此我们可以使用for loop来迭代来查看map中的所有值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">people = [<span class="string">'Dr. Christopher Brooks'</span>, <span class="string">'Dr. Kevyn Collins-Thompson'</span>, <span class="string">'Dr. VG Vinod Vydiswaran'</span>, <span class="string">'Dr. Daniel Romero'</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_title_and_name</span><span class="params">(person)</span>:</span></div><div class="line">    titles=person.split(<span class="string">" "</span>)[<span class="number">0</span>]</div><div class="line">    last_names=person.split(<span class="string">" "</span>)[<span class="number">2</span>]</div><div class="line">    <span class="keyword">return</span> titles,last_names<span class="comment">#Your answer here</span></div><div class="line"></div><div class="line">print(list(map(split_title_and_name,people)))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">[(<span class="string">'Dr.'</span>, <span class="string">'Brooks'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Collins-Thompson'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Vinod'</span>), (<span class="string">'Dr.'</span>, <span class="string">'Romero'</span>)]</div></pre></td></tr></table></figure>
-<h3 id="Advanced-Python-Lambda-and-List-Comprehensions"><a href="#Advanced-Python-Lambda-and-List-Comprehensions" class="headerlink" title="Advanced Python Lambda and List Comprehensions"></a>Advanced Python Lambda and List Comprehensions</h3><p>Lambda是Python的方法创建不具名函数。这些与其他函数相同，但没有名称，意图在于它们很简单或短暂使用，它容易，只需要在一行中就能够写出函数，而不必麻烦的去创建一个有名称函数，</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">my_function=<span class="keyword">lambda</span> a, b, c : a + b</div><div class="line">my_function(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="number">3</span></div></pre></td></tr></table></figure>
-<p>相比完善的函数定义，lambda只能用于单个计算式，而且不能设默认值。</p>
-<p>但我认为在简单的小数据清理任务，它们是非常有用的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">people = [<span class="string">'Dr. Christopher Brooks'</span>, <span class="string">'Dr. Kevyn Collins-Thompson'</span>, <span class="string">'Dr. VG Vinod Vydiswaran'</span>, <span class="string">'Dr. Daniel Romero'</span>]</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_title_and_name</span><span class="params">(person)</span>:</span></div><div class="line">    <span class="keyword">return</span> person.split()[<span class="number">0</span>] + <span class="string">' '</span> + person.split()[<span class="number">-1</span>]</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># option 1</span></div><div class="line"><span class="keyword">for</span> person <span class="keyword">in</span> people:</div><div class="line">    print(split_title_and_name(person) == (<span class="keyword">lambda</span> x: x.split()[<span class="number">0</span>] + <span class="string">' '</span> + x.split()[<span class="number">-1</span>])(person))</div><div class="line"></div><div class="line">    <span class="comment"># option 2</span></div><div class="line">    <span class="comment"># list(map(split_title_and_name, people)) == list(map(???))</span></div><div class="line">print(list(map(split_title_and_name,people))==list(map(<span class="keyword">lambda</span> x: x.split()[<span class="number">0</span>]+<span class="string">' '</span>+x.split()[<span class="number">-1</span>],people)))</div><div class="line"></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
-<p>sequence(序列)是我们可以遍历的结构和往往我们创建这些经由loop或从一个文件当中读取数据资料。</p>
-<p>list comprehensions是类似lambda的浓缩格式。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">my_list=[]</div><div class="line"><span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">1000</span>):</div><div class="line">    <span class="keyword">if</span> number % <span class="number">2</span> == <span class="number">0</span>:</div><div class="line">        my_list.append(number)</div><div class="line">    </div><div class="line">my_list</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">my_list=[number <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">1000</span>) <span class="keyword">if</span> number % <span class="number">2</span> ==<span class="number">0</span>]</div><div class="line">my_list</div></pre></td></tr></table></figure>
-<p>有一个例题：（我认为很有代表性）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">lowercase = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span></div><div class="line">digits = <span class="string">'0123456789'</span></div><div class="line"></div><div class="line">answer = [a+b+c+d <span class="keyword">for</span> a <span class="keyword">in</span> lowercase <span class="keyword">for</span> b <span class="keyword">in</span> lowercase <span class="keyword">for</span> c <span class="keyword">in</span> digits <span class="keyword">for</span> d <span class="keyword">in</span> digits]</div><div class="line"></div><div class="line">print(answer)</div></pre></td></tr></table></figure>
-<h3 id="Advance-Python-Demonstration-The-Numerical-Python-Library-Numpy"><a href="#Advance-Python-Demonstration-The-Numerical-Python-Library-Numpy" class="headerlink" title="Advance Python Demonstration: The Numerical Python Library(Numpy)"></a>Advance Python Demonstration: The Numerical Python Library(Numpy)</h3><p>Numpy使我们能够高效地工作在Python中的阵列（arrays)和矩阵（matrices)当中。</p>
-<p>这部分API通过文档了解更好。</p>
+        <h3 id="Merging-DataFrames"><a href="#Merging-DataFrames" class="headerlink" title="Merging DataFrames"></a>Merging DataFrames</h3><p>上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框<a id="more"></a>（DataFrame）物件。查询这两个数据结构以几种不同的方式完成，例如使用iloc或loc属性进行对行（row）的查询，或者使用方括号在物件本身进行对于列（column）的查询。最重要的是，我们看到一个可以查询DataFrame和series物件通过布林遮蔽（boolean masking）。布林遮蔽是一种强大的过滤方法，它允许我们使用广播来确定在我们的分析中应该保留哪些数据。</p>
+<p>在本周的讲课中，我们将详细介绍如何操作DataFrame。我们将探讨如何使用GroupBy和Apply来减少和处理数据，以及如何将多个文件中的数据集合在一起。</p>
+<p>我们还将讨论pandas一些有用的功能，对传统统计分析和机器学习。我们从如何合并数据集开始吧。我们已经看到如何将新数据添加到现有的DataFrame中。只需使用带有新列名称的方括号运算符，只要索引被共用，数据就添加了。如果没有共享索引，并传入一个标量值，那么记住一个纯量只是一个整数或一个字串。添加在列的新值，是以纯量作为预设值。如果我们想为每一行分配一个不同的值呢？那么它变得更棘手。如果我们可以将值，写死程序到列表中，那么pandas将解拆解它们并将它们分配给行。但是，如果我们的列表不够长，那么我们不能这样做，因为pandas不知道丢失的值应该去哪里。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">df=pd.DataFrame([&#123;<span class="string">'Name'</span> : <span class="string">'Chris'</span>, <span class="string">'Item Purchased'</span>: <span class="string">'Sponge'</span>,<span class="string">'Cost'</span>:<span class="number">22.50</span>&#125;,</div><div class="line">                &#123;<span class="string">'Name'</span>:<span class="string">'Keyvyn'</span>,<span class="string">'Item Purchased'</span>: <span class="string">'Kitty Litter'</span>,<span class="string">'Cost'</span>:<span class="number">2.50</span>&#125;,</div><div class="line">                &#123;<span class="string">'Name'</span>:<span class="string">'Filip'</span>,<span class="string">'Item Purchased'</span>:<span class="string">'Spoon'</span>,<span class="string">'Cost'</span>:<span class="number">5.00</span>&#125;],</div><div class="line">               index=[<span class="string">'Store 1'</span>,<span class="string">'Store 1'</span>,<span class="string">'Store 2'</span>])</div><div class="line">df</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	Cost	Item Purchased	Name</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris</div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn</div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'data'</span>]=[<span class="string">'December 1'</span>,<span class="string">'January'</span>,<span class="string">'mid-May'</span>]</div><div class="line">df</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Cost	Item Purchased	Name	data</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span></div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January</div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Delivered'</span>]=<span class="keyword">True</span></div><div class="line">df</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	Cost	Item Purchased	Name	data	Delivered</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span></div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span></div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>当我们只添加几个项目时，会出现问题。为了使其工作，我们必须为pandas提供足够长的DataFrame的列表，以便可以填充每一行。这意味着我们必须自己输入none值。如果我们每行都有一个独特的索引，那么我们可以将新的列标识分配给该系列。例如，如果我们在此范例中重置索引，因此DataFrame索引标记为0到2，那么我们使用这些标记创建一个新的系列，我们可引用它。我们得到的结果是我们预期的。这种方法的好方面是，我们可以忽略项目中我们不知道的，Pandas会为我们放进丢失值。所以这是一个非常好的方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Feedback'</span>]=[<span class="string">'Positive'</span>,<span class="keyword">None</span>,<span class="string">'Negative'</span>]</div><div class="line">df</div><div class="line"></div><div class="line">Cost	Item Purchased	Name	data	Delivered	Feedback</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span>	Positive</div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span>	<span class="keyword">None</span></div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span>	Negative</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">adf=df.reset_index()</div><div class="line">adf[<span class="string">'Date'</span>]=pd.Series(&#123;<span class="number">0</span>:<span class="string">'December 1'</span>,<span class="number">2</span>:<span class="string">'mid_May'</span>&#125;)</div><div class="line">adf</div><div class="line"></div><div class="line">	index	Cost	Item Purchased	Name	data	Delivered	Feedback	Date</div><div class="line"><span class="number">0</span>	Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span>	Positive	December <span class="number">1</span></div><div class="line"><span class="number">1</span>	Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span>	<span class="keyword">None</span>	NaN</div><div class="line"><span class="number">2</span>	Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span>	Negative	mid_May</div></pre></td></tr></table></figure>
+<p>更常见的是，我们想要结合两个较大的DataFrame在一起，这是一个比较复杂的。在我们跳入程序之前，我们需要解决一点关联理论，并设定一些语言的惯例。</p>
+<p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png" alt="image"></p>
+<p>这是韦恩图。韦恩图通常用于显示集合的关系。例如在左边圆圈的人口是一所大学的学生。在右边圈的人口是一所大学的工作人员。中间的重叠地区是那些也是学生也是工作人员的人。我们可以将这两个人群视为个别的DataFrames中的索引，可能有Person Name的标识。当我们想结合DataFrames时，我们有一些选择。首先，如果我们想要所有人的名单，无论 他们是工作人员还是学生，以及获得所有他们的信息呢？在数据库术语中，这称为完整的外连接（full outer join)。</p>
+<p>在集合中被称为union，在韦恩图中，它代表了任何一个圈子的每个人。很可能，我们只要那些我们拥有最多资料的人，那些既是工作人员又是学生的人。在数据库术语中，这称为内连接（inner join）。或者在集合理论中，交集（intersection）。这在韦恩图中被表示为重叠部分在每个圈中。好的，让我们来看一个我们如何在Pandas中做这个的例子，在那里我们将使用merge函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">staff_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'Kelly'</span>,<span class="string">'Role'</span>:<span class="string">'Director of HR'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'Role'</span>:<span class="string">'Course liaison'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'Role'</span>:<span class="string">'Grader'</span>&#125;])</div><div class="line">staff_df=staff_df.set_index(<span class="string">'Name'</span>)</div><div class="line">student_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'School'</span>:<span class="string">'Business'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Mike'</span>,<span class="string">'School'</span>:<span class="string">'Law'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'School'</span>:<span class="string">'Engineering'</span>&#125;])</div><div class="line">student_df=student_df.set_index(<span class="string">'Name'</span>)</div><div class="line"></div><div class="line">print(staff_df)</div><div class="line">print()</div><div class="line">print(student_df)</div><div class="line"></div><div class="line">                Role</div><div class="line">Name                 </div><div class="line">Kelly  Director of HR</div><div class="line">Sally  Course liaison</div><div class="line">James          Grader</div><div class="line"></div><div class="line">            School</div><div class="line">Name              </div><div class="line">James     Business</div><div class="line">Mike           Law</div><div class="line">Sally  Engineering</div></pre></td></tr></table></figure>
+<p>如果我们想要这些的union，我们将调用merge，传入在左边的DataFrame和在右边的DataFrame，并且告诉merge我们想要使用外连接（outer join）。我们告诉merge，我们要用左索引和右索引作为结合列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'outer'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">James	Grader	Business</div><div class="line">Kelly	Director of HR	NaN</div><div class="line">Mike	NaN	Law</div><div class="line">Sally	Course liaison	Engineering</div></pre></td></tr></table></figure>
+<p>我们在结果的DataFrame中看到每个人都被列出。而且由于Mike没有任何role，而John没有School，那些单元被列为缺失值（NaN)。如果我们想要得到intersection，就是那些也是员工的学生，我们可以将how属性设置为inner。而我们设置的结果DataFrame只有James和Sally。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'inner'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">James	Grader	Business</div><div class="line">Sally	Course liaison	Engineering</div></pre></td></tr></table></figure>
+<p>现在，当合并DataFrames时，还有另外两个常见的用例。两个例子都是我们称之为集合加法（set addition）。第一个是当我们想要得到所有员工的名单，不管他们是否是学生。但如果他们是学生，我们想要获得他们的学生细节。为此，我们将使用使用左连接（left join）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'left'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">Kelly	Director of HR	NaN</div><div class="line">Sally	Course liaison	Engineering</div><div class="line">James	Grader	Business</div></pre></td></tr></table></figure>
+<p>你可能猜测到接下来会是什么。我们想要一个所有学生和他们的角色的列表，如果他们也是工作人员。为此，我们将使用右连接（right join）。合并方法有一些其他有趣的参数。首先，您不需要使用索引来加入，也可以使用列。这是一个例子。这里有个例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">staff_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'Kelly'</span>,<span class="string">'Role'</span>:<span class="string">'Director of HR'</span>,<span class="string">'Location'</span>:<span class="string">'State Street'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'Role'</span>:<span class="string">'Course liaison'</span>,<span class="string">'Location'</span>:<span class="string">'Washington Avenue'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'Role'</span>:<span class="string">'Grader'</span>,<span class="string">'Location'</span>:<span class="string">'Washington Avenue'</span>&#125;])</div><div class="line">student_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'School'</span>:<span class="string">'Bussiness'</span>,<span class="string">'Location'</span>:<span class="string">'1024 Billiard Avenue'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Mike'</span>,<span class="string">'School'</span>:<span class="string">'Law'</span>,<span class="string">'Location'</span>:<span class="string">'Fraternity House #22'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'School'</span>:<span class="string">'Engineering'</span>,<span class="string">'Location'</span>:<span class="string">'512 Wilson Crescent'</span>&#125;])</div><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'left'</span>,left_on=<span class="string">'Name'</span>,right_on=<span class="string">'Name'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Location_x	Name	Role	Location_y	School</div><div class="line"><span class="number">0</span>	State Street	Kelly	Director of HR	NaN	NaN</div><div class="line"><span class="number">1</span>	Washington Avenue	Sally	Course liaison	<span class="number">512</span> Wilson Crescent	Engineering</div><div class="line"><span class="number">2</span>	Washington Avenue	James	Grader	<span class="number">1024</span> Billiard Avenue	Bussiness</div></pre></td></tr></table></figure>
+<p>merge函数保留此资料，但附加_x或 _y以帮助区分哪个索引与哪个列的数据有关。__x始终是左边的DataFrame资料，而y始终是右边的DataFrame资料。</p>
+<p>你可以控制<strong>_</strong>x和y的名字使用附加参数，如果你想。现在你试试看。以下是产品和发票的DataFrame。该产品具有标识符和标价。发票列出了人员，产品，标识符和数量。假设我们要产生总计，我们如何将这两个DataFrames加在一起，以便我们有一个列出我们需要的所有信息？</p>
 
       
     </div>
@@ -386,13 +363,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/12/28/关于Python数据分析初解/">关于Python数据分析初解</a></p>
+        <p><span>本文标题:</span><a href="/2018/01/08/数据分析之四/">数据分析之四</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-12-28, 22:54:21</p>
-        <p><span>最后更新:</span>2017-12-30, 23:38:47</p>
+        <p><span>发布时间:</span>2018-01-08, 20:17:07</p>
+        <p><span>最后更新:</span>2018-01-09, 15:22:54</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/12/28/关于Python数据分析初解/" title="关于Python数据分析初解">http://adamzeng.site/2017/12/28/关于Python数据分析初解/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/12/28/关于Python数据分析初解/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/08/数据分析之四/" title="数据分析之四">http://adamzeng.site/2018/01/08/数据分析之四/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/01/08/数据分析之四/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -404,16 +381,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/12/31/pandas的初步认识/">
-                    pandas的初步认识
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/12/19/mysql学习笔记一/">
-                    mysql学习笔记一
+                <a href="/2018/01/05/数据分析第三节/">
+                    数据分析第三节
                 </a>
             </div>
         
@@ -425,7 +396,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据分析"><span class="toc-number">1.</span> <span class="toc-text">数据分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于时间与日期"><span class="toc-number">1.0.1.</span> <span class="toc-text">关于时间与日期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#timestamp转换为datetime"><span class="toc-number">1.0.2.</span> <span class="toc-text">timestamp转换为datetime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-Python-Objects-map"><span class="toc-number">1.0.3.</span> <span class="toc-text">Advanced Python Objects,map()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advanced-Python-Lambda-and-List-Comprehensions"><span class="toc-number">1.0.4.</span> <span class="toc-text">Advanced Python Lambda and List Comprehensions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advance-Python-Demonstration-The-Numerical-Python-Library-Numpy"><span class="toc-number">1.0.5.</span> <span class="toc-text">Advance Python Demonstration: The Numerical Python Library(Numpy)</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Merging-DataFrames"><span class="toc-number">1.</span> <span class="toc-text">Merging DataFrames</span></a></li></ol>
         
     </div>
     <style>
@@ -461,7 +432,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"关于Python数据分析初解　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"数据分析之四　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -497,15 +468,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/12/31/pandas的初步认识/" title="上一篇: pandas的初步认识">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/12/19/mysql学习笔记一/" title="下一篇: mysql学习笔记一">
+            <a href="/2018/01/05/数据分析第三节/" title="下一篇: 数据分析第三节">
                 <i class="fa fa-angle-right"></i>
             </a>
         
