@@ -4,6 +4,41 @@
 
     
   <url>
+    <loc>http://adamzeng.site/2018/03/08/%E5%85%AB%E7%9A%87%E5%90%8E/</loc>
+    <lastmod>2018-03-09T07:11:19.005Z</lastmod>
+    <data>
+        <display>
+        <title>八皇后</title>
+        <pubTime>2018-03-08T12:53:04.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://adamzeng.site/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/01/09/Group-by/</loc>
+    <lastmod>2018-01-09T08:43:26.099Z</lastmod>
+    <data>
+        <display>
+        <title>Group by</title>
+        <pubTime>2018-01-09T08:43:04.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://adamzeng.site/2018/01/09/Pandas-Idioms/</loc>
     <lastmod>2018-01-09T08:42:07.120Z</lastmod>
     <data>
