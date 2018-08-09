@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[数据库与ERD]]></title>
       <url>/2018/08/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EERD/</url>
-      <content type="html"><![CDATA[<h4 id="INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe"><a href="#INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe" class="headerlink" title="INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)"></a>INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)</h4><h4 id="VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16"><a href="#VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16" class="headerlink" title="VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);"></a>VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);</h4><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-09%20%E4%B8%8B%E5%8D%889.38.53.png"></p>
+      <content type="html"><![CDATA[<h4 id="INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe"><a href="#INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe" class="headerlink" title="INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)"></a>INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)</h4><h4 id="VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16"><a href="#VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16" class="headerlink" title="VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);"></a>VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);<a id="more"></a></h4><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-09%20%E4%B8%8B%E5%8D%889.38.53.png"></p>
 <p>这一段SQL语句所想说明的是插入shr（table 名）VALUES括号中的数据到括号中的这些列中，如果没有括号，SQL就会认为你是按照默认的列的名称的顺序插入括号中的数据，一般建议shr后面指定插入的列名。</p>
 <p>所以说</p>
 <p>####INSERT INTO shr    VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);</p>
@@ -26,6 +26,18 @@
 <h4 id="而且这个东西巧妙地解决了两个表不能直接多对多的问题。"><a href="#而且这个东西巧妙地解决了两个表不能直接多对多的问题。" class="headerlink" title="而且这个东西巧妙地解决了两个表不能直接多对多的问题。"></a>而且这个东西巧妙地解决了两个表不能直接多对多的问题。</h4><h4 id="还有最后一个关于雇员的问题，先看下面的表"><a href="#还有最后一个关于雇员的问题，先看下面的表" class="headerlink" title="还有最后一个关于雇员的问题，先看下面的表"></a>还有最后一个关于雇员的问题，先看下面的表</h4><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-09%20%E4%B8%8B%E5%8D%8811.47.41.png"></p>
 <h4 id="在一个公司中有很多员工，这些员工都在上面那个employee表中，在这种表中，员工的信息都是后插入的，为什么呢？最先插入的永远都是老板，因为如果先插入员工，Boss这一栏如果插入666，但是这时候666还不在表中，这时候插入会出错，所以永远都是先插入老板。"><a href="#在一个公司中有很多员工，这些员工都在上面那个employee表中，在这种表中，员工的信息都是后插入的，为什么呢？最先插入的永远都是老板，因为如果先插入员工，Boss这一栏如果插入666，但是这时候666还不在表中，这时候插入会出错，所以永远都是先插入老板。" class="headerlink" title="在一个公司中有很多员工，这些员工都在上面那个employee表中，在这种表中，员工的信息都是后插入的，为什么呢？最先插入的永远都是老板，因为如果先插入员工，Boss这一栏如果插入666，但是这时候666还不在表中，这时候插入会出错，所以永远都是先插入老板。"></a>在一个公司中有很多员工，这些员工都在上面那个employee表中，在这种表中，员工的信息都是后插入的，为什么呢？最先插入的永远都是老板，因为如果先插入员工，Boss这一栏如果插入666，但是这时候666还不在表中，这时候插入会出错，所以永远都是先插入老板。</h4>]]></content>
       
+        <categories>
+            
+            <category> 数据库 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
         
     </entry>
     
