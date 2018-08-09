@@ -286,6 +286,74 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-数据分析第三节" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/05/数据分析第三节/" class="article-date">
+      <time datetime="2018-01-04T23:16:51.000Z" itemprop="datePublished">2018-01-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/05/数据分析第三节/">数据分析第三节</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="Indexing-Dataframes"><a href="#Indexing-Dataframes" class="headerlink" title="Indexing Dataframes"></a>Indexing Dataframes</h3><p>如我们所见，列表（series）和DataFrames都可以应用索引（index）。索引本质上是行（row)的标识，我们知道行对应于轴零（axis=0）。在我们的奥运数据中，我们用国家的名称对DataFrame进行索引。指数可以被自动推断美丽如当我们创建新列表，没有指定索引时，在这种情况下，我们获得数值索引；或者可以明确设置，比如当我们使用字典（dictionary）创建列表时；或者当我们下载数据时从CSV文件时；指定标头，另一个选项用来设置index是使用set_index函数。此函数使用一个列（column）的名单，并将这些列提升为索引。set_index是个破坏性过程，它不保留当前的索引。如果要保留当前的索引，则需要手动创建一个新的列，并从index属性将其复制到其中。我们回到我们的奥运DataFrame。假设我们不想按照国家来索引DataFrame，而是要按夏季奥运中获得的金牌数量进行索引。首先，我们需要将原来的国家索引保存到新的列（‘country’）。我们可以使用索引操作或具有列标识的字串来执行此操作。然后我们用set_index，使用夏季金牌获得数量column，来设置新的索引。
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/01/05/数据分析第三节/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-数据分析DataFrame-Data-Structure" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -574,74 +642,6 @@
       
         <p class="article-more-link">
           <a href="/2017/12/19/mysql学习笔记一/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-命名-统计-字典" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/12/03/命名-统计-字典/" class="article-date">
-      <time datetime="2017-12-03T10:34:31.000Z" itemprop="datePublished">2017-12-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/03/命名-统计-字典/">命名 统计 字典</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="如何为元组中的每个元素命名，提高程序可读性？"><a href="#如何为元组中的每个元素命名，提高程序可读性？" class="headerlink" title="如何为元组中的每个元素命名，提高程序可读性？"></a>如何为元组中的每个元素命名，提高程序可读性？</h3><p>学生信息系统中数据为固定格式：
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/12/03/命名-统计-字典/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
