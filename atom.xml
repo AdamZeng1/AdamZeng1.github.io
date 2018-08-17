@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adamzeng.site/"/>
-  <updated>2018-08-09T13:55:34.031Z</updated>
+  <updated>2018-08-17T04:41:12.277Z</updated>
   <id>http://adamzeng.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pgsql的总结</title>
+    <link href="http://adamzeng.site/2018/08/16/pgsql%E7%9A%84%E6%80%BB%E7%BB%93/"/>
+    <id>http://adamzeng.site/2018/08/16/pgsql的总结/</id>
+    <published>2018-08-16T07:48:16.000Z</published>
+    <updated>2018-08-17T04:41:12.277Z</updated>
+    
+    <content type="html"><![CDATA[<p>pgsql我最近所发现的一些重要的query方式，<a id="more"></a></p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_name(s)</div><div class="line"><span class="keyword">FROM</span> table_name</div><div class="line"><span class="keyword">LIMIT</span> <span class="built_in">number</span>;</div></pre></td></tr></table></figure><p>这个sql语句能够用来兼容Mysql与Pgsql。</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> TOP <span class="number">2</span> * <span class="keyword">FROM</span> table_name;</div></pre></td></tr></table></figure><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-17%20%E4%B8%8B%E5%8D%881.57.17.png"></p><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-17%20%E4%B8%8B%E5%8D%881.57.09.png"></p><p>关于nasa2这一组表的一个无法用natural join完成join操作的例子</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> ass1.astroNo <span class="keyword">as</span> Commander, ass2.astroNo <span class="keyword">as</span> Pilot, ass1.MissionNo </div><div class="line"><span class="keyword">from</span> NASA2_Assigned ass1, NASA2_Assigned ass2</div><div class="line"><span class="keyword">where</span> ass1.projectName = <span class="string">'Shuttle'</span> </div><div class="line">  <span class="keyword">AND</span> ass1.role = <span class="string">'Commander'</span> <span class="keyword">AND</span> ass2.role = <span class="string">'Pilot'</span></div><div class="line">  <span class="keyword">AND</span> ass1.MissionNo = ass2.MissionNo </div><div class="line">  <span class="keyword">AND</span> ass1.MissionNo <span class="keyword">LIKE</span> <span class="string">'STS-2%'</span></div><div class="line"><span class="keyword">order</span> <span class="keyword">by</span> ass1.missionNo;</div></pre></td></tr></table></figure><p>观察以上这一组sql查询，发现很多问题，首先它需要从同一列中分别选出不同的部分，这时需要from 同一个表设置为两个不同的名字</p><p>ass1 和ass2</p><p>此外由于是从projectname名为Shuttle中选出的项目，所以加上</p><p>where ass1.projectname = ‘Shuttle’</p><p>然后通过role的语句来筛选Commander与Pilot</p><p>and ass1.role = ‘Commander’ and ass2.role =’Pilot’</p><p>然后通过以下语句来join两个表</p><p>and ass1.missionno = ass2.missionno</p><p>然后使用like来筛选</p><p>and ass1.missionno like ‘STS-2%’</p><p>最后按照字母默认以missionno排序</p><p>order by ass1.missionno;</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;pgsql我最近所发现的一些重要的query方式，
+    
+    </summary>
+    
+      <category term="sql" scheme="http://adamzeng.site/categories/sql/"/>
+    
+    
+      <category term="sql" scheme="http://adamzeng.site/tags/sql/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库与ERD</title>
@@ -457,27 +479,6 @@
     
     
       <category term="爬虫" scheme="http://adamzeng.site/tags/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>动态Cookies池</title>
-    <link href="http://adamzeng.site/2017/11/22/%E5%8A%A8%E6%80%81Cookies%E6%B1%A0/"/>
-    <id>http://adamzeng.site/2017/11/22/动态Cookies池/</id>
-    <published>2017-11-22T00:23:54.000Z</published>
-    <updated>2017-11-29T11:17:21.990Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="为什么要用Cookies池？"><a href="#为什么要用Cookies池？" class="headerlink" title="为什么要用Cookies池？"></a>为什么要用Cookies池？</h1><p>答：网站需要登录才可爬取，例如新浪微博，爬取过程中如果频率过高会导致封号，如果我想要抓取这样的网站，不能够去弄特别多的账号，分别登录去抓取。而是在请求头中加入Cookies完成请求，所以建一个Cookies池。</p><p>Cookies池的要求：</p><ul><li>大量账号，存在数据库当中，拿出来，自动登录更新。</li><li>定时验证筛选，拿出Cookies能够请求页面，就依然放在池子中，已经过时失效了就去除。</li><li>提供外部接口，做到模块的分离。</li></ul><p>Cookies池的架构：账号队列——生成器——Cookies队列（API)——定时检测器</p><p>新浪微博账号存储在redis当中，存储两方面，账号密码，该账号密码的Cookies，</p><ol><li><a href="http://image.so.com/zj?ch=art&amp;sn=30&amp;listtype=new&amp;temp=1" target="_blank" rel="noopener">http://image.so.com/zj?ch=art&amp;sn=30&amp;listtype=new&amp;temp=1</a></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;为什么要用Cookies池？&quot;&gt;&lt;a href=&quot;#为什么要用Cookies池？&quot; class=&quot;headerlink&quot; title=&quot;为什么要用Cookies池？&quot;&gt;&lt;/a&gt;为什么要用Cookies池？&lt;/h1&gt;&lt;p&gt;答：网站需要登录才可爬取，例如新浪微博，爬取
-      
-    
-    </summary>
-    
     
   </entry>
   

@@ -3,6 +3,46 @@
   
     
     <entry>
+      <title><![CDATA[pgsql的总结]]></title>
+      <url>/2018/08/16/pgsql%E7%9A%84%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<p>pgsql我最近所发现的一些重要的query方式，<a id="more"></a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> column_name(s)</div><div class="line"><span class="keyword">FROM</span> table_name</div><div class="line"><span class="keyword">LIMIT</span> <span class="built_in">number</span>;</div></pre></td></tr></table></figure>
+<p>这个sql语句能够用来兼容Mysql与Pgsql。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> TOP <span class="number">2</span> * <span class="keyword">FROM</span> table_name;</div></pre></td></tr></table></figure>
+<p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-17%20%E4%B8%8B%E5%8D%881.57.17.png"></p>
+<p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-17%20%E4%B8%8B%E5%8D%881.57.09.png"></p>
+<p>关于nasa2这一组表的一个无法用natural join完成join操作的例子</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> ass1.astroNo <span class="keyword">as</span> Commander, ass2.astroNo <span class="keyword">as</span> Pilot, ass1.MissionNo </div><div class="line"><span class="keyword">from</span> NASA2_Assigned ass1, NASA2_Assigned ass2</div><div class="line"><span class="keyword">where</span> ass1.projectName = <span class="string">'Shuttle'</span> </div><div class="line">  <span class="keyword">AND</span> ass1.role = <span class="string">'Commander'</span> <span class="keyword">AND</span> ass2.role = <span class="string">'Pilot'</span></div><div class="line">  <span class="keyword">AND</span> ass1.MissionNo = ass2.MissionNo </div><div class="line">  <span class="keyword">AND</span> ass1.MissionNo <span class="keyword">LIKE</span> <span class="string">'STS-2%'</span></div><div class="line"><span class="keyword">order</span> <span class="keyword">by</span> ass1.missionNo;</div></pre></td></tr></table></figure>
+<p>观察以上这一组sql查询，发现很多问题，首先它需要从同一列中分别选出不同的部分，这时需要from 同一个表设置为两个不同的名字</p>
+<p>ass1 和ass2</p>
+<p>此外由于是从projectname名为Shuttle中选出的项目，所以加上</p>
+<p>where ass1.projectname = ‘Shuttle’</p>
+<p>然后通过role的语句来筛选Commander与Pilot</p>
+<p>and ass1.role = ‘Commander’ and ass2.role =’Pilot’</p>
+<p>然后通过以下语句来join两个表</p>
+<p>and ass1.missionno = ass2.missionno</p>
+<p>然后使用like来筛选</p>
+<p>and ass1.missionno like ‘STS-2%’</p>
+<p>最后按照字母默认以missionno排序</p>
+<p>order by ass1.missionno;</p>
+]]></content>
+      
+        <categories>
+            
+            <category> sql </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> sql </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[数据库与ERD]]></title>
       <url>/2018/08/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8EERD/</url>
       <content type="html"><![CDATA[<h4 id="INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe"><a href="#INSERT-INTO-shr-shrcode-shrfirm-shrprice-shrqty-shrdiv-shrpe" class="headerlink" title="INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)"></a>INSERT INTO shr    (shrcode,shrfirm,shrprice,shrqty,shrdiv,shrpe)</h4><h4 id="VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16"><a href="#VALUES-‘FC’-’Freedonia-Copper’-27-5-10529-1-84-16" class="headerlink" title="VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);"></a>VALUES (‘FC’,’Freedonia Copper’,27.5,10529,1.84,16);<a id="more"></a></h4><p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-08-09%20%E4%B8%8B%E5%8D%889.38.53.png"></p>
@@ -3263,65 +3303,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[java23种设计模式]]></title>
       <url>/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
@@ -3464,6 +3445,65 @@
             <tag> Java </tag>
             
             <tag> 设计模式 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
             
         </tags>
         
