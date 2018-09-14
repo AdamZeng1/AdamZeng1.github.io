@@ -3,6 +3,103 @@
   
     
     <entry>
+      <title><![CDATA[java加载配置文件的三种方式]]></title>
+      <url>/2018/09/14/java%E5%8A%A0%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<p><img src="http://images.cnitblog.com/i/562629/201406/150730416869009.jpg" alt="avatar"></p>
+<p>比如我们要加载db.properties文件<a id="more"></a></p>
+<p>通常情况下会有以下三种方式：</p>
+<ul>
+<li><p>使用文件io流</p>
+</li>
+<li><p>使用相对路径</p>
+</li>
+<li><p>如果我们要获取src（类包）下的db.properties</p>
+</li>
+</ul>
+<p>  使用文件io流</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="comment">// 文件真实路径</span></div><div class="line">    String fileName = <span class="string">"E:/Workspace/SSHDemo/Source/db.properties"</span>;</div><div class="line">    Properties p = <span class="keyword">new</span> Properties();</div><div class="line">    InputStream is = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(fileName));</div><div class="line">    p.load(is);</div><div class="line">    System.out.println(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用相对路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 相对路径</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load2</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Properties p = <span class="keyword">new</span> Properties();</div><div class="line">    <span class="comment">// InputStream is = ClassLoader.getSystemResourceAsStream("db.properties");</span></div><div class="line">    </div><div class="line">    InputStream is = Thread.currentTread().getContextClassLoader().getSystemResourceAsStream(<span class="string">"db.properties"</span>);</div><div class="line">    p.load(is);</div><div class="line">    System.out.println(p);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Properties p = <span class="keyword">new</span> Properties();</div><div class="line">    </div><div class="line">    InputStream is = SourceLoader.class.getClassLoader().getSystemResourceAsStream(<span class="string">"db.properties"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果我们要获取src（类包）下的db.properties又该怎么处理呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//相对于类路径  properties文件盒java放在一起</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">load3</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        Properties p=<span class="keyword">new</span> Properties();</div><div class="line">        <span class="comment">//InputStream is=ClassLoader.getSystemResourceAsStream("db.properties");</span></div><div class="line">        InputStream is=SourceLoader.class.getResourceAsStream(<span class="string">"db.properties"</span>);</div><div class="line">        p.load(is);</div><div class="line">        System.out.println(p);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>三种方法都打印出db.properties文件中的信息</p>
+<p><img src="http://images.cnitblog.com/i/562629/201406/150735374523200.jpg" alt="avatar"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[primary-function-and-features-of-a-router]]></title>
+      <url>/2018/09/13/primary-function-and-features-of-a-router/</url>
+      <content type="html"><![CDATA[<h4 id="Router到底有什么用？"><a href="#Router到底有什么用？" class="headerlink" title="Router到底有什么用？"></a>Router到底有什么用？</h4><p>Ethernet switches function at the data link layer, Layer 2, and are used to forward Ethernet frames between devices within the same network.<a id="more"></a></p>
+<p>通常switch工作在数据链路层，第二层，并且通常是用于传输以太帧在同一个网络的不同设备之间。</p>
+<p>However, when the source IP and destination IP addresses are on different networks, the Ethernet frame must be sent to a router.</p>
+<p>然而，当起始IP与终点IP在不同的network当中的时候，以太帧必须要被送到router中去。</p>
+<p>A router connects one network to another network. The router is responsible for the delivery of packets across different networks. The destination of the IP packet might be a web server in another country or an email server on the local area network.</p>
+<p>一个路由将一个网络与另一个网络连接起来。路由负责包在不同的network中传递，IP packet的终点可能是一个在另一个国家的网络服务器或者是在本地区的邮件服务器。</p>
+<p>The router uses its routing table to determine the best path to use to forward a packet. It is the responsibility of the routers to deliver those packets in a timely manner. The effectiveness of internetwork communications depends, to a large degree, on the ability of routers to forward packets in the most efficient way possible.</p>
+<p>Router使用它的路由表来决定使用最好的路径来传输一个packet。这是路由的责任及时地来发送这些packet。有效的互联网沟通很大程度上取决于router以最有效的方式来传递packets的能力。</p>
+<p>When a host sends a packet to a device on a different IP network, the packet is forwarded to the default gateway because a host device cannot communicate directly with devices outside of the local network. The default gateway is the destination that routes traffic from the local network to devices on remote networks. It is often used to connect a local network to the Internet.</p>
+<p>当一个host发送一个packet到一个不同的IP network中的设备，packet被发送到default gateway因为一个host设备不能直接与外面的本地网络之间进行沟通。default gateway是目的地从本地network路由到remote的networks。通常用来连接本地网络到Internet。</p>
+<h4 id="Routers-are-computers（router本身也是电脑）"><a href="#Routers-are-computers（router本身也是电脑）" class="headerlink" title="Routers are computers（router本身也是电脑）"></a>Routers are computers（router本身也是电脑）</h4><ul>
+<li>central processing unit(CPU)</li>
+<li>operating system(OS)</li>
+<li>Memory and storage(RAM,ROM,NVRAM,Flash,hard drive)</li>
+</ul>
+<h5 id="阐述volatile与non-volatile的区别"><a href="#阐述volatile与non-volatile的区别" class="headerlink" title="阐述volatile与non-volatile的区别"></a>阐述volatile与non-volatile的区别</h5><p>Router memory is classified as volatile or non-volatile. Volatile memory loses its content when the power is turned off, while non-volatile memory does not lose its content when the power is turned off.</p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2018-09-13 下午9.12.10.png" alt="屏幕快照 2018-09-13 下午9.12.10"></p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2018-09-13 下午9.11.31.png" alt="屏幕快照 2018-09-13 下午9.11.31"></p>
+<p><strong>NVRAM</strong>提供startup configuration file的存储</p>
+<p><strong>Flash</strong>提供IOS与system-ralated file的存储</p>
+<h4 id="The-Router-Connection"><a href="#The-Router-Connection" class="headerlink" title="The Router Connection"></a>The Router Connection</h4><p>A router connects multiple networks, which means that it has multiple interfaces that each belong to a different IP network. When a router receives an IP packet on one interface, it determines which interface to use to forward the packet to the destination.</p>
+<p>当一个router收到IP packet在某一个interface的时候，它会决定使用哪一个interface来传输packet到目的地。</p>
+<h4 id="Routers-选择最好的路径"><a href="#Routers-选择最好的路径" class="headerlink" title="Routers 选择最好的路径"></a>Routers 选择最好的路径</h4><p>When the router receives a packet, it examines the destination address of the packet and uses the routing table to search for the best path to that network.</p>
+<p>The routing table also includes the interface to be used to forward packets for each known network. </p>
+<p>routing table同样也包含interface被用于对于每一个已知网络传输packets。</p>
+<p>When a match is found, the router encapsulates the packet into the data link frame of the outgoing or exit interface, and the packet is forwarded toward its destination.</p>
+<p>当匹配上之后，router把packet封装成出口interface的数据链路帧，并且packet被发送往它的目的地。</p>
+<p>It is possible for a router to receive a packet that is encapsulated in one type of data link frame, and to forward the packet out of an interface that uses a different type of data link frame. </p>
+<p>很有可能router收到某一种packet以一种数据链路帧的形式封装并以另一种数据链路帧的形式将包发送出去。</p>
+<p>The data link encapsulation depends on the type of interface on the router and the type of medium to which it connects. </p>
+<p>不同的数据链路封装取决于在router上的interface的类型与与之相连的介质类型。</p>
+<p>router R1 receives the packet encapsulated in an Ethernet frame. After de-encapsulating the packet, R1 uses the destination IP address of the packet to search its routing table for a matching network address. After a destination network address is found in the routing table, R1 encapsulates the packet inside a PPP frame and forwards the packet to R2. A similar process is performed by R2.</p>
+<p>R1收到以Ethernet frame形式封装的packet。R1使用packet的目的地IP address来搜寻它自己的routing table 来寻找一个相匹配的network address。在找到之后，R1将packet封装入一个PPP帧中并且将包传递出去给R2。</p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2018-09-13 下午11.01.39.png" alt="屏幕快照 2018-09-13 下午11.01.39"></p>
+<ul>
+<li><strong>Default gateway</strong> - Identifies the IP address of the router to send a packet to when the destination is not on the same local network subnet.</li>
+</ul>
+<p>The default gateway is usually the address of the interface on the router connected to the local network. The router maintains routing table entries of all connected networks as well as entries of remote networks, and determines the best path to reach those destinations.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> network </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> network </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[二叉查找树]]></title>
       <url>/2018/08/27/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/</url>
       <content type="html"><![CDATA[<p>树（tree）提供了一种层次组织结构，数据可以存储在树中的每个结点内。</p>

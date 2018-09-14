@@ -207,7 +207,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -285,6 +285,148 @@
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-类设计原则" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/08/类设计原则/" class="article-date">
+      <time datetime="2018-05-08T02:33:59.000Z" itemprop="datePublished">2018-05-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/08/类设计原则/">类设计原则</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h1 id="类的设计原则"><a href="#类的设计原则" class="headerlink" title="类的设计原则"></a>类的设计原则</h1><h4 id="1-内聚性"><a href="#1-内聚性" class="headerlink" title="1.内聚性"></a>1.内聚性</h4><p>类应该描述一个单一的实体，而所有的类操作应该在逻辑上互相配合，支持一个一致的目的。例如：可以设计一个类用于学生，但不应该将学生与教职工组合在同一个类中，因为学生和教职工是不同的实体。</p>
+<p>如果一个实体负担太多的职责，就应该按各自的职责分成几个类。例如:String类、StringBuffer类和StringBuilder类都用于处理字符串，但是它们的职责不同。String类处理不可变字符串，StringBuilder类创建可变字符串，StringBuffer与StringBuilder类似，只是StringBuffer类还包含更行字符串的同步方法。
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/05/08/类设计原则/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-八皇后" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/03/08/八皇后/" class="article-date">
+      <time datetime="2018-03-08T09:53:04.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/八皇后/">八皇后</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>首先，可归纳问题的条件为，八皇后之间需要满足：</p>
+<ol>
+<li>不在同一行上。</li>
+<li>不在同一列上。</li>
+<li>不在同一斜线上。</li>
+<li>不在同一反斜线上。
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/03/08/八皇后/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Group-by" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -459,144 +601,6 @@
       
         <p class="article-more-link">
           <a href="/2018/01/08/数据分析之四/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-数据分析第三节" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/01/05/数据分析第三节/" class="article-date">
-      <time datetime="2018-01-04T23:16:51.000Z" itemprop="datePublished">2018-01-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/05/数据分析第三节/">数据分析第三节</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="Indexing-Dataframes"><a href="#Indexing-Dataframes" class="headerlink" title="Indexing Dataframes"></a>Indexing Dataframes</h3><p>如我们所见，列表（series）和DataFrames都可以应用索引（index）。索引本质上是行（row)的标识，我们知道行对应于轴零（axis=0）。在我们的奥运数据中，我们用国家的名称对DataFrame进行索引。指数可以被自动推断美丽如当我们创建新列表，没有指定索引时，在这种情况下，我们获得数值索引；或者可以明确设置，比如当我们使用字典（dictionary）创建列表时；或者当我们下载数据时从CSV文件时；指定标头，另一个选项用来设置index是使用set_index函数。此函数使用一个列（column）的名单，并将这些列提升为索引。set_index是个破坏性过程，它不保留当前的索引。如果要保留当前的索引，则需要手动创建一个新的列，并从index属性将其复制到其中。我们回到我们的奥运DataFrame。假设我们不想按照国家来索引DataFrame，而是要按夏季奥运中获得的金牌数量进行索引。首先，我们需要将原来的国家索引保存到新的列（‘country’）。我们可以使用索引操作或具有列标识的字串来执行此操作。然后我们用set_index，使用夏季金牌获得数量column，来设置新的索引。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/01/05/数据分析第三节/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-数据分析DataFrame-Data-Structure" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/01/01/数据分析DataFrame-Data-Structure/" class="article-date">
-      <time datetime="2018-01-01T00:43:56.000Z" itemprop="datePublished">2018-01-01</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/数据分析DataFrame-Data-Structure/">数据分析DataFrame Data Structure</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="The-DataFrame-Data-Structure"><a href="#The-DataFrame-Data-Structure" class="headerlink" title="The DataFrame Data Structure"></a>The DataFrame Data Structure</h3><p>DataFrame数据结构是Pandas的核心，这将是你的主要对象，在处理数据分析和数据清理任务的时候。DataFrame在概念上是一个二维列表series对象，其中有一个索引（index）和多列内容，每列（column）都有一个标识（label）。</p>
-<p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-01%20%E4%B8%8B%E5%8D%8812.30.47.png" alt="image"></p>
-<p>你可以将DataFrame本身视为简单的双轴有标识的阵列，你可以以许多不同的方式创建一个DataFrame，其中，你可以使用一组series，其中每个列表代表一行数据。或者你可以使用一组字典（dictionary），
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/01/01/数据分析DataFrame-Data-Structure/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
