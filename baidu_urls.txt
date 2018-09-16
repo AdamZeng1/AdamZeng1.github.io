@@ -1,3 +1,3 @@
-http://adamzeng.site/2018/09/14/java加载配置文件的三种方式/
-http://adamzeng.site/2018/09/13/primary-function-and-features-of-a-router/
-http://adamzeng.site/2018/08/27/二叉查找树/
+http://adamzeng.site/2018/09/16/static-route-and-dynamic-route/
+http://adamzeng.site/2018/09/16/Java内存区域与内存溢出异常/
+http://adamzeng.site/2018/09/15/JVM系列一走进JVM/

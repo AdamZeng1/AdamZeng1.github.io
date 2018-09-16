@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="AdamZeng" />
+
+
+
+<meta name="description" content="Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁、在第七版的Java SE中的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域，如下图所示">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java内存区域与内存溢出异常">
+<meta property="og:url" content="http://adamzeng.site/2018/09/16/Java内存区域与内存溢出异常/index.html">
+<meta property="og:site_name" content="AdamZeng">
+<meta property="og:description" content="Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁、在第七版的Java SE中的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域，如下图所示">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1fvb4kp1xmwj30lw0gmtgm.jpg">
+<meta property="og:updated_time" content="2018-09-16T02:16:13.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java内存区域与内存溢出异常">
+<meta name="twitter:description" content="Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁、在第七版的Java SE中的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域，如下图所示">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1fvb4kp1xmwj30lw0gmtgm.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="AdamZeng" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java内存区域与内存溢出异常 | AdamZeng</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7f446a8347e6278dac2da42f1e8204ad";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AdamZeng</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">start from zero</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Python</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AdamZeng</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AdamZeng</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">start from zero</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Java内存区域与内存溢出异常" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/16/Java内存区域与内存溢出异常/" class="article-date">
+      <time datetime="2018-09-16T01:20:29.000Z" itemprop="datePublished">2018-09-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java内存区域与内存溢出异常
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁、在第七版的Java SE中的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域，如下图所示<a id="more"></a></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79ly1fvb4kp1xmwj30lw0gmtgm.jpg" alt="屏幕快照 2018-09-16 上午11.30.03"></p>
+<h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行字节码的行号指示器。在虚拟机的概念模型里（仅是概念模型，各种虚拟机可能会通过一些更高效地方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。</p>
+<p>由于Java虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器（对于多核处理器来说是一个内核）都只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个独立的程序计数器，各条线程之间计数器互不影响，独立存储，我们称这类内存区域为”线程私有”的内存。</p>
+<p>如果线程正在执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果正在执行的是Native方法，这个计数器值则为空（Undefined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
+<h4 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h4><p>与程序计数器一样，Java虚拟机栈（Java Virtual Machine Stacks）也是线程私有的，它的生命周期与线程相同。虚拟机栈所描述的是Java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态链接、方法出口等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</p>
+<p>经常有人把Java内存区分为堆内存（Heap）和栈内存（Stack），这种分法比较粗糙，Java内存区域的划分实际上远比这复杂。这种划分方式的流行只能说明大多数程序员最关注的、与对象内存分配关系最密切的内存区域是这两块。其中所指的”堆“笔者在后面会专门讲述，而所指的”栈“就是现在讲的虚拟机栈，或者说是虚拟机栈中局部变量表部分。</p>
+<p>局部变量表存放了编译期可知的各种基本数据类型（boolean，byte，char，short，int，float，long，double）、对象引用（reference类型，它不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置）和returnAddress类型（指向了一条字节码指令的地址）。</p>
+<p>其中64位长度的long和double类型的数据会占用2个局部变量空间（Slot），其余的数据类型只占用1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的在方法运行期间不会改变局部变量表的大小。</p>
+<p>在Java虚拟机规范中，对这个区域规定了两种异常状况：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常：如果虚拟机栈可以动态扩展（当前大部分的Java虚拟机都可动态扩展，只不过Java虚拟机规范中也允许固定长度的虚拟机栈），如果扩展时无法申请到足够的内存，就会抛出OutOfMemoryError异常。</p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>本地方法栈（Native Method Stack）与虚拟机栈所发挥的作用是非常相似的，它们之间的区别不过是虚拟机栈为虚拟机执行Java方法</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/09/16/Java内存区域与内存溢出异常/">Java内存区域与内存溢出异常</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
+        <p><span>发布时间:</span>2018-09-16, 11:20:29</p>
+        <p><span>最后更新:</span>2018-09-16, 12:16:13</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/09/16/Java内存区域与内存溢出异常/" title="Java内存区域与内存溢出异常">http://adamzeng.site/2018/09/16/Java内存区域与内存溢出异常/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/09/16/Java内存区域与内存溢出异常/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/09/16/static-route-and-dynamic-route/">
+                    static-route-and-dynamic-route
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/09/15/JVM系列一走进JVM/">
+                    JVM系列一走进JVM
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#程序计数器"><span class="toc-number">1.</span> <span class="toc-text">程序计数器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java虚拟机栈"><span class="toc-number">2.</span> <span class="toc-text">Java虚拟机栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#本地方法栈"><span class="toc-number">3.</span> <span class="toc-text">本地方法栈</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java内存区域与内存溢出异常　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2147425';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/09/16/static-route-and-dynamic-route/" title="上一篇: static-route-and-dynamic-route">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/09/15/JVM系列一走进JVM/" title="下一篇: JVM系列一走进JVM">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/static-route-and-dynamic-route/">static-route-and-dynamic-route</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/Java内存区域与内存溢出异常/">Java内存区域与内存溢出异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/15/JVM系列一走进JVM/">JVM系列一走进JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/java加载配置文件的三种方式/">java加载配置文件的三种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/13/primary-function-and-features-of-a-router/">primary-function-and-features-of-a-router</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/二叉查找树/">二叉查找树</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/26/heap堆排序/">heap堆排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/pgsql的总结/">pgsql的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/数据库与ERD/">数据库与ERD</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/07/使用大O符号来衡量算法效率/">使用大O符号来衡量算法效率</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/03/Java中的同步合集/">Java中的同步合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/01/Switch-Forwarding-Methods/">Switch-Forwarding-Methods</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/08/类设计原则/">类设计原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/08/八皇后/">八皇后</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Group-by/">Group by</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Pandas-Idioms/">Pandas Idioms</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/数据分析之四/">数据分析之四</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/05/数据分析第三节/">数据分析第三节</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/数据分析DataFrame-Data-Structure/">数据分析DataFrame Data Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/31/pandas的初步认识/">pandas的初步认识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/28/关于Python数据分析初解/">关于Python数据分析初解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/mysql学习笔记一/">mysql学习笔记一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/命名-统计-字典/">命名 统计 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/列表，字典，集合筛选数据/">列表，字典，集合筛选数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/Python中的-arg和-kwarg/">Python中的*arg和**kwarg</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/classmethod和staticmethod/">classmethod和staticmethod</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/scrapy了解/">scrapy了解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/动态Cookies池/">动态Cookies池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/未来打算/">未来打算</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/最近的生活总结/">最近的生活总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/爬虫动态代理池/">爬虫动态代理池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/BeautifulSoup/">BeautifulSoup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/getitem-and-setitem/">__getitem__ and __setitem__</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/排序和搜索/">排序和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/leetcode371/">leetcode371题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/TCP-IP与HTTP的关系/">TCP/IP与HTTP的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/动态规划/">动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/探索迷宫/">探索迷宫</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/04/短信轰炸机/">短信轰炸机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/leetcode190/">leetcode190题131题191题231题342题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/谢尔宾斯基三角形/">谢尔宾斯基三角形</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/可视化递归/">可视化递归</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/计算整数列表和/">计算整数列表和</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/Vue-js的数据/">Vue.js的数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/有序列表/">有序列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/列表/">列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是Deque/">什么是Deque</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是队列/">什么是队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/生活/">生活</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/中缀前缀和后缀表达式/">中缀前缀和后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/十进制转换成二进制/">十进制转换成二进制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/简单与复杂括号匹配/">简单与复杂括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/基本数据结构之一/">基本数据结构之一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Python数据结构的字典/">Python数据结构的字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/python数据结构的性能/">python数据结构的性能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/你好，这个世界/">你好，这个世界!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Git详细教程/">Git常用命令(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/java设计模式/">java23种设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/Git常用命令/">Git常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/hexo-nexT配置详情/">Hexo之NexT主题配置</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2018 AdamZeng
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -362,6 +362,227 @@
 
 
   
+    <article id="post-static-route-and-dynamic-route" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/16/static-route-and-dynamic-route/" class="article-date">
+      <time datetime="2018-09-16T07:07:08.000Z" itemprop="datePublished">2018-09-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/16/static-route-and-dynamic-route/">static-route-and-dynamic-route</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="Why-use-static-routing"><a href="#Why-use-static-routing" class="headerlink" title="Why use static routing?"></a>Why use static routing?</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvbejbpus2j31040dgn0a.jpg" alt="屏幕快照 2018-09-16 下午5.14.52"></p>
+<p>Static routing provides some advantages over dynamic routing, including:</p>
+<ul>
+<li><p>Static routes are not advertised over the network, resulting in better security.</p>
+</li>
+<li><p>Static routes use less bandwidth than dynamic routing protocols, no CPU cycles are used to calculate and communicate routes.</p>
+</li>
+<li><p>The path a static route uses to send data is known.</p>
+</li>
+</ul>
+<p>Static routing has the following disadvantages:</p>
+<ul>
+<li><p>Initial configuration and maintenance is time-consuming.</p>
+</li>
+<li><p>Configuration is error-prone, especially in large networks.</p>
+</li>
+<li><p>Administrator intervention is required to maintain changing route information.</p>
+</li>
+<li><p>Does not scale well with growing networks; maintenance becomes cumbersome.</p>
+</li>
+<li><p>Requires complete knowledge of the whole network for proper implementation.</p>
+</li>
+</ul>
+<h4 id="ip-route-Command"><a href="#ip-route-Command" class="headerlink" title="ip route Command"></a>ip route Command</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvbikax1hrj311a0e4gpy.jpg" alt="屏幕快照 2018-09-16 下午7.34.05"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvbjkayh7tj312u0jen6r.jpg" alt="屏幕快照 2018-09-16 下午8.08.44"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvbjonpf4cj313k0segxh.jpg" alt="屏幕快照 2018-09-16 下午8.12.47"></p>
+<h4 id="ipv6-route-command"><a href="#ipv6-route-command" class="headerlink" title="ipv6 route command"></a>ipv6 route command</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvbk8qkpndj314w0o0wsy.jpg" alt="屏幕快照 2018-09-16 下午8.32.09"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvbkh3xgfcj31540u015u.jpg" alt="屏幕快照 2018-09-16 下午8.40.03"></p>
+<p>R1 is configured with a default static route pointing to R2. Because no administrative distance is configured, the default value (1) is used for this static route. R1 is also configured with a floating static default pointing to R3 with an administrative distance of 5. This value is greater than the default value of 1 and therefore; this route floats and is not present in the routing table, unless the preferred route fails.</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/network/">network</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Java内存区域与内存溢出异常" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/16/Java内存区域与内存溢出异常/" class="article-date">
+      <time datetime="2018-09-16T01:20:29.000Z" itemprop="datePublished">2018-09-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/16/Java内存区域与内存溢出异常/">Java内存区域与内存溢出异常</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>Java虚拟机在执行Java程序的过程中，会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁、在第七版的Java SE中的规定，Java虚拟机所管理的内存将会包括以下几个运行时数据区域，如下图所示
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/09/16/Java内存区域与内存溢出异常/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-JVM系列一走进JVM" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/15/JVM系列一走进JVM/" class="article-date">
+      <time datetime="2018-09-15T10:17:34.000Z" itemprop="datePublished">2018-09-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/15/JVM系列一走进JVM/">JVM系列一走进JVM</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>现代高性能的虚拟机雏形是Exact VM,因它使用准备式内存管理（Exact Memory Management，也可以叫Non-Conservative/Accurate Memory Management)而得名，即虚拟机可以知道内存中某个位置的数据具体是什么类型。譬如内存中有一个32位的整数123456，它到底是一个reference类型指向123456的内存地址还是一个数值为123456的整数，虚拟机将有能力分辨出来，这样才能在GC（垃圾收集）的时候准确判断堆上的数据是否还可能被使用。由于使用了准确式内存管理，Exact VM可以抛弃以前Classic VM基于handler的对象查找方式（原因是进行GC后对象将可能会被移动位置，如果将地址为123456的对象移动到654321，在没有明确信息表明内存中哪些数据是reference的前提下，虚拟机是不敢把内存中所有为123456的值改为654321的，所以要使用句柄来保持reference值的稳定），这样每次定位对象都少了一次间接查找的开销，提升执行性能。</p>
+<p>虽然Exact VM的技术相对Classic VM来说先进了很多，但是在商业应用上只存在了很短暂的时间就被更为优秀的HotSpot VM所取代，甚至还没有来得及发布Windows和Linux平台下的商用版本。</p>
+<h4 id="Sun-HotSpot-VM"><a href="#Sun-HotSpot-VM" class="headerlink" title="Sun HotSpot VM"></a>Sun HotSpot VM</h4><p>HotSpot VM既继承了Sun之前两款商用虚拟机的有点（如前面提到的准确式内存管理），也有许多自己新的技术优势，如它名称中的HotSpot指的就是它的热点代码探测技术（其实两个VM基本上是同时期的独立产品，HotSpot还稍早一些，HotSpot一开始就是准确式GC，而Exact VM中也有与HotSpot几乎一样的热点探测。）</p>
+<p><strong>HotSpot VM的热点代码探测能力可以通过执行计数器找出最具有编译价值的代码，然后通知JIT编译器以方法为单位进行编译。如果一个方法被频繁调用，或者方法中有效循环次数很多，将会分别触发标准编译和OSR（栈上替换）编译动作。通过编译器与解释器恰当地协同工作，可以在最优化的程序响应时间与最佳执行性能中取得平衡，而且无需等待本地代码输出才能执行程序，即时编译的时间压力也相对减小，这样有助于引入更多代码优化技术，输出质量更高的本地代码。</strong></p>
+<h4 id="64位虚拟机"><a href="#64位虚拟机" class="headerlink" title="64位虚拟机"></a>64位虚拟机</h4><p>在几年之前，主流的CPU就开始支持64位架构了。</p>
+<p>但是在Java EE方面，企业级应用经常需要使用超过4GB的内存，对于64位虚拟机的需求是非常迫切的，但由于上述原因，许多企业应用都仍然选择使用虚拟集群等方式继续在32位虚拟机中进行部署。Sun也注意到了这些问题，并做出了一些改善，提供了普通对象指针压缩功能（-XX:+UseCompressedOops，这个参数不建议显式设置，建议维持默认由虚拟机的Ergonomics机制自动开启），在执行代码时，动态植入压缩指令以节省内存消耗，但是开启压缩指针会增加执行代码数量，因为所有在Java堆里的、指向Java堆内对象的指针都会被压缩，这些指针的访问就需要更多的代码才可以实现，而且并不只是读写字段才受影响，在实例方法调用、子类型检查等操作中也受影响，因为对象实例指向对象类型的引用也被压缩了。随着硬件的进一步发展，计算机终究会完全过渡到64位的时代，这是一件毫无疑问的事情，主流的虚拟机应用也终究会从32位发展至64位，而虚拟机对64位的支持也将会进一步完善。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-java加载配置文件的三种方式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -431,215 +652,9 @@
 
 
   
-    <article id="post-primary-function-and-features-of-a-router" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/09/13/primary-function-and-features-of-a-router/" class="article-date">
-      <time datetime="2018-09-13T10:34:35.000Z" itemprop="datePublished">2018-09-13</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/13/primary-function-and-features-of-a-router/">primary-function-and-features-of-a-router</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="Router到底有什么用？"><a href="#Router到底有什么用？" class="headerlink" title="Router到底有什么用？"></a>Router到底有什么用？</h4><p>Ethernet switches function at the data link layer, Layer 2, and are used to forward Ethernet frames between devices within the same network.
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/network/">network</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/09/13/primary-function-and-features-of-a-router/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-二叉查找树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/27/二叉查找树/" class="article-date">
-      <time datetime="2018-08-27T12:32:46.000Z" itemprop="datePublished">2018-08-27</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/27/二叉查找树/">二叉查找树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>树（tree）提供了一种层次组织结构，数据可以存储在树中的每个结点内。</p>
-<h4 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h4><ul>
-<li>二叉查找树可以用链接结构实现。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/27/二叉查找树/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-heap堆排序" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/26/heap堆排序/" class="article-date">
-      <time datetime="2018-08-26T12:27:38.000Z" itemprop="datePublished">2018-08-26</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/26/heap堆排序/">heap堆排序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="对于堆排序"><a href="#对于堆排序" class="headerlink" title="对于堆排序"></a>对于堆排序</h2><p>首先堆排序的一些要点是，首先堆排序本身是使用二叉堆，而二叉堆本身是一个非常有意思的东西，首先它是一个完全二叉树，而二叉堆（binary heap）则是一颗具有以下属性的二叉树：
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/26/heap堆排序/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
