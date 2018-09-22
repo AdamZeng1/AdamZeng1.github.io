@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adamzeng.site/2018/09/22/ipv6%E5%A4%8D%E4%B9%A0/</loc>
+    
+    <lastmod>2018-09-22T05:33:03.266Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://adamzeng.site/2018/09/16/static-route-and-dynamic-route/</loc>
+    
+    <lastmod>2018-09-22T00:21:20.264Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://adamzeng.site/2018/09/15/JVM%E7%B3%BB%E5%88%97%E4%B8%80%E8%B5%B0%E8%BF%9BJVM/</loc>
     
     <lastmod>2018-09-21T23:49:57.182Z</lastmod>
@@ -33,13 +47,6 @@
     <loc>http://adamzeng.site/2018/09/16/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/</loc>
     
     <lastmod>2018-09-16T12:11:00.462Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://adamzeng.site/2018/09/16/static-route-and-dynamic-route/</loc>
-    
-    <lastmod>2018-09-16T10:41:58.952Z</lastmod>
     
   </url>
   
@@ -471,14 +478,14 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/categories/index.html</loc>
+    <loc>http://adamzeng.site/page/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adamzeng.site/page/index.html</loc>
+    <loc>http://adamzeng.site/categories/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     

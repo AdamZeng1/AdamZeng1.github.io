@@ -15,20 +15,34 @@
 
 
 
-<meta name="description" content="1.简单括号匹配我们现在把注意力转向使用栈解决真正的计算机问题。你会这么写算术表达式">
-<meta name="keywords" content="Python">
+<meta name="description" content="Rule 1- Omit leading 0s The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For exam">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单与复杂括号匹配">
-<meta property="og:url" content="http://adamzeng.site/2017/10/27/简单与复杂括号匹配/index.html">
+<meta property="og:title" content="ipv6复习">
+<meta property="og:url" content="http://adamzeng.site/2018/09/22/ipv6复习/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="1.简单括号匹配我们现在把注意力转向使用栈解决真正的计算机问题。你会这么写算术表达式">
+<meta property="og:description" content="Rule 1- Omit leading 0s The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:  01AB can be represented as 1AB  09">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/assets/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D.simpleparcheck.png">
-<meta property="og:updated_time" content="2017-10-27T12:27:35.000Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1p2w4jmj310y06udgo.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi221eq9xj313u0rwdt2.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi2mva3l9j311e0keag2.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fvi2rso5cyj311o0rednl.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fvi36it5syj31640s6n8e.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi38mkgyuj314y0o8dos.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3973huxj314m0scdm3.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3d061rjj31520tkn9e.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fvi3qdhoafj30z80omk2j.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4279fjrj314m0toao2.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvi445e5ooj314c0t67f4.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi45usu4wj31540twwsf.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fvi4a9atj9j31460to16b.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4dl06f6j314m0tk7hq.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvi9axl7vhj315i0tm4at.jpg">
+<meta property="og:updated_time" content="2018-09-22T05:33:03.266Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单与复杂括号匹配">
-<meta name="twitter:description" content="1.简单括号匹配我们现在把注意力转向使用栈解决真正的计算机问题。你会这么写算术表达式">
-<meta name="twitter:image" content="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/assets/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D.simpleparcheck.png">
+<meta name="twitter:title" content="ipv6复习">
+<meta name="twitter:description" content="Rule 1- Omit leading 0s The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:  01AB can be represented as 1AB  09">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +74,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>简单与复杂括号匹配 | AdamZeng</title>
+<title>ipv6复习 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -283,11 +297,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-简单与复杂括号匹配" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-ipv6复习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/27/简单与复杂括号匹配/" class="article-date">
-      <time datetime="2017-10-27T06:12:47.000Z" itemprop="datePublished">2017-10-27</time>
+      <a href="/2018/09/22/ipv6复习/" class="article-date">
+      <time datetime="2018-09-22T00:52:25.000Z" itemprop="datePublished">2018-09-22</time>
 </a>
 
 
@@ -302,7 +316,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      简单与复杂括号匹配
+      ipv6复习
     </h1>
   
 
@@ -310,16 +324,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -327,31 +333,62 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="1-简单括号匹配"><a href="#1-简单括号匹配" class="headerlink" title="1.简单括号匹配"></a>1.简单括号匹配</h4><p>我们现在把注意力转向使用栈解决真正的计算机问题。你会这么写算术表达式<a id="more"></a></p>
-<p>(5+6)∗(7+8)/(4+3)</p>
-<p>其中括号用于命令操作的执行。你可能也有一些语言的经验，如Lisp的构造</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(<span class="name">defun</span> square(<span class="name">n</span>)</div><div class="line">     (<span class="name">*</span> n n))</div></pre></td></tr></table></figure>
-<p>这段代码定义了一个名为square的函数，它将返回参数的n的平方。Lisp使用大量的圆括号是臭名昭著的。</p>
-<p>在这两个例子中，括号必须以匹配的方式出现。括号匹配意味着每个开始符号具有相应的结束符号，并且括号能被正确嵌套。考虑下面正确匹配的括号字符串：</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(()()()())</div><div class="line"></div><div class="line">(((())))</div><div class="line"></div><div class="line">(()((())()))</div></pre></td></tr></table></figure>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">((((((())</div><div class="line"></div><div class="line">()))</div><div class="line"></div><div class="line">(()()(()</div></pre></td></tr></table></figure>
-<p>下面是那些不匹配的括号</p>
-<p>区分括号是否匹配的能力是识别很多编程语言结构的重要部分。具有挑战的是如何编写一个算法，能够从左到右读取一串符号，并决定符号是否平衡。为了解决这个问题，我们需要做一个重要的观察。从左到右处理符号时，最近开始符号必须与下一个关闭符号相匹配（见Figure 4）。此外，处理的第一个开始符号必须等待直到其匹配最后一个符号。结束符号以相反的顺序匹配开始符号。他们从内到外匹配。这是一个可以用栈解决问题的线索。</p>
-<p><img src="https://facert.gitbooks.io/python-data-structure-cn/3.%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D/assets/3.6.%E7%AE%80%E5%8D%95%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D.simpleparcheck.png" alt="image"></p>
-<p><em>Figure 4</em></p>
-<p>一旦你认为栈是保存括号的恰当的数据结构，算法是很直接的。从空栈开始，从左到右处理括号字符串。如果一个符号是一个开始符号，将其作为一个信号，对应的结束符号稍后会出现。另一方面，如果符号是结束符号，弹出栈，只要弹出栈的开始符号可以匹配每个结束符号，则括号保持匹配状态。如果任何时候栈上没有出现符合开始符号的结束符号，则字符串不匹配。最后，当所有符号都被处理后，栈应该是空的。实现此算法的Python代码间ActiveCode1.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> test <span class="keyword">import</span> Stack</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parChecker</span><span class="params">(symbolString)</span>:</span></div><div class="line">    s=Stack()</div><div class="line">    balanced=<span class="keyword">True</span></div><div class="line">    index=<span class="number">0</span></div><div class="line">    <span class="keyword">while</span> index&lt;len(symbolString) <span class="keyword">and</span> balanced:</div><div class="line">        symbol=symbolString[index]</div><div class="line">        <span class="keyword">if</span> symbol==<span class="string">'('</span>:</div><div class="line">            s.push(symbol)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> s.isEmpty():</div><div class="line">                balanced=<span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s.pop()</div><div class="line">        index=index+<span class="number">1</span></div><div class="line">        </div><div class="line">    <span class="keyword">if</span> balanced <span class="keyword">and</span> s.isEmpty():</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">      </div><div class="line">print(parChecker(<span class="string">'((()))'</span>))</div><div class="line">print(parChecker(<span class="string">'(()'</span>))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure>
-<h4 id="2-复杂符号匹配"><a href="#2-复杂符号匹配" class="headerlink" title="2.复杂符号匹配"></a>2.复杂符号匹配</h4><p>上面显示的匹配括号问题是许多编程语言都会出现的一般情况的特定情况。匹配和嵌套不同种类的开始和结束符号的情况经常发生。例如，在Python中，方括号[和]用于列表，花括号{和}用于字典。括号（和）用于元祖和算术表达式。只要每个符号都能保持自己的开始和结束关系，就可以混合符号。</p>
-<p>符号字符串如</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123; &#123; ( [ ] [ ] ) &#125; ( ) &#125;</div><div class="line"></div><div class="line">[ [ &#123; &#123; ( ( ) ) &#125; &#125; ] ]</div><div class="line"></div><div class="line">[ ] [ ] [ ] ( ) &#123; &#125;</div></pre></td></tr></table></figure>
-<p>这些被恰当匹配了，因为不仅每一个开始符号都有对应的结束符号，而且符号的类型也匹配。</p>
-<p>相反这些字符串没法匹配：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">( [ ) ]</div><div class="line"></div><div class="line">( ( ( ) ] ) )</div><div class="line"></div><div class="line">[ &#123; ( ) ]</div></pre></td></tr></table></figure>
-<p>上节简单括号检查程序可以轻松扩展处理这些新类型的符号。回想一下，每个开始符号被简单的压入栈中，等待匹配的结束符号出现。当出现结束符号时。唯一的区别是我们必须检查确保它正确匹配栈顶部开始符号的类型。如果两个符号不匹配，则字符串不匹配。如果整个字符串都被处理完并且没有什么留在栈中，则字符串匹配。</p>
-<p>Python程序见ActiveCode 1。唯一的变化是16行，我们称之为辅助函数匹配。必须检查栈中每个删除的符号，以查看它是否与当前结束符号匹配。如果不匹配，则布尔变量balanced被设置为False。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.stack <span class="keyword">import</span> Stack</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parChecker</span><span class="params">(symbolString)</span>:</span></div><div class="line">    s = Stack()</div><div class="line">    balanced = <span class="keyword">True</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> index &lt; len(symbolString) <span class="keyword">and</span> balanced:</div><div class="line">        symbol = symbolString[index]</div><div class="line">        <span class="keyword">if</span> symbol <span class="keyword">in</span> <span class="string">"([&#123;"</span>:</div><div class="line">            s.push(symbol)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> s.isEmpty():</div><div class="line">                balanced = <span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                top = s.pop()</div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> matches(top,symbol):</div><div class="line">                       balanced = <span class="keyword">False</span></div><div class="line">        index = index + <span class="number">1</span></div><div class="line">    <span class="keyword">if</span> balanced <span class="keyword">and</span> s.isEmpty():</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">matches</span><span class="params">(open,close)</span>:</span></div><div class="line">    opens = <span class="string">"([&#123;"</span></div><div class="line">    closers = <span class="string">")]&#125;"</span></div><div class="line">    <span class="keyword">return</span> opens.index(open) == closers.index(close)</div><div class="line"></div><div class="line"></div><div class="line">print(parChecker(<span class="string">'&#123;&#123;([][])&#125;()&#125;'</span>))</div><div class="line">print(parChecker(<span class="string">'[&#123;()]'</span>)</div></pre></td></tr></table></figure>
-<p><em>ActiveCode 1</em></p>
-<p>这两个例子表明，栈是计算机语言结构处理非常重要的数据结构。几乎你能想到的任何嵌套符号必须按照平衡匹配的顺序。栈还有其他重要的用途。</p>
+        <h4 id="Rule-1-Omit-leading-0s"><a href="#Rule-1-Omit-leading-0s" class="headerlink" title="Rule 1- Omit leading 0s"></a>Rule 1- Omit leading 0s</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg" alt="屏幕快照 2018-09-22 上午11.02.28"></p>
+<p>The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:</p>
+<ul>
+<li><p>01AB can be represented as 1AB</p>
+</li>
+<li><p>09F0 can be represented as 9F0</p>
+</li>
+<li><p>0A00 can be represented as A00</p>
+</li>
+<li><p>00AB can be represented as AB</p>
+</li>
+</ul>
+<p>This rule only applies to leading 0s, NOT to trailing 0s, otherwise the address would be ambiguous. For example, the hextet “ABC” could be either “0ABC” or “ABC0”, but these do not represent the same value.</p>
+<h4 id="Rule-2-Omit-all-0-segments"><a href="#Rule-2-Omit-all-0-segments" class="headerlink" title="Rule 2-Omit all 0 segments"></a>Rule 2-Omit all 0 segments</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1p2w4jmj310y06udgo.jpg" alt="屏幕快照 2018-09-22 上午11.09.37"></p>
+<p>The second rule to help reduce the notation of IPv6 addresses is that a double colon (::) can replace any single, contiguous string of one or more 16-bit segments (hextets) consisting of all 0s.</p>
+<p>The double colon (::) can only be used once within an address, otherwise there would be more than one possible resulting address. When used with the omitting leading 0s technique, the notation of IPv6 address can often be greatly reduced. This is commonly known as the compressed format.</p>
+<p>Incorrect address:</p>
+<ul>
+<li>2001:0DB8::ABCD::1234</li>
+</ul>
+<h4 id="IPv6-Address-Types"><a href="#IPv6-Address-Types" class="headerlink" title="IPv6 Address Types"></a>IPv6 Address Types</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi221eq9xj313u0rwdt2.jpg" alt="屏幕快照 2018-09-22 上午11.21.53"></p>
+<ul>
+<li><p><strong>Unicast</strong> - An IPv6 unicast address uniquely identifies an interface on an IPv6-enabled device. As shown in the figure, a source IPv6 address must be a unicast address.</p>
+</li>
+<li><p><strong>Multicast</strong> - An IPv6 multicast address is used to send a single IPv6 packet to multiple destinations.</p>
+</li>
+<li><p><strong>Anycast</strong> - An IPv6 anycast address is any IPv6 unicast address that can be assigned to multiple devices. A packet sent to an anycast address is routed to the nearest device having that address. Anycast addresses are beyond the scope of this course.</p>
+</li>
+</ul>
+<h4 id="IPv6-prefix-length"><a href="#IPv6-prefix-length" class="headerlink" title="IPv6 prefix length"></a>IPv6 prefix length</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi2mva3l9j311e0keag2.jpg" alt="屏幕快照 2018-09-22 上午11.41.47"></p>
+<p>Recall that the prefix, or network portion, of an IPv4 address, can be identified by a dotted-decimal subnet mask or prefix length (slash notation). For example, an IPv4 address of 192.168.1.10 with dotted-decimal subnet mask 255.255.255.0 is equivalent to 192.168.1.10/24.</p>
+<p>IPv6 uses the prefix length to represent the prefix portion of the address. IPv6 does not use the dotted-decimal subnet mask notation. The prefix length is used to indicate the network portion of an IPv6 address using the IPv6 address/prefix length.</p>
+<p>The prefix length can range from 0 to 128. A typical IPv6 prefix length for LANs and most other types of networks is /64. This means the prefix or network portion of the address is 64 bits in length, leaving another 64 bits for the interface ID (host portion) of the address.</p>
+<h4 id="IPv6-Unicast-Addresses"><a href="#IPv6-Unicast-Addresses" class="headerlink" title="IPv6 Unicast Addresses"></a>IPv6 Unicast Addresses</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi2rso5cyj311o0rednl.jpg" alt="屏幕快照 2018-09-22 上午11.46.36"></p>
+<p>An IPv6 unicast address uniquely identifies an interface on an IPv6-enabled device. A packet sent to a unicast address is received by the interface that is assigned that address. Similar to IPv4, a source IPv6 address must be a unicast address. The destination IPv6 address can be either a unicast or a multicast address.</p>
+<h4 id="Structure-of-an-IPv6-Global-Unicast-Address"><a href="#Structure-of-an-IPv6-Global-Unicast-Address" class="headerlink" title="Structure of an IPv6 Global Unicast Address"></a>Structure of an IPv6 Global Unicast Address</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi36it5syj31640s6n8e.jpg" alt="屏幕快照 2018-09-22 下午12.00.53"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi38mkgyuj314y0o8dos.jpg" alt="屏幕快照 2018-09-22 下午12.02.46"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3973huxj314m0scdm3.jpg" alt="屏幕快照 2018-09-22 下午12.03.28"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3d061rjj31520tkn9e.jpg" alt="屏幕快照 2018-09-22 下午12.07.03"></p>
+<h4 id="Subnetting-Using-the-Subnet-ID"><a href="#Subnetting-Using-the-Subnet-ID" class="headerlink" title="Subnetting Using the Subnet ID"></a>Subnetting Using the Subnet ID</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi3qdhoafj30z80omk2j.jpg" alt="屏幕快照 2018-09-22 下午12.19.18"></p>
+<p>The 16 bit subnet ID section of the IPv6 global unicast address can be used by an organization to create internal subnets.</p>
+<p>The subnet ID provides more than enough subnets and host support than will ever be needed in one subnet. For instance, the 16 bit section can:</p>
+<ul>
+<li><p>Create up to 65,536 /64 subnets. This does not include the possibility of borrowing any bits from the interface ID of the address.</p>
+</li>
+<li><p>Support up to 18 quintillion host IPv6 addresses per subnet (i.e., 18,000,000,000,000,000,000).</p>
+</li>
+</ul>
+<p><strong>Note</strong>: Subnetting into the 64 bit Interface ID (or host portion) is also possible but it is rarely required.</p>
+<p>IPv6 subnetting is also easier to implement than IPv4, because there is no conversion to binary required. To determine the next available subnet, just count up in hexadecimal.</p>
+<h4 id="Configure-a-Next-Hop-Static-IPv6-Route"><a href="#Configure-a-Next-Hop-Static-IPv6-Route" class="headerlink" title="Configure a Next-Hop Static IPv6 Route"></a>Configure a Next-Hop Static IPv6 Route</h4><p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4279fjrj314m0toao2.jpg" alt="屏幕快照 2018-09-22 下午12.31.18"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi445e5ooj314c0t67f4.jpg" alt="屏幕快照 2018-09-22 下午12.33.08"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi45usu4wj31540twwsf.jpg" alt="屏幕快照 2018-09-22 下午12.34.27"></p>
+<h4 id="Configure-a-Default-Static-IPv6-Route"><a href="#Configure-a-Default-Static-IPv6-Route" class="headerlink" title="Configure a Default Static IPv6 Route"></a>Configure a Default Static IPv6 Route</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi4a9atj9j31460to16b.jpg" alt="屏幕快照 2018-09-22 下午12.39.02"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4dl06f6j314m0tk7hq.jpg" alt="屏幕快照 2018-09-22 下午12.41.28"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi9axl7vhj315i0tm4at.jpg" alt="屏幕快照 2018-09-22 下午3.32.22"></p>
 
       
     </div>
@@ -360,13 +397,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/27/简单与复杂括号匹配/">简单与复杂括号匹配</a></p>
+        <p><span>本文标题:</span><a href="/2018/09/22/ipv6复习/">ipv6复习</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-10-27, 17:12:47</p>
-        <p><span>最后更新:</span>2017-10-27, 23:27:35</p>
+        <p><span>发布时间:</span>2018-09-22, 10:52:25</p>
+        <p><span>最后更新:</span>2018-09-22, 15:33:03</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/27/简单与复杂括号匹配/" title="简单与复杂括号匹配">http://adamzeng.site/2017/10/27/简单与复杂括号匹配/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/10/27/简单与复杂括号匹配/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/09/22/ipv6复习/" title="ipv6复习">http://adamzeng.site/2018/09/22/ipv6复习/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/09/22/ipv6复习/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -378,16 +415,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/10/27/十进制转换成二进制/">
-                    十进制转换成二进制
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/10/27/基本数据结构之一/">
-                    基本数据结构之一
+                <a href="/2018/09/21/jvm检测工具/">
+                    jvm检测工具
                 </a>
             </div>
         
@@ -399,7 +430,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-简单括号匹配"><span class="toc-number">1.</span> <span class="toc-text">1.简单括号匹配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-复杂符号匹配"><span class="toc-number">2.</span> <span class="toc-text">2.复杂符号匹配</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Rule-1-Omit-leading-0s"><span class="toc-number">1.</span> <span class="toc-text">Rule 1- Omit leading 0s</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rule-2-Omit-all-0-segments"><span class="toc-number">2.</span> <span class="toc-text">Rule 2-Omit all 0 segments</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPv6-Address-Types"><span class="toc-number">3.</span> <span class="toc-text">IPv6 Address Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPv6-prefix-length"><span class="toc-number">4.</span> <span class="toc-text">IPv6 prefix length</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPv6-Unicast-Addresses"><span class="toc-number">5.</span> <span class="toc-text">IPv6 Unicast Addresses</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Structure-of-an-IPv6-Global-Unicast-Address"><span class="toc-number">6.</span> <span class="toc-text">Structure of an IPv6 Global Unicast Address</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Subnetting-Using-the-Subnet-ID"><span class="toc-number">7.</span> <span class="toc-text">Subnetting Using the Subnet ID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-a-Next-Hop-Static-IPv6-Route"><span class="toc-number">8.</span> <span class="toc-text">Configure a Next-Hop Static IPv6 Route</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-a-Default-Static-IPv6-Route"><span class="toc-number">9.</span> <span class="toc-text">Configure a Default Static IPv6 Route</span></a></li></ol>
         
     </div>
     <style>
@@ -435,7 +466,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"简单与复杂括号匹配　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"ipv6复习　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -471,15 +502,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/10/27/十进制转换成二进制/" title="上一篇: 十进制转换成二进制">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/10/27/基本数据结构之一/" title="下一篇: 基本数据结构之一">
+            <a href="/2018/09/21/jvm检测工具/" title="下一篇: jvm检测工具">
                 <i class="fa fa-angle-right"></i>
             </a>
         

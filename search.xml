@@ -3,6 +3,70 @@
   
     
     <entry>
+      <title><![CDATA[ipv6复习]]></title>
+      <url>/2018/09/22/ipv6%E5%A4%8D%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<h4 id="Rule-1-Omit-leading-0s"><a href="#Rule-1-Omit-leading-0s" class="headerlink" title="Rule 1- Omit leading 0s"></a>Rule 1- Omit leading 0s</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg" alt="屏幕快照 2018-09-22 上午11.02.28"></p>
+<p>The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:</p>
+<ul>
+<li><p>01AB can be represented as 1AB</p>
+</li>
+<li><p>09F0 can be represented as 9F0</p>
+</li>
+<li><p>0A00 can be represented as A00</p>
+</li>
+<li><p>00AB can be represented as AB</p>
+</li>
+</ul>
+<p>This rule only applies to leading 0s, NOT to trailing 0s, otherwise the address would be ambiguous. For example, the hextet “ABC” could be either “0ABC” or “ABC0”, but these do not represent the same value.</p>
+<h4 id="Rule-2-Omit-all-0-segments"><a href="#Rule-2-Omit-all-0-segments" class="headerlink" title="Rule 2-Omit all 0 segments"></a>Rule 2-Omit all 0 segments</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1p2w4jmj310y06udgo.jpg" alt="屏幕快照 2018-09-22 上午11.09.37"></p>
+<p>The second rule to help reduce the notation of IPv6 addresses is that a double colon (::) can replace any single, contiguous string of one or more 16-bit segments (hextets) consisting of all 0s.</p>
+<p>The double colon (::) can only be used once within an address, otherwise there would be more than one possible resulting address. When used with the omitting leading 0s technique, the notation of IPv6 address can often be greatly reduced. This is commonly known as the compressed format.</p>
+<p>Incorrect address:</p>
+<ul>
+<li>2001:0DB8::ABCD::1234</li>
+</ul>
+<h4 id="IPv6-Address-Types"><a href="#IPv6-Address-Types" class="headerlink" title="IPv6 Address Types"></a>IPv6 Address Types</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi221eq9xj313u0rwdt2.jpg" alt="屏幕快照 2018-09-22 上午11.21.53"></p>
+<ul>
+<li><p><strong>Unicast</strong> - An IPv6 unicast address uniquely identifies an interface on an IPv6-enabled device. As shown in the figure, a source IPv6 address must be a unicast address.</p>
+</li>
+<li><p><strong>Multicast</strong> - An IPv6 multicast address is used to send a single IPv6 packet to multiple destinations.</p>
+</li>
+<li><p><strong>Anycast</strong> - An IPv6 anycast address is any IPv6 unicast address that can be assigned to multiple devices. A packet sent to an anycast address is routed to the nearest device having that address. Anycast addresses are beyond the scope of this course.</p>
+</li>
+</ul>
+<h4 id="IPv6-prefix-length"><a href="#IPv6-prefix-length" class="headerlink" title="IPv6 prefix length"></a>IPv6 prefix length</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi2mva3l9j311e0keag2.jpg" alt="屏幕快照 2018-09-22 上午11.41.47"></p>
+<p>Recall that the prefix, or network portion, of an IPv4 address, can be identified by a dotted-decimal subnet mask or prefix length (slash notation). For example, an IPv4 address of 192.168.1.10 with dotted-decimal subnet mask 255.255.255.0 is equivalent to 192.168.1.10/24.</p>
+<p>IPv6 uses the prefix length to represent the prefix portion of the address. IPv6 does not use the dotted-decimal subnet mask notation. The prefix length is used to indicate the network portion of an IPv6 address using the IPv6 address/prefix length.</p>
+<p>The prefix length can range from 0 to 128. A typical IPv6 prefix length for LANs and most other types of networks is /64. This means the prefix or network portion of the address is 64 bits in length, leaving another 64 bits for the interface ID (host portion) of the address.</p>
+<h4 id="IPv6-Unicast-Addresses"><a href="#IPv6-Unicast-Addresses" class="headerlink" title="IPv6 Unicast Addresses"></a>IPv6 Unicast Addresses</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi2rso5cyj311o0rednl.jpg" alt="屏幕快照 2018-09-22 上午11.46.36"></p>
+<p>An IPv6 unicast address uniquely identifies an interface on an IPv6-enabled device. A packet sent to a unicast address is received by the interface that is assigned that address. Similar to IPv4, a source IPv6 address must be a unicast address. The destination IPv6 address can be either a unicast or a multicast address.</p>
+<h4 id="Structure-of-an-IPv6-Global-Unicast-Address"><a href="#Structure-of-an-IPv6-Global-Unicast-Address" class="headerlink" title="Structure of an IPv6 Global Unicast Address"></a>Structure of an IPv6 Global Unicast Address</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi36it5syj31640s6n8e.jpg" alt="屏幕快照 2018-09-22 下午12.00.53"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi38mkgyuj314y0o8dos.jpg" alt="屏幕快照 2018-09-22 下午12.02.46"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3973huxj314m0scdm3.jpg" alt="屏幕快照 2018-09-22 下午12.03.28"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvi3d061rjj31520tkn9e.jpg" alt="屏幕快照 2018-09-22 下午12.07.03"></p>
+<h4 id="Subnetting-Using-the-Subnet-ID"><a href="#Subnetting-Using-the-Subnet-ID" class="headerlink" title="Subnetting Using the Subnet ID"></a>Subnetting Using the Subnet ID</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi3qdhoafj30z80omk2j.jpg" alt="屏幕快照 2018-09-22 下午12.19.18"></p>
+<p>The 16 bit subnet ID section of the IPv6 global unicast address can be used by an organization to create internal subnets.</p>
+<p>The subnet ID provides more than enough subnets and host support than will ever be needed in one subnet. For instance, the 16 bit section can:</p>
+<ul>
+<li><p>Create up to 65,536 /64 subnets. This does not include the possibility of borrowing any bits from the interface ID of the address.</p>
+</li>
+<li><p>Support up to 18 quintillion host IPv6 addresses per subnet (i.e., 18,000,000,000,000,000,000).</p>
+</li>
+</ul>
+<p><strong>Note</strong>: Subnetting into the 64 bit Interface ID (or host portion) is also possible but it is rarely required.</p>
+<p>IPv6 subnetting is also easier to implement than IPv4, because there is no conversion to binary required. To determine the next available subnet, just count up in hexadecimal.</p>
+<h4 id="Configure-a-Next-Hop-Static-IPv6-Route"><a href="#Configure-a-Next-Hop-Static-IPv6-Route" class="headerlink" title="Configure a Next-Hop Static IPv6 Route"></a>Configure a Next-Hop Static IPv6 Route</h4><p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4279fjrj314m0toao2.jpg" alt="屏幕快照 2018-09-22 下午12.31.18"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi445e5ooj314c0t67f4.jpg" alt="屏幕快照 2018-09-22 下午12.33.08"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi45usu4wj31540twwsf.jpg" alt="屏幕快照 2018-09-22 下午12.34.27"></p>
+<h4 id="Configure-a-Default-Static-IPv6-Route"><a href="#Configure-a-Default-Static-IPv6-Route" class="headerlink" title="Configure a Default Static IPv6 Route"></a>Configure a Default Static IPv6 Route</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvi4a9atj9j31460to16b.jpg" alt="屏幕快照 2018-09-22 下午12.39.02"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi4dl06f6j314m0tk7hq.jpg" alt="屏幕快照 2018-09-22 下午12.41.28"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvi9axl7vhj315i0tm4at.jpg" alt="屏幕快照 2018-09-22 下午3.32.22"></p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[jvm检测工具]]></title>
       <url>/2018/09/21/jvm%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7/</url>
       <content type="html"><![CDATA[<h4 id="JConsole"><a href="#JConsole" class="headerlink" title="JConsole"></a>JConsole</h4><p>下图为macox平台上的JConsole，内存区域相当于可视化的jstat命令，用于监视受收集器管理的虚拟机内存（Java堆和永久代）的变化趋势。我们通过运行代码下图代码来体验一下它的监视功能。<a id="more"></a></p>
@@ -148,7 +212,7 @@
       <title><![CDATA[static-route-and-dynamic-route]]></title>
       <url>/2018/09/16/static-route-and-dynamic-route/</url>
       <content type="html"><![CDATA[<h4 id="Why-use-static-routing"><a href="#Why-use-static-routing" class="headerlink" title="Why use static routing?"></a>Why use static routing?</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvbejbpus2j31040dgn0a.jpg" alt="屏幕快照 2018-09-16 下午5.14.52"></p>
-<p>Static routing provides some advantages over dynamic routing, including:</p>
+<p>Static routing provides some advantages over dynamic routing, including:<a id="more"></a></p>
 <ul>
 <li><p>Static routes are not advertised over the network, resulting in better security.</p>
 </li>
