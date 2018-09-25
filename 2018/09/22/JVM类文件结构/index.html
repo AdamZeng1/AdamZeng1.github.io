@@ -15,20 +15,19 @@
 
 
 
-<meta name="description" content="大家好，我是曾维瀚，英文名Adam Zeng。600多万分之一的大学生。">
-<meta name="keywords" content="生活">
+<meta name="description" content="概述记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你好，这个世界!">
-<meta property="og:url" content="http://adamzeng.site/2017/10/27/你好，这个世界/index.html">
+<meta property="og:title" content="JVM类文件结构">
+<meta property="og:url" content="http://adamzeng.site/2018/09/22/JVM类文件结构/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="大家好，我是曾维瀚，英文名Adam Zeng。600多万分之一的大学生。">
+<meta property="og:description" content="概述记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oxufz8asv.bkt.clouddn.com/timg.jpeg">
-<meta property="og:updated_time" content="2017-10-27T12:29:21.000Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg">
+<meta property="og:updated_time" content="2018-09-22T10:43:56.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好，这个世界!">
-<meta name="twitter:description" content="大家好，我是曾维瀚，英文名Adam Zeng。600多万分之一的大学生。">
-<meta name="twitter:image" content="http://oxufz8asv.bkt.clouddn.com/timg.jpeg">
+<meta name="twitter:title" content="JVM类文件结构">
+<meta name="twitter:description" content="概述记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>你好，这个世界! | AdamZeng</title>
+<title>JVM类文件结构 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -283,11 +282,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-你好，这个世界" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-JVM类文件结构" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/10/27/你好，这个世界/" class="article-date">
-      <time datetime="2017-10-27T05:31:19.000Z" itemprop="datePublished">2017-10-27</time>
+      <a href="/2018/09/22/JVM类文件结构/" class="article-date">
+      <time datetime="2018-09-22T09:07:06.000Z" itemprop="datePublished">2018-09-22</time>
 </a>
 
 
@@ -302,7 +301,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      你好，这个世界!
+      JVM类文件结构
     </h1>
   
 
@@ -310,16 +309,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/生活/">生活</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -327,11 +318,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>大家好，我是曾维瀚，英文名Adam Zeng。600多万分之一的大学生。<a id="more"></a></p>
-<p>许多人会问为什么人的思想会发生转变，其实上是外部的环境在变化，如果人不随环境而改变，很多时候会被社会淘汰。直到我发现了Python这个神奇的武器，知晓Web的开发流程，爬虫与反爬的技术，还有各种神奇的实现，我确实被这条蟒蛇牢牢捆住，已经动弹不得。</p>
-<p><img src="http://oxufz8asv.bkt.clouddn.com/timg.jpeg" alt="image"></p>
-<h4 id="2-对未来的期许"><a href="#2-对未来的期许" class="headerlink" title="2.对未来的期许"></a>2.对未来的期许</h4><p>在未来我会发布更多的关于Django web框架和基础爬虫的文章，关于HTTP协议与TCP/IP。</p>
-<p>有兴趣的Pythonista可以关注一下。</p>
+        <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。</p>
+<p>Java语言中的各种变量、关键字和运算符号的语义最终都是由多条字节码命令组合而成的，因此字节码命令所能提供的语义描述能力肯定会比Java语言本身更加强大。因此，有一些Java语言本身无法有效支持的语言特性不代表字节码本身无法有效支持，这也为其他语言实现一些有别于Java的语言特性提供了基础。</p>
+<p>Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文件之中，中间没有添加任何分隔符，这使得整个Class文件中存储的内容几乎全部是程序运行的必要数据，没有空隙存在。当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
+<p>根据Java虚拟机规范的规定，Class文件格式采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表，后面的解析都要以这两种数据类型为基础，所以这里要先介绍这两个概念。</p>
+<p>无符号数属于基本的数据类型，以u1,u2,u4,u8来分别代表1个字节、2个字节、4个字节和8个字节的无符号数，无符号数可以用来描述数字、索引引用、数量值或者按照UTF-8编码构成字符串值。</p>
+<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地以”_info”结尾。表用于描述有层次关系的复合结构的数据，整个Class文件本质上就是一张表，它由表6-1所示的数据项构成。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg" alt="屏幕快照 2018-09-22 下午8.43.21"></p>
 
       
     </div>
@@ -340,13 +333,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/10/27/你好，这个世界/">你好，这个世界!</a></p>
+        <p><span>本文标题:</span><a href="/2018/09/22/JVM类文件结构/">JVM类文件结构</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-10-27, 16:31:19</p>
-        <p><span>最后更新:</span>2017-10-27, 23:29:21</p>
+        <p><span>发布时间:</span>2018-09-22, 19:07:06</p>
+        <p><span>最后更新:</span>2018-09-22, 20:43:56</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/10/27/你好，这个世界/" title="你好，这个世界!">http://adamzeng.site/2017/10/27/你好，这个世界/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/10/27/你好，这个世界/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/09/22/JVM类文件结构/" title="JVM类文件结构">http://adamzeng.site/2018/09/22/JVM类文件结构/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/09/22/JVM类文件结构/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -358,16 +351,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/10/27/python数据结构的性能/">
-                    python数据结构的性能
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/06/30/Git详细教程/">
-                    Git常用命令(转)
+                <a href="/2018/09/22/ipv6复习/">
+                    ipv6复习
                 </a>
             </div>
         
@@ -379,7 +366,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-对未来的期许"><span class="toc-number">1.</span> <span class="toc-text">2.对未来的期许</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li></ol>
         
     </div>
     <style>
@@ -415,7 +402,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"你好，这个世界!　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"JVM类文件结构　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -451,15 +438,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/10/27/python数据结构的性能/" title="上一篇: python数据结构的性能">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/30/Git详细教程/" title="下一篇: Git常用命令(转)">
+            <a href="/2018/09/22/ipv6复习/" title="下一篇: ipv6复习">
                 <i class="fa fa-angle-right"></i>
             </a>
         
