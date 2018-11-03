@@ -4,6 +4,151 @@
 
     
   <url>
+    <loc>http://adamzeng.site/2018/11/01/%E5%B9%B6%E5%8F%91%E4%B8%80/</loc>
+    <lastmod>2018-11-03T10:44:30.297Z</lastmod>
+    <data>
+        <display>
+        <title>并发一</title>
+        <pubTime>2018-11-01T09:58:51.000Z</pubTime>
+        
+        <tag>多线程</tag>
+         
+         
+           
+             
+              <breadCrumb title="多线程" url="http://adamzeng.site/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/15/MyBatis/</loc>
+    <lastmod>2018-10-20T05:27:42.051Z</lastmod>
+    <data>
+        <display>
+        <title>MyBatis</title>
+        <pubTime>2018-10-15T05:43:10.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/14/Spring-5/</loc>
+    <lastmod>2018-10-14T09:45:04.191Z</lastmod>
+    <data>
+        <display>
+        <title>Spring-5</title>
+        <pubTime>2018-10-14T05:25:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/13/Spring-4/</loc>
+    <lastmod>2018-10-14T05:24:14.294Z</lastmod>
+    <data>
+        <display>
+        <title>Spring-4</title>
+        <pubTime>2018-10-13T09:25:36.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://adamzeng.site/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/12/Spring-3/</loc>
+    <lastmod>2018-10-13T09:24:47.793Z</lastmod>
+    <data>
+        <display>
+        <title>Spring-3</title>
+        <pubTime>2018-10-12T04:25:18.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://adamzeng.site/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/10/spring-2/</loc>
+    <lastmod>2018-10-12T04:24:37.934Z</lastmod>
+    <data>
+        <display>
+        <title>spring-2</title>
+        <pubTime>2018-10-10T10:31:58.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://adamzeng.site/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/06/Spring-1/</loc>
+    <lastmod>2018-10-10T09:36:01.305Z</lastmod>
+    <data>
+        <display>
+        <title>Spring(1)</title>
+        <pubTime>2018-10-06T09:34:36.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://adamzeng.site/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://adamzeng.site/2018/10/07/%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2018-10-07T04:41:24.230Z</lastmod>
+    <data>
+        <display>
+        <title>常见命令</title>
+        <pubTime>2018-10-07T00:27:46.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://adamzeng.site/2018/10/02/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2018-10-05T09:33:15.223Z</lastmod>
     <data>

@@ -207,7 +207,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -286,11 +286,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-java加载配置文件的三种方式" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JVM类文件结构" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/09/14/java加载配置文件的三种方式/" class="article-date">
-      <time datetime="2018-09-14T00:21:43.000Z" itemprop="datePublished">2018-09-14</time>
+      <a href="/2018/09/22/JVM类文件结构/" class="article-date">
+      <time datetime="2018-09-22T09:07:06.000Z" itemprop="datePublished">2018-09-22</time>
 </a>
 
 
@@ -305,7 +305,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/14/java加载配置文件的三种方式/">java加载配置文件的三种方式</a>
+      <a class="article-title" href="/2018/09/22/JVM类文件结构/">JVM类文件结构</a>
     </h1>
   
 
@@ -315,8 +315,130 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p><img src="http://images.cnitblog.com/i/562629/201406/150730416869009.jpg" alt="avatar"></p>
-<p>比如我们要加载db.properties文件
+        <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。</p>
+<p>Java语言中的各种变量、关键字和运算符号的语义最终都是由多条字节码命令组合而成的，因此字节码命令所能提供的语义描述能力肯定会比Java语言本身更加强大。因此，有一些Java语言本身无法有效支持的语言特性不代表字节码本身无法有效支持，这也为其他语言实现一些有别于Java的语言特性提供了基础。</p>
+<p>Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文件之中，中间没有添加任何分隔符，这使得整个Class文件中存储的内容几乎全部是程序运行的必要数据，没有空隙存在。当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
+<p>根据Java虚拟机规范的规定，Class文件格式采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表，后面的解析都要以这两种数据类型为基础，所以这里要先介绍这两个概念。</p>
+<p>无符号数属于基本的数据类型，以u1,u2,u4,u8来分别代表1个字节、2个字节、4个字节和8个字节的无符号数，无符号数可以用来描述数字、索引引用、数量值或者按照UTF-8编码构成字符串值。</p>
+<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地以”_info”结尾。表用于描述有层次关系的复合结构的数据，整个Class文件本质上就是一张表，它由表6-1所示的数据项构成。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg" alt="屏幕快照 2018-09-22 下午8.43.21"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ipv6复习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/22/ipv6复习/" class="article-date">
+      <time datetime="2018-09-22T00:52:25.000Z" itemprop="datePublished">2018-09-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/22/ipv6复习/">ipv6复习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="Rule-1-Omit-leading-0s"><a href="#Rule-1-Omit-leading-0s" class="headerlink" title="Rule 1- Omit leading 0s"></a>Rule 1- Omit leading 0s</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg" alt="屏幕快照 2018-09-22 上午11.02.28"></p>
+<p>The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2018/09/22/ipv6复习/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-jvm检测工具" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/09/21/jvm检测工具/" class="article-date">
+      <time datetime="2018-09-21T07:37:57.000Z" itemprop="datePublished">2018-09-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/21/jvm检测工具/">jvm检测工具</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="JConsole"><a href="#JConsole" class="headerlink" title="JConsole"></a>JConsole</h4><p>下图为macox平台上的JConsole，内存区域相当于可视化的jstat命令，用于监视受收集器管理的虚拟机内存（Java堆和永久代）的变化趋势。我们通过运行代码下图代码来体验一下它的监视功能。
           
       
     </div>
@@ -336,7 +458,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/09/14/java加载配置文件的三种方式/#more">阅读全文 >></a>
+          <a href="/2018/09/21/jvm检测工具/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -355,11 +477,11 @@
 
 
   
-    <article id="post-primary-function-and-features-of-a-router" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-minor-GC" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/09/13/primary-function-and-features-of-a-router/" class="article-date">
-      <time datetime="2018-09-13T10:34:35.000Z" itemprop="datePublished">2018-09-13</time>
+      <a href="/2018/09/20/minor-GC/" class="article-date">
+      <time datetime="2018-09-20T01:08:55.000Z" itemprop="datePublished">2018-09-20</time>
 </a>
 
 
@@ -374,7 +496,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/13/primary-function-and-features-of-a-router/">primary-function-and-features-of-a-router</a>
+      <a class="article-title" href="/2018/09/20/minor-GC/">minor GC</a>
     </h1>
   
 
@@ -384,28 +506,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h4 id="Router到底有什么用？"><a href="#Router到底有什么用？" class="headerlink" title="Router到底有什么用？"></a>Router到底有什么用？</h4><p>Ethernet switches function at the data link layer, Layer 2, and are used to forward Ethernet frames between devices within the same network.
-          
+        
       
     </div>
     
     <div class="article-info article-info-index">
       
       
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/network/">network</a>
-    </div>
-
 
       
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/09/13/primary-function-and-features-of-a-router/#more">阅读全文 >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -423,11 +532,11 @@
 
 
   
-    <article id="post-二叉查找树" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-垃圾收集器与内存分配策略" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/08/27/二叉查找树/" class="article-date">
-      <time datetime="2018-08-27T12:32:46.000Z" itemprop="datePublished">2018-08-27</time>
+      <a href="/2018/09/17/垃圾收集器与内存分配策略/" class="article-date">
+      <time datetime="2018-09-17T09:33:12.000Z" itemprop="datePublished">2018-09-17</time>
 </a>
 
 
@@ -442,7 +551,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/27/二叉查找树/">二叉查找树</a>
+      <a class="article-title" href="/2018/09/17/垃圾收集器与内存分配策略/">垃圾收集器与内存分配策略</a>
     </h1>
   
 
@@ -452,10 +561,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>树（tree）提供了一种层次组织结构，数据可以存储在树中的每个结点内。</p>
-<h4 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h4><ul>
-<li>二叉查找树可以用链接结构实现。
-          
+        <a id="more"></a>
       
     </div>
     
@@ -472,146 +578,6 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
     </div>
 
-      
-        <p class="article-more-link">
-          <a href="/2018/08/27/二叉查找树/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-heap堆排序" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/26/heap堆排序/" class="article-date">
-      <time datetime="2018-08-26T12:27:38.000Z" itemprop="datePublished">2018-08-26</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/26/heap堆排序/">heap堆排序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="对于堆排序"><a href="#对于堆排序" class="headerlink" title="对于堆排序"></a>对于堆排序</h2><p>首先堆排序的一些要点是，首先堆排序本身是使用二叉堆，而二叉堆本身是一个非常有意思的东西，首先它是一个完全二叉树，而二叉堆（binary heap）则是一颗具有以下属性的二叉树：
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/26/heap堆排序/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-pgsql的总结" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/16/pgsql的总结/" class="article-date">
-      <time datetime="2018-08-16T07:48:16.000Z" itemprop="datePublished">2018-08-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/16/pgsql的总结/">pgsql的总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>pgsql我最近所发现的一些重要的query方式，
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/sql/">sql</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/16/pgsql的总结/#more">阅读全文 >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -631,7 +597,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>

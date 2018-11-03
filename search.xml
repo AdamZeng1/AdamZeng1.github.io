@@ -3,6 +3,1114 @@
   
     
     <entry>
+      <title><![CDATA[并发一]]></title>
+      <url>/2018/11/01/%E5%B9%B6%E5%8F%91%E4%B8%80/</url>
+      <content type="html"><![CDATA[<a id="more"></a>
+<p>并发:同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时”存在”的，每个线程都处于执行过程中的某个状态，如果运行在多核处理器上，此时，程序中的每个线程都将分配到一个处理器核上，因此可以同时运行。</p>
+<p>高并发:高并发（High Concurrency)是互联网分布式系统架构设计中必须要考虑的因此之一，它通常是指，通过设计保证系统能够同时并行处理很多请求。</p>
+<p>并发:多个线程操作相同的资源，保证线程安全，合理使用资源。</p>
+<p>高并发:服务能同时处理很多请求，提高程序性能。</p>
+<p>为什么需要CPU cache:CPU的频率太快了，快到主寸跟不上，这样在处理器时钟周期内，CPU常常需要等待主存，浪费资源。所以cache的出现，是为了缓解CPU和内存之间速度的不匹配问题(结构:cpu-&gt;cache-&gt;memory)。</p>
+<p>CPU cache有什么意义：</p>
+<ol>
+<li>时间局限性：如果某个数据被访问，那么在不久的将来它很可能被再次访问。</li>
+<li>空间局限性：如果某个数据被访问，那么与它相邻的数据很快也可能被访问。</li>
+</ol>
+<h4 id="CPU多级缓存-缓存一致性（MESI）"><a href="#CPU多级缓存-缓存一致性（MESI）" class="headerlink" title="CPU多级缓存-缓存一致性（MESI）"></a>CPU多级缓存-缓存一致性（MESI）</h4><ul>
+<li>用于保证多个CPU cache之间缓存共享数据的一致<img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwsrix1mgfj310o0f64ap.jpg" alt="屏幕快照 2018-11-01 下午9.58.41"></li>
+</ul>
+<h4 id="CPU多级缓存-乱序执行优化"><a href="#CPU多级缓存-乱序执行优化" class="headerlink" title="CPU多级缓存-乱序执行优化"></a>CPU多级缓存-乱序执行优化</h4><h4 id="Java内存模型-Java-Memory-Model-JMM"><a href="#Java内存模型-Java-Memory-Model-JMM" class="headerlink" title="Java内存模型(Java Memory Model,JMM)"></a>Java内存模型(Java Memory Model,JMM)</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fwss8prshrj31260getoo.jpg" alt="屏幕快照 2018-11-01 下午10.23.44"></p>
+<h4 id="Java内存模型-同步八种操作"><a href="#Java内存模型-同步八种操作" class="headerlink" title="Java内存模型-同步八种操作"></a>Java内存模型-同步八种操作</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fwsslfnldxj316e0iuqfv.jpg" alt="屏幕快照 2018-11-01 下午10.36.08"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwtuoipxslj30zq0om7jw.jpg" alt="屏幕快照 2018-11-02 下午8.33.34"></p>
+<ul>
+<li>CPU多级缓存：缓存一致性、乱序执行优化</li>
+<li>Java内存模型：JMM规定、抽象结构、同步八种操作及规则</li>
+<li>Java并发的优势与风险</li>
+</ul>
+<h4 id="并发编程与线程安全"><a href="#并发编程与线程安全" class="headerlink" title="并发编程与线程安全"></a>并发编程与线程安全</h4><p>并发环境下得到我们所期望的结果</p>
+<h4 id="并发模拟"><a href="#并发模拟" class="headerlink" title="并发模拟"></a>并发模拟</h4><ul>
+<li>Postman：Http请求模拟工具</li>
+<li>Apache Bench（AB)：Apache附带的工具，测试网站性能</li>
+<li>JMeter：Apache组织开发的压力测试工具</li>
+<li>代码：Semaphore、CountDownLatch等</li>
+</ul>
+<h4 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h4><p>定义：当多个线程访问某个类时，不管运行时环境采用<strong>何种调度方式</strong>或者这些进程将如何交替执行，并且在主调代码中<strong>不需要任何额外的同步或协同</strong>，这个类都能表现出<strong>正确的行为</strong>，那么就称这个类是线程安全的。</p>
+<ul>
+<li>原子性：提供了互斥访问，同一时刻只能有一个线程来对它进行操作。</li>
+<li>可见性：一个线程对主内存的修改可以及时的被其他线程观察到。</li>
+<li>有序性：一个线程观察到其他线程中的指令执行顺序，由于指令重排序的存在，该观察结果一般杂乱无序。</li>
+</ul>
+<h4 id="原子性-Atomic包"><a href="#原子性-Atomic包" class="headerlink" title="原子性 -Atomic包"></a>原子性 -Atomic包</h4><ul>
+<li><p>AtomicXXX：CAS、Unsafe.compareAndSwapInt</p>
+</li>
+<li><p>AtomicLong、LongAdder</p>
+</li>
+<li><p>对于long 与double类型的变量，JVM允许将读操作与写操作拆成两个32位的操作</p>
+</li>
+<li><p>AtomicReference、AtomicReferenceFieldUpdater</p>
+<p>原子性更新对象中的某一个字段，是volatile非static字段</p>
+</li>
+<li><p>AtomicStampReference:CAS的ABA问题</p>
+</li>
+</ul>
+<p>Unsafe类：compareAndSwapInt(var1,var2,var5,var5+var4)</p>
+<p>如果当前值var2与底层从主内存地址中获取的值相同的话，才执行增加操作，因为这个增加操作依赖原值，原值在各个线程使用过程中可能会修改，需要有这么一个校验的过程，这样就防止某一次一个线程将缓存中的数据没来得及同步回主存之前，另一个线程将主存数据取来进行操作。将该Java线程中工作内存中的值与Java线程中共享的值（主内存中的值）进行对比，如果相同才执行增加操作。</p>
+<p>LongAdder： 将AtomicLong内部核心数据value分离成一个数组，每个线程访问时，通过Hash等算法预测到其中一个数字进行计数，最后结果为这个数组的求和累加。</p>
+<p>分成多个cell，每个cell独自维护内部的值。</p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><h5 id="synchronized：依赖JVM"><a href="#synchronized：依赖JVM" class="headerlink" title="synchronized：依赖JVM"></a>synchronized：依赖JVM</h5><p>同步锁，修饰的对象总共有四种：</p>
+<ol>
+<li>修饰一个代码块：大括号扩起来的代码，作用于<strong>调用这个代码块的对象</strong></li>
+<li>修饰方法（同步方法）：整个方法，作用于<strong>调用的对象</strong></li>
+<li>修饰静态方法：整个静态方法，作用于<strong>所有对象</strong></li>
+<li>修饰类：括号扩起来的部分，作用于<strong>所有对象</strong></li>
+</ol>
+<p>修饰一个代码块与修饰一个方法均是作用于调用对象的，调用对象之间是互相不影响的</p>
+<p>如果一个一个方法内部是一个完整的同步代码块，与用synchronized关键字直接修饰方法是等同的。</p>
+<p>如果父类中有synchronized修饰的方法，子类在继承父类的时候，该方法的synchronized关键字不会被继承！！！（原因是：synchronized不属于方法声明的一部分）</p>
+<h4 id="原子性-对比"><a href="#原子性-对比" class="headerlink" title="原子性-对比"></a>原子性-对比</h4><ul>
+<li>synchronized：不可中断锁，适合竞争不激烈，可读性好</li>
+<li>Lock:可中断锁，多样化同步，竞争激烈时能维持常态</li>
+<li>Atomic:竞争激烈时能维持常态，比Lock性能好；只能同步一个值</li>
+</ul>
+<h5 id="Lock：依赖特殊的CPU指令，代码实现，Reen"><a href="#Lock：依赖特殊的CPU指令，代码实现，Reen" class="headerlink" title="Lock：依赖特殊的CPU指令，代码实现，Reen"></a>Lock：依赖特殊的CPU指令，代码实现，Reen</h5><h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>导致共享变量在线程间不可见的原因</p>
+<ul>
+<li>线程交叉执行</li>
+<li>重排序结合线程交叉执行</li>
+<li>共享变量更新后的值没有在工作内存与主存间及时更新</li>
+</ul>
+<p>JMM关于<strong>synchronized</strong>的两条规定：</p>
+<ul>
+<li>线程解锁前，必须把共享变量的最新值刷新到主内存</li>
+<li><p>线程加锁时，将清空工作内存中共享变量的值，从而使用共享变量时需要从主内存中重新读取最新的值<strong>（注意，加锁与解锁是同一把锁）</strong></p>
+<h4 id="可见性-volatile"><a href="#可见性-volatile" class="headerlink" title="可见性-volatile"></a>可见性-volatile</h4></li>
+</ul>
+<p>通过加入<strong>内存屏障</strong>和<strong>禁止重排序</strong>优化来实现</p>
+<ul>
+<li>对volatile变量写操作时，会在写操作后加入一条store屏障指令、将本地内存中的共享变量值刷新到主内存</li>
+<li>对volatile变量读操作时，会在读操作前加入一条load屏障指令，从主内存中读取共享变量</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwv0b40p8kj31420mwn8e.jpg" alt="屏幕快照 2018-11-03 下午8.33.40"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fwv0ch3yzfj313g0na7fn.jpg" alt="屏幕快照 2018-11-03 下午8.35.30"></p>
+<h4 id="volatile适合什么样的场景"><a href="#volatile适合什么样的场景" class="headerlink" title="volatile适合什么样的场景"></a>volatile适合什么样的场景</h4><ol>
+<li>对变量的写操作不依赖当前值</li>
+<li>该变量没有包含在具有其他变量的不变式中。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> inited=<span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="comment">// 线程1：</span></div><div class="line">context=loadContext();</div><div class="line">inited=<span class="keyword">true</span>;</div><div class="line"></div><div class="line"><span class="comment">// 线程2：</span></div><div class="line"><span class="keyword">while</span>(!inited)&#123;</div><div class="line">    sleep();</div><div class="line">&#125;</div><div class="line">doSomethingWithConfig(context);</div></pre></td></tr></table></figure>
+<p>还有一个使用场景double check</p>
+<h4 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h4><ul>
+<li>Java内存模型中，允许编译器和处理器对指令进行重排序，但是重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。</li>
+<li>volatile、synchronized、Lock</li>
+</ul>
+<h4 id="有序性-happens-before"><a href="#有序性-happens-before" class="headerlink" title="有序性-happens-before"></a>有序性-happens-before</h4><p>如果两个操作的执行次序不能从happens-before原则推导出来，虚拟机就不能保证操作执行的次序。</p>
+<ul>
+<li>程序次序规则：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作。</li>
+<li>锁定规则：一个unLock操作先行发生于后面对同一个锁的lock操作</li>
+<li>volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作</li>
+<li><p>传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</p>
+</li>
+<li><p>线程启动规则：Thread对象的start()方法先行发生于此线程的每一个动作</p>
+</li>
+<li><p>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断时间的发生</p>
+</li>
+<li><p>线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join方法结束、Thread.isAlive()的返回值手段检测到线程已经终止执行</p>
+</li>
+<li>对象终极规则：一个对象的初始化完成先行发生于它的finalize()方法的开始</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 多线程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MyBatis]]></title>
+      <url>/2018/10/15/MyBatis/</url>
+      <content type="html"><![CDATA[<h4 id="MyBatis概述"><a href="#MyBatis概述" class="headerlink" title="MyBatis概述"></a>MyBatis概述</h4><p>ORM简介<a id="more"></a></p>
+<ul>
+<li>ORM：对象关系映射（Object Relation Mapping）</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw8v39qzpbj31bq0coak7.jpg" alt="屏幕快照 2018-10-15 下午4.51.00"></p>
+<p>传统JDBC程序的设计缺陷</p>
+<ul>
+<li>大量配置信息硬编码</li>
+<li>大量的无关业务处理的编码</li>
+<li>扩展优化极为不便</li>
+</ul>
+<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>Mybatis是支持定制化SQL、存储过程以及高级映射的优秀的持久层框架。</p>
+<ul>
+<li>避免传统JDBC硬编码</li>
+<li>XML配置或者注解</li>
+<li>POJO对象和数据库记录直接映射</li>
+<li>完善的文档支持</li>
+</ul>
+<h4 id="MyBatis前世今生"><a href="#MyBatis前世今生" class="headerlink" title="MyBatis前世今生"></a>MyBatis前世今生</h4><ul>
+<li>apache开源项目：ibatis<ul>
+<li>ibatis是internet和abatis的组合，一个基于java持久层框架</li>
+<li>2010年-&gt;apache software foundation -&gt;google code-童年修改名称：MyBatis</li>
+<li>2013年-&gt;google code-&gt;迁移-&gt;GitHub</li>
+</ul>
+</li>
+</ul>
+<h4 id="MyBatis的使用优势"><a href="#MyBatis的使用优势" class="headerlink" title="MyBatis的使用优势"></a>MyBatis的使用优势</h4><ul>
+<li>简单易学，快速上手，学习成本低</li>
+<li>数据库交互信息配置化</li>
+<li>动态SQL处理</li>
+</ul>
+<h4 id="MyBatis的使用场景"><a href="#MyBatis的使用场景" class="headerlink" title="MyBatis的使用场景"></a>MyBatis的使用场景</h4><ul>
+<li>更加关注SQL优化的项目</li>
+<li>需求频繁更新改动的项目</li>
+</ul>
+<p>####MyBatis开发环境搭建</p>
+<ul>
+<li>MyBatis的下载</li>
+<li>项目中引入MyBatis支持</li>
+<li>入门程序</li>
+<li>了解MyBatis的工作原理</li>
+</ul>
+<h4 id="获取MyBatis"><a href="#获取MyBatis" class="headerlink" title="获取MyBatis"></a>获取MyBatis</h4><p>现在一般使用maven方式引入</p>
+<h4 id="入门程序"><a href="#入门程序" class="headerlink" title="入门程序"></a>入门程序</h4><ul>
+<li>需求：完成一个数据的查询流程</li>
+<li>目的：了解mybatis核心api的操作流程</li>
+<li>扩展：了解mybatis的工作流程</li>
+</ul>
+<h4 id="MyBatis核心炒作过程"><a href="#MyBatis核心炒作过程" class="headerlink" title="MyBatis核心炒作过程"></a>MyBatis核心炒作过程</h4><p>在程序运行过程中要对mybatis.xml主配置文件和<em>*</em>Mapper.xml映射配置文件进行读取</p>
+<p>读取之后构建一个和数据库之间的会话</p>
+<ul>
+<li>SqlSessionFactoryBuilder</li>
+<li>SqlSessionFactory</li>
+<li>SqlSession</li>
+<li>Executor</li>
+</ul>
+<p>Mybatis架构分解</p>
+<h4 id="接口层"><a href="#接口层" class="headerlink" title="接口层"></a>接口层</h4><ul>
+<li>数据查询接口</li>
+<li>数据新增接口</li>
+<li>数据更新接口</li>
+<li>数据删除接口</li>
+<li>获取配置接口</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw922qlwusj31io0nwx0g.jpg" alt="屏幕快照 2018-10-15 下午8.52.40"></p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><ul>
+<li>项目案例演示</li>
+<li>数据库数据准备工作</li>
+<li>界面准备工作</li>
+<li>MyBatis基础操作</li>
+</ul>
+<p>项目案例：后台管理系统用户数据维护平台</p>
+<ul>
+<li>所有用户数据查询</li>
+<li>单个用户数据查询</li>
+<li>用户数据修改</li>
+<li>锁定用户账号</li>
+<li>删除用户账号</li>
+<li>彻底删除用户账号</li>
+</ul>
+<p>案例数据库准备</p>
+<ul>
+<li>数据库：MySQL5.7</li>
+<li>数据库名称</li>
+<li>数据表：用户表（Users） </li>
+</ul>
+<h4 id="基础操作—-主配置解析"><a href="#基础操作—-主配置解析" class="headerlink" title="基础操作—-主配置解析"></a>基础操作—-主配置解析</h4><ul>
+<li>properties配置加载</li>
+<li>environments环境配置</li>
+<li>settings参数设置配置</li>
+<li>typeAliases别名设置</li>
+<li>mapper映射加载</li>
+</ul>
+<h4 id="基础操作—-查询数据"><a href="#基础操作—-查询数据" class="headerlink" title="基础操作—-查询数据"></a>基础操作—-查询数据</h4><ul>
+<li>映射配置：sql片段</li>
+<li>映射配置：select配置<ul>
+<li>特殊配置：字段和属性不一致时resultMap配置</li>
+</ul>
+</li>
+</ul>
+<h4 id="基础操作——增加数据"><a href="#基础操作——增加数据" class="headerlink" title="基础操作——增加数据"></a>基础操作——增加数据</h4><ul>
+<li>映射配置:sql片段</li>
+<li>映射配置：insert配置 </li>
+</ul>
+<h4 id="基础操作——修改数据"><a href="#基础操作——修改数据" class="headerlink" title="基础操作——修改数据"></a>基础操作——修改数据</h4><ul>
+<li>映射配置：update配置</li>
+<li>动态SQL配置：set配置</li>
+</ul>
+<h4 id="基础操作——删除数据"><a href="#基础操作——删除数据" class="headerlink" title="基础操作——删除数据"></a>基础操作——删除数据</h4><ul>
+<li>映射配置：delete配置</li>
+<li>补充：业务功能中的删除账号、锁定账号和彻底删除账号</li>
+</ul>
+<h4 id="基础进阶——多表关联入门"><a href="#基础进阶——多表关联入门" class="headerlink" title="基础进阶——多表关联入门"></a>基础进阶——多表关联入门</h4><ul>
+<li>需求：一个用户有多个地址</li>
+<li>解决方案：多表关联查询</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Spring-5]]></title>
+      <url>/2018/10/14/Spring-5/</url>
+      <content type="html"><![CDATA[<h4 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h4><ul>
+<li><p>Java事务导引</p>
+<ul>
+<li>什么是事务</li>
+<li>事务与Java的关系</li>
+<li>事务的原则性内容</li>
+</ul>
+</li>
+<li><p>Spring事务核心接口</p>
+</li>
+<li>编程式事务管理</li>
+<li>声明式事务管理</li>
+<li>事务最佳实践</li>
+<li>总结</li>
+</ul>
+<h4 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h4><ul>
+<li><p>事务是正确执行一系列的操作（或动作），使得数据库从一种状态转换成另一种状态，且保证操作全部成功，或者全部失败。</p>
+</li>
+<li><p>事务原则是什么</p>
+<ul>
+<li>事务必须服从ISO/IEC所制定的ACID原则</li>
+<li>ACID原则如下：<ul>
+<li>原子性（Atomicity）：即不可分割性，事务要么全部被执行，要么就全部不被执行。</li>
+<li>一致性（Consistency）：事务的执行使得数据库从一种正确状态转换成另一种正确状态。</li>
+<li>隔离性（Isolation）：在事务正确提交之前，它可能的结果不应显示给任何其他事务。</li>
+<li>持久性（Durability）：事务正确提交后，其结果将永久保存在数据库中。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Java事务的产生</p>
+<ul>
+<li>程序操作数据库的需要。在Java编写的程序或系统中，实现ACID的操作。</li>
+</ul>
+</li>
+<li>Java事务实现范围<ul>
+<li>通过JDBC相应方法间接来实现对数据库的增、删、改、查，把事务转移到Java程序代码中进行控制；</li>
+<li>确保事务—-要么全部执行成功，要么撤销不执行。</li>
+</ul>
+</li>
+<li>总结：Java事务机制和原理就是确保数据库操作的ACID特性。</li>
+</ul>
+<h4 id="Java事务实现模式"><a href="#Java事务实现模式" class="headerlink" title="Java事务实现模式"></a>Java事务实现模式</h4><ul>
+<li>Java事务的实现<ul>
+<li>通过Java代码来实现对数据库的事务性操作。</li>
+</ul>
+</li>
+<li>Java事务类型<ul>
+<li>JDBC事务：用Connection对象控制，包括手动模式和自动模式；</li>
+<li>JTA（Java transaction API）事务：与实现无关，与协议无关的API；</li>
+<li>容器事务：应用服务器提供的，且大多是基于JTA完成（通常基于JNDI的，相当复杂的API实现）。</li>
+</ul>
+</li>
+</ul>
+<p>JDBC事务：控制的局限性在一个数据库连接内，但是其使用简单。</p>
+<p>JTA事务：功能强大，可跨越多个数据库或多DAO，使用比较复杂。</p>
+<p>容器事务：主要指的是J2EE应用服务器提供的事务管理，局限于EJB。</p>
+<h4 id="Spring事务核心接口"><a href="#Spring事务核心接口" class="headerlink" title="Spring事务核心接口"></a>Spring事务核心接口</h4><p>事务接口架构</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw7peaqvq9j31kw0rtkgh.jpg" alt="屏幕快照 2018-10-14 下午4.47.23"></p>
+<h4 id="Spring事务属性定义"><a href="#Spring事务属性定义" class="headerlink" title="Spring事务属性定义"></a>Spring事务属性定义</h4><ul>
+<li>事务属性范围</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw7pnox1oaj30ee0e2gqe.jpg" alt="屏幕快照 2018-10-14 下午4.57.44"></p>
+<ul>
+<li>事务属性定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionDefinition</span> </span>&#123;</div><div class="line">    <span class="comment">// 返回事务的传播行为</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPropagationBehavior</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 返回事务的隔离级别，事务管理器根据它来控制</span></div><div class="line">    <span class="comment">// 另外一个事务可以看到本事务内的哪些数据</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getIsolationLevel</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 返回事务必须在多少秒内完成</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getTimeout</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 判断事务是否只读，事务管理器能够根据这个返回值进行优化，确保事务是只读的</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isReadOnly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>数据读取类型说明</p>
+<ul>
+<li>脏读：事务没提交，提前读取；</li>
+<li>不可重复读：两次读取的数据不一致；</li>
+<li>幻读：事务不是独立执行时发生的一种非预期现象。</li>
+</ul>
+<h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><ul>
+<li>隔离级别定义了一个事务可能受其他并发事务影响的程度。</li>
+<li>隔离级别分为：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fw7pxffrdmj318m0eih47.jpg" alt="屏幕快照 2018-10-14 下午5.06.58"></p>
+<ul>
+<li>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播；</li>
+<li>Spring的7种传播行为：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fw7pzc6hnvj317y0janp6.jpg" alt="屏幕快照 2018-10-14 下午5.08.39"></p>
+<h4 id="事务是否只读"><a href="#事务是否只读" class="headerlink" title="事务是否只读"></a>事务是否只读</h4><ul>
+<li><p>利用数据库事务的“只读”属性，进行特定优化处理。</p>
+</li>
+<li><p>设置“只读”注意：</p>
+<ul>
+<li><p>事务的是否“只读”属性，不同的数据库厂商支持不同。</p>
+</li>
+<li><p>通常而言只读属性的应用要参考厂商的具体支持说明，比如，</p>
+<p>Oracle的“readOnly”不起作用，不影响其增删改查；</p>
+<p>Mysql的“readOnly”为true，只能查，增删改则出异常。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="事务超时"><a href="#事务超时" class="headerlink" title="事务超时"></a>事务超时</h4><ul>
+<li>事务超时就是事务的一个定时器，在特定时间内事务如果没有执行完毕，那么就会自动回滚，而不是一直等待其结束。</li>
+<li>设置事务时注意点：为了使应用程序很好地运行，事务不能运行太长的时间。因为事务可能涉及对后端数据库的锁定，所以长时间的事务会不必要的占用数据库资源。</li>
+</ul>
+<h4 id="事务回滚"><a href="#事务回滚" class="headerlink" title="事务回滚"></a>事务回滚</h4><ul>
+<li>默认情况下，事务只有遇到运行期异常时才会回滚，而在遇到检查型异常时不会回滚。</li>
+<li>自定义回滚策略：<ul>
+<li>声明事务在遇到特定的检查性异常时像遇到运行期异常那样回滚；</li>
+<li>声明事务遇到特定的异常不回滚，即使这些异常是运行期异常。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Spring事务状态"><a href="#Spring事务状态" class="headerlink" title="Spring事务状态"></a>Spring事务状态</h4><ul>
+<li>事务接口<ul>
+<li>通过事务管理器获取TransactionStatus实例；</li>
+<li>控制事务在回滚或提交的时候需要应用对应的事务状态；</li>
+<li>Spring事务接口：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Spring事务状态接口</span></div><div class="line"><span class="comment">//通过调用PlatfromTransactionManager的getTransaction()获取事务状态实例</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionStatus</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isNewTransaction</span><span class="params">()</span></span>;<span class="comment">// 是否是新的事务</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasSavePoint</span><span class="params">()</span></span>;<span class="comment">// 是否有恢复点</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setRollbackOnly</span><span class="params">()</span></span>;<span class="comment">// 设置为只回滚</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRollbackOnly</span><span class="params">()</span></span>; <span class="comment">//是否为只回滚</span></div><div class="line">    <span class="keyword">boolean</span> isCompleted; <span class="comment">// 是否已完成</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><p>编程式事务实现方式</p>
+<ul>
+<li>事务管理器（PlatformTransactionManager）方式<ul>
+<li>类似应用JTA UserTransaction API方式，但异常处理更简洁；；</li>
+<li>核心类为：Spring事务管理的三个接口类以及JdbcTemplate类。</li>
+</ul>
+</li>
+<li>模板事务（TransactionTemplate）的方式<ul>
+<li>此为Spring官方团队推荐的编程式事务管理方式；</li>
+<li>主要工具为JdbcTemplate类。</li>
+</ul>
+</li>
+</ul>
+<h4 id="编程式事务实现案例"><a href="#编程式事务实现案例" class="headerlink" title="编程式事务实现案例"></a>编程式事务实现案例</h4><ul>
+<li><p>事务管理器（PlatformTransactionManager）</p>
+</li>
+<li><p>要介绍的功能是修改数据库中存储的书籍信息</p>
+</li>
+<li>书籍信息包括：ISBN号、名称、价格和出版日期</li>
+<li>会有一个对应的Book类包含上述内容</li>
+</ul>
+<p>下面为Book类中的属性定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> String isbn;</div><div class="line"><span class="keyword">private</span> String name;</div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> price;</div><div class="line"><span class="keyword">private</span> Date pubdate;</div></pre></td></tr></table></figure>
+<ul>
+<li>步骤：获取事务管理器；创建事务属性对象；获取事务状态对象；创建JDBC模板对象；业务数据操作处理。</li>
+</ul>
+<h4 id="模板事务（TransactionTemplate）案例"><a href="#模板事务（TransactionTemplate）案例" class="headerlink" title="模板事务（TransactionTemplate）案例"></a>模板事务（TransactionTemplate）案例</h4><ul>
+<li>步骤：获取模板对象；选择事务结果类型；业务数据操作处理。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>需要有效的数据源，具体数据源根据实际情况创建</li>
+<li><p>创建编程事务管理对象：</p>
+<ul>
+<li>事务模板（TransactionTemplate）</li>
+<li>事务管理器（PlateformTransactionManager）</li>
+</ul>
+</li>
+<li><p>业务逻辑处理</p>
+<ul>
+<li>基于JdbcTemplate完成业务处理。</li>
+</ul>
+</li>
+</ul>
+<h4 id="声明式事务管理"><a href="#声明式事务管理" class="headerlink" title="声明式事务管理"></a>声明式事务管理</h4><p>基于AOP模式机制，对方法前后进行拦截。</p>
+<ul>
+<li><p>声明式事务管理的配置类型：</p>
+<ul>
+<li><p>5种类型（?)：独立代理；共享代理；拦截器；</p>
+<p>tx.拦截器；全注释（前三类2.0版后不推荐使用）</p>
+</li>
+</ul>
+</li>
+<li><p>声明式事务管理配置实现方式：</p>
+<ul>
+<li>2种类型的配置实现参考</li>
+<li>声明式事务管理完整案例：书籍管理操作。</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Spring-4]]></title>
+      <url>/2018/10/13/Spring-4/</url>
+      <content type="html"><![CDATA[<h4 id="JDBC-Template"><a href="#JDBC-Template" class="headerlink" title="JDBC Template"></a>JDBC Template</h4><p>使用Spring组件JDBC Template简化持久化操作<a id="more"></a></p>
+<h4 id="JDBC的概念"><a href="#JDBC的概念" class="headerlink" title="JDBC的概念"></a>JDBC的概念</h4><ul>
+<li><p>为了简化持久化操作，Spring在JDBC API之上提供了JDBC Template组件</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fw6q9b3d7ij31c0090gqq.jpg" alt="屏幕快照 2018-10-13 下午8.32.51"></p>
+</li>
+</ul>
+<p>####Spring简单封装JDBC API</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw6qa4bxewj31fq0eqjy2.jpg" alt="屏幕快照 2018-10-13 下午8.33.35"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// JDBC API</span></div><div class="line">Statement statement =conn.createStatement();</div><div class="line">ResultSet resultSet=statement.executeQuery(<span class="string">"select count(*) COUNT from student"</span>);</div><div class="line"><span class="keyword">if</span>(resultSet.next()) &#123;</div><div class="line">    Integer count=resultSet.getInt(<span class="string">"COUNT"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">//JDBC Template</span></div><div class="line">Integer count =jt.queryForObject(<span class="string">"select count(*) from student"</span>,Integer.class);</div></pre></td></tr></table></figure>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fw6qmde8kuj314a0pak55.jpg" alt="屏幕快照 2018-10-13 下午8.44.10"></p>
+<h4 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h4><ul>
+<li><p>Maven</p>
+<ul>
+<li>Mysql驱动</li>
+<li>Spring组件（core、beans、context、aop）</li>
+<li>JDBC Template（jdbc、tx）</li>
+</ul>
+</li>
+<li><p>Spring配置</p>
+<ul>
+<li>数据源</li>
+<li>JDBC Template</li>
+</ul>
+</li>
+</ul>
+<h4 id="JDBC-Template基本使用"><a href="#JDBC-Template基本使用" class="headerlink" title="JDBC Template基本使用"></a>JDBC Template基本使用</h4><ul>
+<li>execute方法</li>
+<li>update与batchUpdate方法</li>
+<li>query与queryXXX方法</li>
+<li>call方法</li>
+</ul>
+<h4 id="update方法"><a href="#update方法" class="headerlink" title="update方法"></a>update方法</h4><ul>
+<li>对数据进行增删改操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">update</span><span class="params">(String sql,Object[] args)</span></span></div><div class="line"><span class="keyword">int</span> <span class="title">update</span><span class="params">(String sql,Object... args)</span></div></pre></td></tr></table></figure>
+<h4 id="batchUpdate方法"><a href="#batchUpdate方法" class="headerlink" title="batchUpdate方法"></a>batchUpdate方法</h4><ul>
+<li>批量增删改操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>[] batchUpdate(String[] sql)</div><div class="line"><span class="keyword">int</span>[] batchUpdate(String sql,List&lt;Object[]&gt; args)</div></pre></td></tr></table></figure>
+<h4 id="查询简单数据项"><a href="#查询简单数据项" class="headerlink" title="查询简单数据项"></a>查询简单数据项</h4><ul>
+<li>获取一个</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">T <span class="title">queryForObject</span><span class="params">(String sql,Class&lt;T&gt; type)</span></span></div><div class="line">T <span class="title">queryForObject</span><span class="params">(String sql,Object[] args, Class&lt;T&gt; type)</span></div><div class="line">T <span class="title">queryForObject</span><span class="params">(String sql,Class&lt;T&gt; type,Object... arg)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>获取多个</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">List&lt;T&gt; <span class="title">queryForList</span><span class="params">(String sql,Class&lt;T&gt; type)</span></span></div><div class="line">List&lt;T&gt; <span class="title">queryForList</span><span class="params">(String sql,Object[] args,Class&lt;T&gt; type)</span></div><div class="line">List&lt;T&gt; <span class="title">queryForList</span><span class="params">(String sql,Class&lt;T&gt; type,Object... arg)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>查询复杂对象（封装为Map）<ul>
+<li>获取一个</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">Map <span class="title">queryForMap</span><span class="params">(String sql)</span></span></div><div class="line">Map <span class="title">queryForMap</span><span class="params">(String sql,Object[] args)</span></div><div class="line">Map <span class="title">queryForMap</span><span class="params">(String sql,Object... arg)</span></div></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>获取多个</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<ul>
+<li>查询复杂对象（封装为实体对象）<ul>
+<li>RowMapper接口</li>
+<li>获取一个</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">T <span class="title">queryForObject</span><span class="params">(String sql,RowMapper&lt;T&gt; mapper)</span></span></div><div class="line">T <span class="title">queryForObject</span><span class="params">(String sql,Object[] args,RowMapper&lt;T&gt; mapper)</span></div><div class="line">T <span class="title">queryForObject</span><span class="params">(String sql,RowMapper&lt;T&gt; mapper,Object... arg)</span></div></pre></td></tr></table></figure>
+<ul>
+<li>获取多个</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">List&lt;T&gt; <span class="title">query</span><span class="params">(String sql,RowMapper&lt;T&gt; mapper)</span></span></div><div class="line">List&lt;T&gt; <span class="title">query</span><span class="params">(String sql,Object[] args,RowMapper&lt;T&gt; mapper)</span></div><div class="line">List&lt;T&gt; <span class="title">query</span><span class="params">(String sql,RowMapper&lt;T&gt; mapper,Object... arg)</span></div></pre></td></tr></table></figure>
+<h4 id="持久层实现"><a href="#持久层实现" class="headerlink" title="持久层实现"></a>持久层实现</h4><ul>
+<li>实体类</li>
+<li>DAO<ul>
+<li>注入JdbcTemplate</li>
+<li>声明RowMapper</li>
+</ul>
+</li>
+</ul>
+<p>优缺点分析</p>
+<p>优点：</p>
+<ul>
+<li>简单</li>
+<li>灵活</li>
+</ul>
+<p>确定：</p>
+<ul>
+<li>SQL与Java代码掺杂</li>
+<li>功能不丰富</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>持久化操作特点</p>
+<ul>
+<li>必须</li>
+<li>机械性</li>
+</ul>
+</li>
+<li><p>ORM (Object Relationship Map)</p>
+<ul>
+<li>对象-关系</li>
+</ul>
+</li>
+<li><p>JDBC Template是Spring框架对JDBC操作的封装，简单。灵活但不够强大。</p>
+</li>
+<li>实际应用中还需要和其他ORM框架混合使用。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Spring-3]]></title>
+      <url>/2018/10/12/Spring-3/</url>
+      <content type="html"><![CDATA[<h4 id="Spring基于AspectJ的AOP开发"><a href="#Spring基于AspectJ的AOP开发" class="headerlink" title="Spring基于AspectJ的AOP开发"></a>Spring基于AspectJ的AOP开发</h4><ul>
+<li>使用AspectJ实现AOP<a id="more"></a><ul>
+<li>注解方式</li>
+<li>XML方式</li>
+</ul>
+</li>
+</ul>
+<h4 id="基于AspectJ的AOP注解开发方式"><a href="#基于AspectJ的AOP注解开发方式" class="headerlink" title="基于AspectJ的AOP注解开发方式"></a>基于AspectJ的AOP注解开发方式</h4><ul>
+<li><p>AspectJ是一个基于Java语言的AOP框架</p>
+</li>
+<li><p>能够使Spring AOP的开发变得简单</p>
+</li>
+<li><p>Spring2.0以后新增了对AspectJ切点表达式支持</p>
+</li>
+<li>@AspectJ是AspectJ1.5新增功能，通过JDK5注解技术，允许直接在Bean类中定义切面<ul>
+<li>新版本Spring框架，建议使用AspectJ方法来开发AOP</li>
+</ul>
+</li>
+<li>使用AspectJ需要导入Spring AOP和AspectJ相关jar包<ul>
+<li>spring-aop-4.2.4.RELEASE.jar</li>
+<li>com.sprngsource.org.aopalliance-1.0.0.jar</li>
+<li>spring-aspects-4.2.4.RELEASE.jar</li>
+<li>com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar</li>
+</ul>
+</li>
+</ul>
+<h4 id="注解开发：环境准备"><a href="#注解开发：环境准备" class="headerlink" title="注解开发：环境准备"></a>注解开发：环境准备</h4><h4 id="AspectJ提供不同的通知类型"><a href="#AspectJ提供不同的通知类型" class="headerlink" title="AspectJ提供不同的通知类型"></a>AspectJ提供不同的通知类型</h4><ul>
+<li>@Before前置通知，相当于BeforeAdvice</li>
+<li>@AfterReturning后置通知，相当于AfterReturningAdvice</li>
+<li>@Around环绕通知，相当于MethodInterceptor</li>
+<li>@AfterThrowing异常抛出通知，相当于ThrowAdvice</li>
+<li>@After最终final通知，不管是否异常，该通知都会执行</li>
+<li>@DeclareParents引介通知，相当于IntroductionInterceptor（不要求掌握）</li>
+</ul>
+<h4 id="在通知中通过value属性定义切点"><a href="#在通知中通过value属性定义切点" class="headerlink" title="在通知中通过value属性定义切点"></a>在通知中通过value属性定义切点</h4><ul>
+<li><p>通过execution函数，可以定义切点的方法切入</p>
+</li>
+<li><p>语法：</p>
+<p> —execution(&lt;访问修饰符&gt;?&lt;返回类型&gt;&lt;方法名&gt;(&lt;参数&gt;)&lt;异常&gt;)</p>
+</li>
+<li><p>例如</p>
+<ul>
+<li>匹配所有类public方法execution(public **(…))</li>
+<li>匹配指定包下所有类方法executoin(<em> com.imooc.dao.</em>(…))不包含子包</li>
+<li>execution(<em> com.imooc.dao..</em>(..)) ..*表示包、子孙包下所有类</li>
+<li>匹配指定类所有方法execution(<em> com.imooc.service.UserService.</em>(..))</li>
+<li>匹配实现特定接口所有类方法execution(<em> com.imooc.dao.GenericDAO+.</em>(..))</li>
+<li>匹配所有save开头的方法execution(<em> save</em>(..))</li>
+</ul>
+</li>
+</ul>
+<h4 id="为目标类，定义切面类"><a href="#为目标类，定义切面类" class="headerlink" title="为目标类，定义切面类"></a>为目标类，定义切面类</h4><p>定义切面类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="function"><span class="keyword">public</span> class <span class="title">MyAspectAnno</span><span class="params">()</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>@Before前置通知</p>
+<p>在方法执行之前进行的增强</p>
+<ul>
+<li>可以在方法中传入JoinPoint对象，用来获得切点信息</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 要增强的代码：</span></div><div class="line"><span class="meta">@Before</span>(<span class="string">"execution(* com.imooc.spring.demo1.UserDao.save(..))"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">(JoinPoint joinPoint)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"==============前置通知======="</span>+joinPoint);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@AfterReturning后置通知</p>
+<ul>
+<li>通过returning属性可以定义方法返回值，作为参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@AfterReturning</span>(value<span class="string">"execution(* com.imooc.spring.demo1.UserDao.update(..))"</span>,returning=<span class="string">"returning"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterReturning</span><span class="params">(Object returning)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"=========后置通知========="</span>+returning)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@Around环绕通知</p>
+<ul>
+<li>around方法的返回值就是目标代理方法执行返回值</li>
+<li>参数为ProceedingJoinPoint可以调用拦截目标方法执行</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Around</span>(<span class="string">"execution(* com.imooc.spring.demo1.UserDao.delete(..))"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</div><div class="line">    System.out.println(<span class="string">"=======环绕前通知"</span>);</div><div class="line">    Object obj=joinPoint.proceed();</div><div class="line">    <span class="keyword">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>重点：如果不调用ProceedingJoinPoint的proceed方法，那么目标方法就被拦截了。</p>
+<p>@AfterThrowing异常抛出通知</p>
+<ul>
+<li>通过设置throwing属性，可以设置发生异常对象参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@AfterThrowing</span>(value=<span class="string">"execution(* com.imooc.spring.demo1.UserDao.find(..))"</span>,throwing=<span class="string">"e"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterThrowing</span><span class="params">(Throwable e)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"==========异常抛出通知=========="</span>+e.getMessage);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>@After最终通知（无论目标方法中是否有异常总是会被执行）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@After</span>(value=<span class="string">"execution(* com.imooc.spring.demo1.UserDao.findAll(..))"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span></span>&#123;</div><div class="line">    System.out.println(<span class="string">"=======最终通知====="</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="通过-Pointcut为切点命名"><a href="#通过-Pointcut为切点命名" class="headerlink" title="通过@Pointcut为切点命名"></a>通过@Pointcut为切点命名</h4><ul>
+<li><p>在每个通知内定义切点，会造成工作量大，不易维护，对于重复的切点，可以使用@Pointcut进行定义</p>
+</li>
+<li><p>切点方法：private void无参数方法，方法名为切点名</p>
+</li>
+<li>当通知多个切点时，可以使用||进行连接</li>
+</ul>
+<h4 id="AspectJ的XML方式进行开发"><a href="#AspectJ的XML方式进行开发" class="headerlink" title="AspectJ的XML方式进行开发"></a>AspectJ的XML方式进行开发</h4><h4 id="使用XML配置切面"><a href="#使用XML配置切面" class="headerlink" title="使用XML配置切面"></a>使用XML配置切面</h4><ul>
+<li><p>编写切面类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAspectJXML</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"前置增强=========="</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterReturning</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"后置增强=========="</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        System.out.println(<span class="string">"环绕前增强==========="</span>);</div><div class="line">        Object obj=joinPoint.proceed();</div><div class="line">        System.out.println(<span class="string">"环绕后增强==========="</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterThrowing</span><span class="params">(Throwable e)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"异常抛出通知=========="</span>+e.getMessage());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"最终通知============"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>完成切面类的配置</p>
+<p>\<bean id="myAspectJXML" class="com.imooc.spring.demo2.MyAspectJXML"></bean></p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[spring-2]]></title>
+      <url>/2018/10/10/spring-2/</url>
+      <content type="html"><![CDATA[<h4 id="Spring的AOP"><a href="#Spring的AOP" class="headerlink" title="Spring的AOP"></a>Spring的AOP</h4><p>面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术，AOP是OOP的延续，是软件开发中的一个热点，是Spring框架中的一个重要内容。<a id="more"></a></p>
+<ul>
+<li><p>AOP Aspect Oriented Programming 面向切面编程</p>
+</li>
+<li><p>AOP采取横向抽取机制，取代了传统纵向集成体系重复性代码（性能监视、事务管理、安全检查、缓存）</p>
+</li>
+</ul>
+<p>AOP</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDao</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        checkPrivilege()</div><div class="line">        <span class="comment">//保存用户</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        <span class="comment">//修改用户</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        <span class="comment">//删除用户</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        <span class="comment">//查询用户</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkPrivilege</span><span class="params">()</span> </span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你不可能在每一个save方法里面去写一个checkPrivilege(),这样就比较low了。</p>
+<p>因为实际业务中可能有上百个类。</p>
+<p>传统方式————&gt;纵向继承。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseDaoImpl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkPrivilege</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">    </div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">extends</span> <span class="title">BaseDaoImpl</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        checkPrivilege()</div><div class="line">        <span class="comment">//保存用户</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而AOP采用的是<strong>横向抽取机制</strong>——&gt;代理机制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">UserDao</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        <span class="comment">//保存用户</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UserDaoImpl——————&gt;Proxy</p>
+<p>AOP底层的实现就是一个代理机制</p>
+<p>Spring AOP使用纯Java实现，不需要专门的编译过程和类加载器，在运行期通过代理方式向目标类植入增强代码。</p>
+<h4 id="AOP相关术语"><a href="#AOP相关术语" class="headerlink" title="AOP相关术语"></a>AOP相关术语</h4><p>Joinpoint（连接点）：所谓连接点是指那些被拦截到的店。在Spring中，这些点指的是方法，因为Spring只支持方法类型的连接点。</p>
+<p>Pointcut（切入点）：所谓切入点是指我们要对哪些Joinpoint进行拦截的定义。</p>
+<p>Advice（通知/增强）：所谓通知是指拦截到Joinpoint之后所要做的事情就是通知。</p>
+<p>通知分为前置通知，后置通知，异常通知，最终通知，环绕通知（切面要完成的功能）</p>
+<p>Introduction（引介）：引介是一种特殊的通知在不修改类代码的前提下，Introduction可以在运行期为类动态地添加一些方法或Field。</p>
+<p>Target(目标对象)：代理的目标对象</p>
+<p>Weaving（织入）：是指把增强应用到目标对象来创建新的代理对象的过程。spring采用动态代理织入，而AspectJ采用编译期织入和类装载器织入。</p>
+<p>Proxy（代理）：一个类被AOP织入增强后，就产生一个结果代理类。</p>
+<p>Aspect（切面）：是切入点和通知（引介）的结合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoImpl</span> <span class="keyword">implements</span> <span class="title">UserDao</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> List <span class="title">find</span><span class="params">()</span></span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(User user)</span></span>&#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>Joinpoint(连接点)：指的是可以被拦截到的点。</p>
+<ul>
+<li>增删改查这些方法都可以被增强，这些方法称为是连接点。</li>
+</ul>
+</li>
+<li><p>Pointcut（切入点）：指的是真正被拦截到的点。</p>
+<ul>
+<li>只想对save方法进行增强（做权限校验），save方法称为是切入点。</li>
+</ul>
+</li>
+<li><p>Advice（通知）：拦截后要做的事情。</p>
+<ul>
+<li>对save方法要进行权限校验，权限校验的方法称为是通知。</li>
+</ul>
+</li>
+<li><p>Spring只负责方法层面的增强！！！！</p>
+</li>
+<li>Target（目标）：被增强的对象（实现类UserDaoImpl）</li>
+<li><p>Weaving（织入）：将Advice应用到Target的过程</p>
+<ul>
+<li>将权限校验应用到UserDaoImpl的save方法的这个过程。</li>
+</ul>
+</li>
+<li><p>Proxy（代理）：被应用了增强后，产生一个代理对象。</p>
+</li>
+<li>Aspect（切面）：就是切入点和通知的组合。</li>
+</ul>
+<h4 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h4><p>使用JDK本身的一个类</p>
+<h4 id="使用CGLIB生成代理"><a href="#使用CGLIB生成代理" class="headerlink" title="使用CGLIB生成代理"></a>使用CGLIB生成代理</h4><p>非常底层的字节码增强技术</p>
+<p>生成一个类来继承目标类。</p>
+<ul>
+<li>对于不使用接口的业务类，无法使用JDK动态代理</li>
+<li>CGlib采用非常底层字节码技术，可以为一个类创建子类，解决无接口代理问题。</li>
+</ul>
+<h4 id="代理知识总结"><a href="#代理知识总结" class="headerlink" title="代理知识总结"></a>代理知识总结</h4><ul>
+<li>Spring在运行期，生成动态代理对象，不需要特殊的编译期</li>
+<li>Spring AOP的底层就是通过JDK动态代理或CGlib动态代理技术为目标Bean执行横向织入<ul>
+<li>若目标对象实现了若干接口，spring使用JDK的java.lang.reflect.Proxy类代理。</li>
+<li>若目标对象没有实现任何接口，spring使用CGLIB库生成目标对象的子类。</li>
+</ul>
+</li>
+<li>程序中应优先对接口创建代理，便于程序解耦维护</li>
+<li>标记为final的方法，不能被代理，因为无法进行覆盖<ul>
+<li>JDK动态代理，是针对接口生成子类，接口中方法不能使用final修饰</li>
+<li>CGLib是针对目标类生产子类，因此类或方法不能使用final的。</li>
+</ul>
+</li>
+<li>Spring只支持方法连接点，不支持属性连接点。</li>
+</ul>
+<h4 id="Spring-AOP增强类型"><a href="#Spring-AOP增强类型" class="headerlink" title="Spring AOP增强类型"></a>Spring AOP增强类型</h4><ul>
+<li>AOP联盟为通知Advice定义了org.aopalliance.aop.Interface.Advice</li>
+<li>Spring按照通知Advice在目标类方法的连接点位置，可以分为5类<ul>
+<li>前置通知org.springframework.aop.MethodBeforeAdvice<ul>
+<li>在目标方法执行前实施增强  </li>
+</ul>
+</li>
+<li>后置通知org.springframework.aop.AfterReturningAdvice<ul>
+<li>在目标方法执行后实施增强</li>
+</ul>
+</li>
+<li>环绕通知org.aopalliance.intercept.MethodInterceptor<ul>
+<li>在目标执行前后实施增强</li>
+</ul>
+</li>
+<li>在异常抛出通知org.springframework.aop.ThrowsAdvice<ul>
+<li>在方法池异常后实施增强</li>
+</ul>
+</li>
+<li>引介通知org.springframework.aop.IntroductionInterceptor<ul>
+<li>在目标类中添加一些新的方法和属性</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Spring-AOP的切面类型"><a href="#Spring-AOP的切面类型" class="headerlink" title="Spring AOP的切面类型"></a>Spring AOP的切面类型</h4><ul>
+<li>Advisor：代表一般切面，Advice本身就是一个切面，对目标类所有方法进行拦截</li>
+<li><p>PointcutAdvisor：代表具有切点的切面，可以指定拦截目标类方法</p>
+</li>
+<li><p>IntroductionAdvisor：代表引介切面，针对引介通知而使用切面（不要求掌握）</p>
+</li>
+</ul>
+<h4 id="Advisor切面案例"><a href="#Advisor切面案例" class="headerlink" title="Advisor切面案例"></a>Advisor切面案例</h4><p>对目标类里面的所有方法都完成增强工作</p>
+<ul>
+<li><p>ProxyFactoryBean常用可配置属性</p>
+<ul>
+<li><p>target：代理的目标对象</p>
+</li>
+<li><p>proxyInterfaces：代理要实现的接口</p>
+<ul>
+<li><p>如果多个接口可以使用以下格式赋值</p>
+<p>\<list></list></p>
+<p>​    \<value>\</value></p>
+<p>…</p>
+<p>\&lt;\list&gt;</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="拦截其他属性的配置"><a href="#拦截其他属性的配置" class="headerlink" title="拦截其他属性的配置"></a>拦截其他属性的配置</h4><ul>
+<li>proxyTargetClass：是否对类代理而不是接口，设置为true时，使用CGLib代理</li>
+<li>interceptorNames：需要织入目标的Advice</li>
+<li>singleton：返回代理是否为单实例，默认为单例</li>
+<li>optimize：当设置为true时，强制使用CGLib</li>
+</ul>
+<p>PointcutAdvisor切点切面</p>
+<ul>
+<li><p>使用普通Advice作为切面，将对目标类所有方法进行拦截，不够灵活，在实际开发中常采用带有切点的切面</p>
+</li>
+<li><p>常用PointcutAdvisor实现类</p>
+<ul>
+<li>DefaultPointcutAdvisor最常用的切面类型，它可以通过任意Pointcut和Advice组合定义切面</li>
+<li>JdkRegexpMethodPointcut构造正则表达式切点</li>
+</ul>
+</li>
+</ul>
+<h4 id="自动创建代理"><a href="#自动创建代理" class="headerlink" title="自动创建代理"></a>自动创建代理</h4><p>每一个需要产生代理的对象都需要一个ProxyFactoryBean</p>
+<ul>
+<li>前面的案例中，每一个代理都是通过ProxyFactoryBean织入切面代理，在实际开发中，非常多的Bean每个都配置ProxyFactoryBean开发维护量巨大</li>
+<li>解决方案：自动创建代理<ul>
+<li>BeanNameAutoProxyCreator根据Bean名称创建代理</li>
+<li>DefaultAdvisorAutoProxyCreator根据Advisor本身包含信息创建代理</li>
+<li>AnnotationAwareAspectJAutoProxyCreator基于Bean中的AspectJ注解进行自动代理</li>
+</ul>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>AOP是面向切面编程，是面向对象的进化版</p>
+<p>底层原理采用的是代理机制，根据类是否实现接口，如果实现了接口就是采用动态代理，没有实现接口就使用GClib的方式。</p>
+<p>一般切面是对这个类中所有方法增强</p>
+<p>还有一种对某个类某些方法增强，如果有一个类，就需要使用proxyFactoryBean，如果类很多，就需要有很多proxyFactoryBean，维护量很大。</p>
+<p>所以使用自动创建代理的方式</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[常见命令]]></title>
+      <url>/2018/10/07/%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h4 id="Privileged-EXEC-Password-Example"><a href="#Privileged-EXEC-Password-Example" class="headerlink" title="Privileged EXEC Password Example"></a>Privileged EXEC Password Example</h4><a id="more"></a>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzcwcrt38j31180o4jtj.jpg" alt="屏幕快照 2018-10-07 上午11.31.44"></p>
+<h4 id="User-EXEC-Password-Example"><a href="#User-EXEC-Password-Example" class="headerlink" title="User EXEC Password Example"></a>User EXEC Password Example</h4><p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvzd3bk6p6j31120nota6.jpg" alt="屏幕快照 2018-10-07 上午11.38.27"></p>
+<h4 id="VTY-Line-Password-Example"><a href="#VTY-Line-Password-Example" class="headerlink" title="VTY Line Password Example"></a>VTY Line Password Example</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzd43n33xj31120no75k.jpg" alt="屏幕快照 2018-10-07 上午11.39.15"></p>
+<h4 id="Encrypt-Password"><a href="#Encrypt-Password" class="headerlink" title="Encrypt Password"></a>Encrypt Password</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvzd5429j5j311y0jw40t.jpg" alt="屏幕快照 2018-10-07 上午11.40.11"></p>
+<h4 id="Banner-Message"><a href="#Banner-Message" class="headerlink" title="Banner Message"></a>Banner Message</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvzd76b3jkj310w05uag2.jpg" alt="屏幕快照 2018-10-07 上午11.41.48"></p>
+<h4 id="Viewing-and-Saving-the-Configuration"><a href="#Viewing-and-Saving-the-Configuration" class="headerlink" title="Viewing and Saving the Configuration"></a>Viewing and Saving the Configuration</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvzd9kmt73j31160p4jz5.jpg" alt="屏幕快照 2018-10-07 上午11.44.26"></p>
+<h4 id="Switch-Configuration-Tasks"><a href="#Switch-Configuration-Tasks" class="headerlink" title="Switch Configuration Tasks"></a>Switch Configuration Tasks</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzdckcrcbj30us0oqtb7.jpg" alt="屏幕快照 2018-10-07 上午11.46.50"></p>
+<h4 id="Configure-Router-Interface"><a href="#Configure-Router-Interface" class="headerlink" title="Configure Router Interface"></a>Configure Router Interface</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvzdrx6zqyj310e0e4acy.jpg" alt="屏幕快照 2018-10-07 下午12.02.05"></p>
+<h4 id="Configuring-a-Switch-Default-Gateway"><a href="#Configuring-a-Switch-Default-Gateway" class="headerlink" title="Configuring a Switch Default Gateway"></a>Configuring a Switch Default Gateway</h4><p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvzjfisza8j30zw0dmjtd.jpg" alt="屏幕快照 2018-10-07 下午3.17.45"></p>
+<h4 id="IOS-Ping-Indicators"><a href="#IOS-Ping-Indicators" class="headerlink" title="IOS Ping Indicators"></a>IOS Ping Indicators</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvzji9539sj314a0tin99.jpg" alt="屏幕快照 2018-10-07 下午3.20.17"></p>
+<h4 id="tracert-and-traceroute"><a href="#tracert-and-traceroute" class="headerlink" title="tracert and traceroute"></a>tracert and traceroute</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzjt2zw1lj30z20oun82.jpg" alt="屏幕快照 2018-10-07 下午3.30.37"></p>
+<h4 id="Show-running-config"><a href="#Show-running-config" class="headerlink" title="Show running-config"></a>Show running-config</h4><p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvzjwra97aj30zo0nwwi6.jpg" alt="屏幕快照 2018-10-07 下午3.34.20"></p>
+<h4 id="Show-ip-route"><a href="#Show-ip-route" class="headerlink" title="Show ip route"></a>Show ip route</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzk3r2u70j310o0nqade.jpg" alt="屏幕快照 2018-10-07 下午3.41.04"></p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Spring(1)]]></title>
+      <url>/2018/10/06/Spring-1/</url>
+      <content type="html"><![CDATA[<ul>
+<li><p>Spring是一个开源框架<a id="more"></a></p>
+</li>
+<li><p>Spring为简化企业级应用开发而生，使用Spring可以使简单的JavaBean实现以前只有EJB才能实现的功能</p>
+</li>
+<li>Spring是JavaSE/EE的一站式框架</li>
+</ul>
+<p>####方便解耦，简化开发</p>
+<p>Spring就是一个大工厂，可以将所有对象创建和依赖关系维护，交给Spring管理</p>
+<h4 id="AOP编程的支持"><a href="#AOP编程的支持" class="headerlink" title="AOP编程的支持"></a>AOP编程的支持</h4><p>Spring提供面向切面编程，可以方便的实现对程序进行拦截、运行监控等功能</p>
+<h4 id="声明式事务的支持"><a href="#声明式事务的支持" class="headerlink" title="声明式事务的支持"></a>声明式事务的支持</h4><p>只需要通过配置就可以完成对事务的管理，而无需时候手动编程</p>
+<h4 id="方便程序的测试"><a href="#方便程序的测试" class="headerlink" title="方便程序的测试"></a>方便程序的测试</h4><p>Spring对Junit4支持，可以通过注解方便的测试Spring程序</p>
+<h4 id="方便集成各种优秀框架"><a href="#方便集成各种优秀框架" class="headerlink" title="方便集成各种优秀框架"></a>方便集成各种优秀框架</h4><p>Spring不排斥各种优秀框架</p>
+<h4 id="降低Java-EE-API的使用难度"><a href="#降低Java-EE-API的使用难度" class="headerlink" title="降低Java EE API的使用难度"></a>降低Java EE API的使用难度</h4><p>Spring封装了EE的较难用的API</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvyoyu6iwbj314y0pcdsw.jpg" alt="屏幕快照 2018-10-06 下午8.43.36"></p>
+<h4 id="Spring-IOC的底层原理"><a href="#Spring-IOC的底层原理" class="headerlink" title="Spring IOC的底层原理"></a>Spring IOC的底层原理</h4><p>传统方式的开发</p>
+<p>UserService us=new UserService();</p>
+<p>但是我们要面向接口编程</p>
+<p>UserService us= new UserServiceImp1();</p>
+<p>但是这样也不好</p>
+<p>ocp原则：open-close原则，对程序扩展是open的，对修改程序代码是close。</p>
+<p>尽量做到不修改程序的源码，实现对程序的扩展。</p>
+<p>使用一个设计模式，工厂模式！！！！</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvypae46hoj30mi0d277g.jpg" alt="屏幕快照 2018-10-06 下午8.54.45"></p>
+<p>把获取UserService的方法放在FactoryBean中来管理。UserService与UserServiceImp1之间就没有直接的耦合关系了。</p>
+<p>但我们要达到真正的解耦，需要使用：</p>
+<ul>
+<li>工厂+反射+配置文件</li>
+</ul>
+<p>配置文件：\<bean id="us" class="com.adam.UserServiceImp1"></bean></p>
+<p>工厂类里面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryBean</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getBean</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        反射</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Spring-IOC的快速入门案例"><a href="#Spring-IOC的快速入门案例" class="headerlink" title="Spring IOC的快速入门案例"></a>Spring IOC的快速入门案例</h4><ul>
+<li>下载Spring开发包</li>
+<li>复制Spring开发jar包到工程</li>
+<li>理解IOC控制反转和DI依赖注入</li>
+<li>编写Spring核心配置文件</li>
+<li>在程序中读取Spring配置文件，通过Spring框架获得bean，完成相应操作</li>
+</ul>
+<h4 id="引入jar包"><a href="#引入jar包" class="headerlink" title="引入jar包"></a>引入jar包</h4><p>直接在pom.xml来编写dependency</p>
+<p>Maven会自动把相应的jar包加入External Library当中。</p>
+<h4 id="IOC到底是什么"><a href="#IOC到底是什么" class="headerlink" title="IOC到底是什么"></a>IOC到底是什么</h4><ul>
+<li><p>IOC Inverse of control反转控制的概念，就是将原本在程序中手动创建UserService对象的控制权，交由Spring框架管理。</p>
+</li>
+<li><p>简单说，就是创建UserService对象控制权被反转到了Spring框架</p>
+</li>
+<li>DI Dependency Injection依赖注入的概念，就是在Spring创建这个对象的过程中，将这个对象所依赖的属性注入进去。</li>
+</ul>
+<p>####Spring的工厂类</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvytgzq87fj30w00sqn77.jpg" alt="屏幕快照 2018-10-06 下午11.18.56"></p>
+<h4 id="Spring的Bean管理（XML方式）"><a href="#Spring的Bean管理（XML方式）" class="headerlink" title="Spring的Bean管理（XML方式）"></a>Spring的Bean管理（XML方式）</h4><p>Spring是如何来生成实例的呢？</p>
+<p>三种实例化Bean的方式</p>
+<ul>
+<li>使用类构造器实例化（默认无参数）</li>
+<li>使用静态工厂的方式实例化（简单工厂模式）</li>
+<li>使用实例工厂方法实例化(工厂方法模式)</li>
+</ul>
+<p>一般情况下采用无参构造器的方式</p>
+<p>除非类特别复杂。</p>
+<h4 id="Bean常用的相关配置"><a href="#Bean常用的相关配置" class="headerlink" title="Bean常用的相关配置"></a>Bean常用的相关配置</h4><p>id和name</p>
+<ul>
+<li>一般情况下，装配一个Bean时，通过指定一个id属性作为Bean的名称。</li>
+<li><p>id属性在IOC容器中必须是唯一的</p>
+</li>
+<li><p>如果Bean的名称中含有特殊字符，就需要使用name属性。</p>
+</li>
+</ul>
+<p>class</p>
+<ul>
+<li><p>class用于设置一个类的完全路径名称，主要作用是IOC容器生成类的实例</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzsf0rdcwj30xq0h4dpw.jpg" alt="屏幕快照 2018-10-07 下午8.28.16"></p>
+<h4 id="Spring容器中Bean的生命周期"><a href="#Spring容器中Bean的生命周期" class="headerlink" title="Spring容器中Bean的生命周期"></a>Spring容器中Bean的生命周期</h4><p>Spring初始化bean或销毁bean时，有时需要做一些处理工作，因此spring可以在创建和销毁bean的时候调用bean的两个生命周期方法。</p>
+<bean id="xxx" class="...Yoo" init-method="init" destory-method="destory">
+
+<p>当bean被载入到容器的时候调用init</p>
+<p>当bean从容器中删除的时候调用destory(scope=singleton有效)</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzuf6vxohj30y40rck47.jpg" alt="屏幕快照 2018-10-07 下午9.37.51"></p>
+<ol>
+<li>instantiate bean对象</li>
+<li>populate properties封装属性</li>
+<li>如果Bean实现BeanNameAware执行setBeanName</li>
+<li>如果Bean实现BeanFactoryAware或者ApplicationContextAware设置工厂setBeanFactory或者上下文对象setApplicationContext</li>
+<li>如果存在类实现BeanPostProcessor(后处理Bean)，执行postProcessBeforeInitialization</li>
+<li>如果Bean实现InitializingBean执行afterPropertiesSet</li>
+<li>调用\<bean init-method="init">指定初始化方法init</bean></li>
+<li>如果过存在类实现BeanPostProcessor(处理Bean)，执行postProcessAfterInitialization。</li>
+<li>执行业务处理</li>
+<li>如果Bean实现DisposableBean执行destroy</li>
+<li>调用\<bean destroy-method="customerDestroy">指定销毁方法</bean></li>
+</ol>
+</bean></li>
+</ul>
+<h4 id="Spring的属性注入"><a href="#Spring的属性注入" class="headerlink" title="Spring的属性注入"></a>Spring的属性注入</h4><ul>
+<li>对于类成员变量，注入方式有三种</li>
+</ul>
+<ol>
+<li>构造函数注入</li>
+<li>属性setter方法注入</li>
+<li>接口注入</li>
+</ol>
+<ul>
+<li>Spring支持前两种</li>
+</ul>
+<h4 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h4><ul>
+<li>通过构造方法注入Bean的属性值或依赖的对象，它保证了Bean实例在实例化后就可以使用。</li>
+<li>构造器注入在\<constructor-arg>元素里声明的属性</constructor-arg></li>
+</ul>
+<h4 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h4><ul>
+<li>使用set方法注入，在Spring配置文件中，通过\<property>设置注入属性</property></li>
+<li>对于对象属性，同样需要在Spring配置文件的\<property>设置注入属性，而且还要在Spring配置文件中设置该对象的bean标签，且值标签不是value而是ref。</property></li>
+</ul>
+<h4 id="p名称空间注入"><a href="#p名称空间注入" class="headerlink" title="p名称空间注入"></a>p名称空间注入</h4><ul>
+<li>使用p命名空间</li>
+<li>为了简化XML文件配置，Spring从2.5开始引入一个新的p名称空间</li>
+<li>p:\&lt;属性名&gt;=”xxx”引入常量值</li>
+<li>p:\&lt;属性名&gt;-ref=”xxx”引用其他对象</li>
+</ul>
+<h4 id="SpEL注入"><a href="#SpEL注入" class="headerlink" title="SpEL注入"></a>SpEL注入</h4><ul>
+<li>SpEL：Spring expression language，spring表达式语言，对依赖注入进行简化</li>
+<li>语法:#{表达式}</li>
+<li>\<bean id="" value="#{表达式}"></bean></li>
+</ul>
+<p>SpEL表达式语言</p>
+<p>语法：#{}</p>
+<p>#{‘hello’}:使用字符串</p>
+<p>#{beanId}:使用另一个bean</p>
+<p>#{beanId.content.toUpperCase()}:使用指定名属性，并使用方法</p>
+<p>#{T(java.lang.Math).PI}:使用静态字段或方法</p>
+<h4 id="复杂类型的属性注入"><a href="#复杂类型的属性注入" class="headerlink" title="复杂类型的属性注入"></a>复杂类型的属性注入</h4><ul>
+<li>数组类型的属性注入</li>
+<li>List集合类型的属性注入</li>
+<li>Set集合类型的属性注入</li>
+<li>Map集合类型的属性注入</li>
+<li>Properties类型的属性注入</li>
+</ul>
+<h4 id="Spring的Bean管理-注解方式"><a href="#Spring的Bean管理-注解方式" class="headerlink" title="Spring的Bean管理(注解方式)"></a>Spring的Bean管理(注解方式)</h4><p>使用注解定义Bean</p>
+<ul>
+<li><p>Spring2.5引入使用注解去定义Bean</p>
+<ul>
+<li>@Component描述Spring框架中Bean</li>
+</ul>
+</li>
+<li><p>除了@Component外，Spring提供了3个功能基本和@Component等效的注解 </p>
+<ul>
+<li>@Repository用于对DAO实现类进行标注</li>
+<li>@Service用于对Service实现类进行标注</li>
+<li>@Controller用于对Controller实现类进行标注</li>
+</ul>
+</li>
+<li><p>这三个注解是为了让标注类本身的用途清晰，Spring在后续版本会对其增强</p>
+</li>
+</ul>
+<p>使用注解方式如果没有set方法，注解写在属性上</p>
+<p>如果有set方法，注解写在set方法上。</p>
+<ul>
+<li>使用@Autowired进行自动注入<ul>
+<li>如果存在两个相同Bean类型相同，则按照名称注入</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>@Autowired注入时可以针对成员变量或者set方法</li>
+<li>通过@Autowired的required属性，设置一定要找到匹配的Bean</li>
+<li>使用@Qualifier指定注入Bean的名称</li>
+<li>使用@Qualifier指定Bean名称后，注解Bean必须指定相同名称</li>
+<li>Spring提供对JSR-250中定义@Resource标准注解的支持</li>
+<li>@Resource和@Autowired注解方式类似</li>
+</ul>
+<h4 id="Spring的其他注解"><a href="#Spring的其他注解" class="headerlink" title="Spring的其他注解"></a>Spring的其他注解</h4><p>Spring初始化bean或销毁bean时，有时需要作一些处理工作，因此spring可以在创建和拆卸bean的时候调用bean的两个生命周期方法。</p>
+<bean id="xxx" class="...Yoo" init-method="init" destroy-method="destroy">
+
+<p>当bean被载入到容器的时候调用</p>
+<p>init</p>
+<p>注解方式下：</p>
+<ul>
+<li>@PostConstruct</li>
+<li>初始化</li>
+</ul>
+<p>当bean从容器中删除的时候调用</p>
+<p>destroy(scope=singleton有效)注解方式如下：</p>
+<ul>
+<li>@PreDestroy</li>
+<li>销毁</li>
+</ul>
+<h4 id="Bean的作用范围"><a href="#Bean的作用范围" class="headerlink" title="Bean的作用范围"></a>Bean的作用范围</h4><ul>
+<li>使用注解配置的Bean和\<bean>配置的一样，默认作用范围都是singleton</bean></li>
+<li>@Scope注解用于指定Bean的作用范围</li>
+<li>通过Scope来指定是单例还是多例（加一个@Scope(“prototype”)在Bean上面）</li>
+</ul>
+<p>传统XML配置和注解配置混合使用</p>
+<h4 id="XML方法的优势"><a href="#XML方法的优势" class="headerlink" title="XML方法的优势"></a>XML方法的优势</h4><ul>
+<li>结构清晰，易于阅读</li>
+</ul>
+<h4 id="注解方法的优势"><a href="#注解方法的优势" class="headerlink" title="注解方法的优势"></a>注解方法的优势</h4><ul>
+<li>开发便捷，属性注入方便</li>
+</ul>
+<p>各司其职，</p>
+<p>XML用于管理我们的类，注解用于完成属性注入</p>
+<h4 id="XML与注解的整合开发"><a href="#XML与注解的整合开发" class="headerlink" title="XML与注解的整合开发"></a>XML与注解的整合开发</h4><ul>
+<li>引入context命名空间</li>
+<li>在配置文件中添加context:annotation-config标签</li>
+</ul>
+</bean>]]></content>
+      
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Java内存模型和线程]]></title>
       <url>/2018/10/02/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</url>
       <content type="html"><![CDATA[<p>计算机的运行速度<a id="more"></a>与它的存储和通信子系统速度差距太大，大量的时间都花费在磁盘I/O、网络通信或者数据库访问上。如果不希望处理器在大部分时都处于等待其他资源的状态，就必须使用一些手段去把处理器的运算能力”压榨”出来，否则就会造成很大的浪费，而让计算机同时处理几项任务则是最容易想到、也被证明是非常有效的”压榨”手段。</p>
@@ -4010,6 +5118,65 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[java23种设计模式]]></title>
       <url>/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
@@ -4152,65 +5319,6 @@
             <tag> Java </tag>
             
             <tag> 设计模式 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
             
         </tags>
         

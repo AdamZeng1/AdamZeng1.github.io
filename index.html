@@ -207,7 +207,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
                     </div>
                 </section>
                 
@@ -362,11 +362,11 @@
 
 
   
-    <article id="post-Java内存模型和线程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-并发一" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/10/02/Java内存模型和线程/" class="article-date">
-      <time datetime="2018-10-02T10:10:25.000Z" itemprop="datePublished">2018-10-02</time>
+      <a href="/2018/11/01/并发一/" class="article-date">
+      <time datetime="2018-11-01T09:58:51.000Z" itemprop="datePublished">2018-11-01</time>
 </a>
 
 
@@ -381,7 +381,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/02/Java内存模型和线程/">Java内存模型和线程</a>
+      <a class="article-title" href="/2018/11/01/并发一/">并发一</a>
     </h1>
   
 
@@ -391,7 +391,473 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>计算机的运行速度
+        <a id="more"></a>
+<p>并发:同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时”存在”的，每个线程都处于执行过程中的某个状态，如果运行在多核处理器上，此时，程序中的每个线程都将分配到一个处理器核上，因此可以同时运行。</p>
+<p>高并发:高并发（High Concurrency)是互联网分布式系统架构设计中必须要考虑的因此之一，它通常是指，通过设计保证系统能够同时并行处理很多请求。</p>
+<p>并发:多个线程操作相同的资源，保证线程安全，合理使用资源。</p>
+<p>高并发:服务能同时处理很多请求，提高程序性能。</p>
+<p>为什么需要CPU cache:CPU的频率太快了，快到主寸跟不上，这样在处理器时钟周期内，CPU常常需要等待主存，浪费资源。所以cache的出现，是为了缓解CPU和内存之间速度的不匹配问题(结构:cpu-&gt;cache-&gt;memory)。</p>
+<p>CPU cache有什么意义：</p>
+<ol>
+<li>时间局限性：如果某个数据被访问，那么在不久的将来它很可能被再次访问。</li>
+<li>空间局限性：如果某个数据被访问，那么与它相邻的数据很快也可能被访问。</li>
+</ol>
+<h4 id="CPU多级缓存-缓存一致性（MESI）"><a href="#CPU多级缓存-缓存一致性（MESI）" class="headerlink" title="CPU多级缓存-缓存一致性（MESI）"></a>CPU多级缓存-缓存一致性（MESI）</h4><ul>
+<li>用于保证多个CPU cache之间缓存共享数据的一致<img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwsrix1mgfj310o0f64ap.jpg" alt="屏幕快照 2018-11-01 下午9.58.41"></li>
+</ul>
+<h4 id="CPU多级缓存-乱序执行优化"><a href="#CPU多级缓存-乱序执行优化" class="headerlink" title="CPU多级缓存-乱序执行优化"></a>CPU多级缓存-乱序执行优化</h4><h4 id="Java内存模型-Java-Memory-Model-JMM"><a href="#Java内存模型-Java-Memory-Model-JMM" class="headerlink" title="Java内存模型(Java Memory Model,JMM)"></a>Java内存模型(Java Memory Model,JMM)</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fwss8prshrj31260getoo.jpg" alt="屏幕快照 2018-11-01 下午10.23.44"></p>
+<h4 id="Java内存模型-同步八种操作"><a href="#Java内存模型-同步八种操作" class="headerlink" title="Java内存模型-同步八种操作"></a>Java内存模型-同步八种操作</h4><p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fwsslfnldxj316e0iuqfv.jpg" alt="屏幕快照 2018-11-01 下午10.36.08"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwtuoipxslj30zq0om7jw.jpg" alt="屏幕快照 2018-11-02 下午8.33.34"></p>
+<ul>
+<li>CPU多级缓存：缓存一致性、乱序执行优化</li>
+<li>Java内存模型：JMM规定、抽象结构、同步八种操作及规则</li>
+<li>Java并发的优势与风险</li>
+</ul>
+<h4 id="并发编程与线程安全"><a href="#并发编程与线程安全" class="headerlink" title="并发编程与线程安全"></a>并发编程与线程安全</h4><p>并发环境下得到我们所期望的结果</p>
+<h4 id="并发模拟"><a href="#并发模拟" class="headerlink" title="并发模拟"></a>并发模拟</h4><ul>
+<li>Postman：Http请求模拟工具</li>
+<li>Apache Bench（AB)：Apache附带的工具，测试网站性能</li>
+<li>JMeter：Apache组织开发的压力测试工具</li>
+<li>代码：Semaphore、CountDownLatch等</li>
+</ul>
+<h4 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h4><p>定义：当多个线程访问某个类时，不管运行时环境采用<strong>何种调度方式</strong>或者这些进程将如何交替执行，并且在主调代码中<strong>不需要任何额外的同步或协同</strong>，这个类都能表现出<strong>正确的行为</strong>，那么就称这个类是线程安全的。</p>
+<ul>
+<li>原子性：提供了互斥访问，同一时刻只能有一个线程来对它进行操作。</li>
+<li>可见性：一个线程对主内存的修改可以及时的被其他线程观察到。</li>
+<li>有序性：一个线程观察到其他线程中的指令执行顺序，由于指令重排序的存在，该观察结果一般杂乱无序。</li>
+</ul>
+<h4 id="原子性-Atomic包"><a href="#原子性-Atomic包" class="headerlink" title="原子性 -Atomic包"></a>原子性 -Atomic包</h4><ul>
+<li><p>AtomicXXX：CAS、Unsafe.compareAndSwapInt</p>
+</li>
+<li><p>AtomicLong、LongAdder</p>
+</li>
+<li><p>对于long 与double类型的变量，JVM允许将读操作与写操作拆成两个32位的操作</p>
+</li>
+<li><p>AtomicReference、AtomicReferenceFieldUpdater</p>
+<p>原子性更新对象中的某一个字段，是volatile非static字段</p>
+</li>
+<li><p>AtomicStampReference:CAS的ABA问题</p>
+</li>
+</ul>
+<p>Unsafe类：compareAndSwapInt(var1,var2,var5,var5+var4)</p>
+<p>如果当前值var2与底层从主内存地址中获取的值相同的话，才执行增加操作，因为这个增加操作依赖原值，原值在各个线程使用过程中可能会修改，需要有这么一个校验的过程，这样就防止某一次一个线程将缓存中的数据没来得及同步回主存之前，另一个线程将主存数据取来进行操作。将该Java线程中工作内存中的值与Java线程中共享的值（主内存中的值）进行对比，如果相同才执行增加操作。</p>
+<p>LongAdder： 将AtomicLong内部核心数据value分离成一个数组，每个线程访问时，通过Hash等算法预测到其中一个数字进行计数，最后结果为这个数组的求和累加。</p>
+<p>分成多个cell，每个cell独自维护内部的值。</p>
+<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><h5 id="synchronized：依赖JVM"><a href="#synchronized：依赖JVM" class="headerlink" title="synchronized：依赖JVM"></a>synchronized：依赖JVM</h5><p>同步锁，修饰的对象总共有四种：</p>
+<ol>
+<li>修饰一个代码块：大括号扩起来的代码，作用于<strong>调用这个代码块的对象</strong></li>
+<li>修饰方法（同步方法）：整个方法，作用于<strong>调用的对象</strong></li>
+<li>修饰静态方法：整个静态方法，作用于<strong>所有对象</strong></li>
+<li>修饰类：括号扩起来的部分，作用于<strong>所有对象</strong></li>
+</ol>
+<p>修饰一个代码块与修饰一个方法均是作用于调用对象的，调用对象之间是互相不影响的</p>
+<p>如果一个一个方法内部是一个完整的同步代码块，与用synchronized关键字直接修饰方法是等同的。</p>
+<p>如果父类中有synchronized修饰的方法，子类在继承父类的时候，该方法的synchronized关键字不会被继承！！！（原因是：synchronized不属于方法声明的一部分）</p>
+<h4 id="原子性-对比"><a href="#原子性-对比" class="headerlink" title="原子性-对比"></a>原子性-对比</h4><ul>
+<li>synchronized：不可中断锁，适合竞争不激烈，可读性好</li>
+<li>Lock:可中断锁，多样化同步，竞争激烈时能维持常态</li>
+<li>Atomic:竞争激烈时能维持常态，比Lock性能好；只能同步一个值</li>
+</ul>
+<h5 id="Lock：依赖特殊的CPU指令，代码实现，Reen"><a href="#Lock：依赖特殊的CPU指令，代码实现，Reen" class="headerlink" title="Lock：依赖特殊的CPU指令，代码实现，Reen"></a>Lock：依赖特殊的CPU指令，代码实现，Reen</h5><h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>导致共享变量在线程间不可见的原因</p>
+<ul>
+<li>线程交叉执行</li>
+<li>重排序结合线程交叉执行</li>
+<li>共享变量更新后的值没有在工作内存与主存间及时更新</li>
+</ul>
+<p>JMM关于<strong>synchronized</strong>的两条规定：</p>
+<ul>
+<li>线程解锁前，必须把共享变量的最新值刷新到主内存</li>
+<li><p>线程加锁时，将清空工作内存中共享变量的值，从而使用共享变量时需要从主内存中重新读取最新的值<strong>（注意，加锁与解锁是同一把锁）</strong></p>
+<h4 id="可见性-volatile"><a href="#可见性-volatile" class="headerlink" title="可见性-volatile"></a>可见性-volatile</h4></li>
+</ul>
+<p>通过加入<strong>内存屏障</strong>和<strong>禁止重排序</strong>优化来实现</p>
+<ul>
+<li>对volatile变量写操作时，会在写操作后加入一条store屏障指令、将本地内存中的共享变量值刷新到主内存</li>
+<li>对volatile变量读操作时，会在读操作前加入一条load屏障指令，从主内存中读取共享变量</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwv0b40p8kj31420mwn8e.jpg" alt="屏幕快照 2018-11-03 下午8.33.40"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fwv0ch3yzfj313g0na7fn.jpg" alt="屏幕快照 2018-11-03 下午8.35.30"></p>
+<h4 id="volatile适合什么样的场景"><a href="#volatile适合什么样的场景" class="headerlink" title="volatile适合什么样的场景"></a>volatile适合什么样的场景</h4><ol>
+<li>对变量的写操作不依赖当前值</li>
+<li>该变量没有包含在具有其他变量的不变式中。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> inited=<span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="comment">// 线程1：</span></div><div class="line">context=loadContext();</div><div class="line">inited=<span class="keyword">true</span>;</div><div class="line"></div><div class="line"><span class="comment">// 线程2：</span></div><div class="line"><span class="keyword">while</span>(!inited)&#123;</div><div class="line">    sleep();</div><div class="line">&#125;</div><div class="line">doSomethingWithConfig(context);</div></pre></td></tr></table></figure>
+<p>还有一个使用场景double check</p>
+<h4 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h4><ul>
+<li>Java内存模型中，允许编译器和处理器对指令进行重排序，但是重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。</li>
+<li>volatile、synchronized、Lock</li>
+</ul>
+<h4 id="有序性-happens-before"><a href="#有序性-happens-before" class="headerlink" title="有序性-happens-before"></a>有序性-happens-before</h4><p>如果两个操作的执行次序不能从happens-before原则推导出来，虚拟机就不能保证操作执行的次序。</p>
+<ul>
+<li>程序次序规则：一个线程内，按照代码顺序，书写在前面的操作先行发生于书写在后面的操作。</li>
+<li>锁定规则：一个unLock操作先行发生于后面对同一个锁的lock操作</li>
+<li>volatile变量规则：对一个变量的写操作先行发生于后面对这个变量的读操作</li>
+<li><p>传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</p>
+</li>
+<li><p>线程启动规则：Thread对象的start()方法先行发生于此线程的每一个动作</p>
+</li>
+<li><p>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断时间的发生</p>
+</li>
+<li><p>线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join方法结束、Thread.isAlive()的返回值手段检测到线程已经终止执行</p>
+</li>
+<li>对象终极规则：一个对象的初始化完成先行发生于它的finalize()方法的开始</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/多线程/">多线程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-MyBatis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/15/MyBatis/" class="article-date">
+      <time datetime="2018-10-15T05:43:10.000Z" itemprop="datePublished">2018-10-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/15/MyBatis/">MyBatis</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="MyBatis概述"><a href="#MyBatis概述" class="headerlink" title="MyBatis概述"></a>MyBatis概述</h4><p>ORM简介
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2018/10/15/MyBatis/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Spring-5" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/14/Spring-5/" class="article-date">
+      <time datetime="2018-10-14T05:25:00.000Z" itemprop="datePublished">2018-10-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/14/Spring-5/">Spring-5</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h4><ul>
+<li><p>Java事务导引</p>
+<ul>
+<li>什么是事务</li>
+<li>事务与Java的关系</li>
+<li>事务的原则性内容</li>
+</ul>
+</li>
+<li><p>Spring事务核心接口</p>
+</li>
+<li>编程式事务管理</li>
+<li>声明式事务管理</li>
+<li>事务最佳实践</li>
+<li>总结</li>
+</ul>
+<h4 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h4><ul>
+<li><p>事务是正确执行一系列的操作（或动作），使得数据库从一种状态转换成另一种状态，且保证操作全部成功，或者全部失败。</p>
+</li>
+<li><p>事务原则是什么</p>
+<ul>
+<li>事务必须服从ISO/IEC所制定的ACID原则</li>
+<li>ACID原则如下：<ul>
+<li>原子性（Atomicity）：即不可分割性，事务要么全部被执行，要么就全部不被执行。</li>
+<li>一致性（Consistency）：事务的执行使得数据库从一种正确状态转换成另一种正确状态。</li>
+<li>隔离性（Isolation）：在事务正确提交之前，它可能的结果不应显示给任何其他事务。</li>
+<li>持久性（Durability）：事务正确提交后，其结果将永久保存在数据库中。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Java事务的产生</p>
+<ul>
+<li>程序操作数据库的需要。在Java编写的程序或系统中，实现ACID的操作。</li>
+</ul>
+</li>
+<li>Java事务实现范围<ul>
+<li>通过JDBC相应方法间接来实现对数据库的增、删、改、查，把事务转移到Java程序代码中进行控制；</li>
+<li>确保事务—-要么全部执行成功，要么撤销不执行。</li>
+</ul>
+</li>
+<li>总结：Java事务机制和原理就是确保数据库操作的ACID特性。</li>
+</ul>
+<h4 id="Java事务实现模式"><a href="#Java事务实现模式" class="headerlink" title="Java事务实现模式"></a>Java事务实现模式</h4><ul>
+<li>Java事务的实现<ul>
+<li>通过Java代码来实现对数据库的事务性操作。</li>
+</ul>
+</li>
+<li>Java事务类型<ul>
+<li>JDBC事务：用Connection对象控制，包括手动模式和自动模式；</li>
+<li>JTA（Java transaction API）事务：与实现无关，与协议无关的API；</li>
+<li>容器事务：应用服务器提供的，且大多是基于JTA完成（通常基于JNDI的，相当复杂的API实现）。</li>
+</ul>
+</li>
+</ul>
+<p>JDBC事务：控制的局限性在一个数据库连接内，但是其使用简单。</p>
+<p>JTA事务：功能强大，可跨越多个数据库或多DAO，使用比较复杂。</p>
+<p>容器事务：主要指的是J2EE应用服务器提供的事务管理，局限于EJB。</p>
+<h4 id="Spring事务核心接口"><a href="#Spring事务核心接口" class="headerlink" title="Spring事务核心接口"></a>Spring事务核心接口</h4><p>事务接口架构</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw7peaqvq9j31kw0rtkgh.jpg" alt="屏幕快照 2018-10-14 下午4.47.23"></p>
+<h4 id="Spring事务属性定义"><a href="#Spring事务属性定义" class="headerlink" title="Spring事务属性定义"></a>Spring事务属性定义</h4><ul>
+<li>事务属性范围</li>
+</ul>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fw7pnox1oaj30ee0e2gqe.jpg" alt="屏幕快照 2018-10-14 下午4.57.44"></p>
+<ul>
+<li>事务属性定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionDefinition</span> </span>&#123;</div><div class="line">    <span class="comment">// 返回事务的传播行为</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getPropagationBehavior</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 返回事务的隔离级别，事务管理器根据它来控制</span></div><div class="line">    <span class="comment">// 另外一个事务可以看到本事务内的哪些数据</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getIsolationLevel</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 返回事务必须在多少秒内完成</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getTimeout</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">// 判断事务是否只读，事务管理器能够根据这个返回值进行优化，确保事务是只读的</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isReadOnly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>数据读取类型说明</p>
+<ul>
+<li>脏读：事务没提交，提前读取；</li>
+<li>不可重复读：两次读取的数据不一致；</li>
+<li>幻读：事务不是独立执行时发生的一种非预期现象。</li>
+</ul>
+<h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><ul>
+<li>隔离级别定义了一个事务可能受其他并发事务影响的程度。</li>
+<li>隔离级别分为：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fw7pxffrdmj318m0eih47.jpg" alt="屏幕快照 2018-10-14 下午5.06.58"></p>
+<ul>
+<li>当事务方法被另一个事务方法调用时，必须指定事务应该如何传播；</li>
+<li>Spring的7种传播行为：</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fw7pzc6hnvj317y0janp6.jpg" alt="屏幕快照 2018-10-14 下午5.08.39"></p>
+<h4 id="事务是否只读"><a href="#事务是否只读" class="headerlink" title="事务是否只读"></a>事务是否只读</h4><ul>
+<li><p>利用数据库事务的“只读”属性，进行特定优化处理。</p>
+</li>
+<li><p>设置“只读”注意：</p>
+<ul>
+<li><p>事务的是否“只读”属性，不同的数据库厂商支持不同。</p>
+</li>
+<li><p>通常而言只读属性的应用要参考厂商的具体支持说明，比如，</p>
+<p>Oracle的“readOnly”不起作用，不影响其增删改查；</p>
+<p>Mysql的“readOnly”为true，只能查，增删改则出异常。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="事务超时"><a href="#事务超时" class="headerlink" title="事务超时"></a>事务超时</h4><ul>
+<li>事务超时就是事务的一个定时器，在特定时间内事务如果没有执行完毕，那么就会自动回滚，而不是一直等待其结束。</li>
+<li>设置事务时注意点：为了使应用程序很好地运行，事务不能运行太长的时间。因为事务可能涉及对后端数据库的锁定，所以长时间的事务会不必要的占用数据库资源。</li>
+</ul>
+<h4 id="事务回滚"><a href="#事务回滚" class="headerlink" title="事务回滚"></a>事务回滚</h4><ul>
+<li>默认情况下，事务只有遇到运行期异常时才会回滚，而在遇到检查型异常时不会回滚。</li>
+<li>自定义回滚策略：<ul>
+<li>声明事务在遇到特定的检查性异常时像遇到运行期异常那样回滚；</li>
+<li>声明事务遇到特定的异常不回滚，即使这些异常是运行期异常。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Spring事务状态"><a href="#Spring事务状态" class="headerlink" title="Spring事务状态"></a>Spring事务状态</h4><ul>
+<li>事务接口<ul>
+<li>通过事务管理器获取TransactionStatus实例；</li>
+<li>控制事务在回滚或提交的时候需要应用对应的事务状态；</li>
+<li>Spring事务接口：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Spring事务状态接口</span></div><div class="line"><span class="comment">//通过调用PlatfromTransactionManager的getTransaction()获取事务状态实例</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TransactionStatus</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isNewTransaction</span><span class="params">()</span></span>;<span class="comment">// 是否是新的事务</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasSavePoint</span><span class="params">()</span></span>;<span class="comment">// 是否有恢复点</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setRollbackOnly</span><span class="params">()</span></span>;<span class="comment">// 设置为只回滚</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isRollbackOnly</span><span class="params">()</span></span>; <span class="comment">//是否为只回滚</span></div><div class="line">    <span class="keyword">boolean</span> isCompleted; <span class="comment">// 是否已完成</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="编程式事务管理"><a href="#编程式事务管理" class="headerlink" title="编程式事务管理"></a>编程式事务管理</h4><p>编程式事务实现方式</p>
+<ul>
+<li>事务管理器（PlatformTransactionManager）方式<ul>
+<li>类似应用JTA UserTransaction API方式，但异常处理更简洁；；</li>
+<li>核心类为：Spring事务管理的三个接口类以及JdbcTemplate类。</li>
+</ul>
+</li>
+<li>模板事务（TransactionTemplate）的方式<ul>
+<li>此为Spring官方团队推荐的编程式事务管理方式；</li>
+<li>主要工具为JdbcTemplate类。</li>
+</ul>
+</li>
+</ul>
+<h4 id="编程式事务实现案例"><a href="#编程式事务实现案例" class="headerlink" title="编程式事务实现案例"></a>编程式事务实现案例</h4><ul>
+<li><p>事务管理器（PlatformTransactionManager）</p>
+</li>
+<li><p>要介绍的功能是修改数据库中存储的书籍信息</p>
+</li>
+<li>书籍信息包括：ISBN号、名称、价格和出版日期</li>
+<li>会有一个对应的Book类包含上述内容</li>
+</ul>
+<p>下面为Book类中的属性定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> String isbn;</div><div class="line"><span class="keyword">private</span> String name;</div><div class="line"><span class="keyword">private</span> <span class="keyword">float</span> price;</div><div class="line"><span class="keyword">private</span> Date pubdate;</div></pre></td></tr></table></figure>
+<ul>
+<li>步骤：获取事务管理器；创建事务属性对象；获取事务状态对象；创建JDBC模板对象；业务数据操作处理。</li>
+</ul>
+<h4 id="模板事务（TransactionTemplate）案例"><a href="#模板事务（TransactionTemplate）案例" class="headerlink" title="模板事务（TransactionTemplate）案例"></a>模板事务（TransactionTemplate）案例</h4><ul>
+<li>步骤：获取模板对象；选择事务结果类型；业务数据操作处理。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>需要有效的数据源，具体数据源根据实际情况创建</li>
+<li><p>创建编程事务管理对象：</p>
+<ul>
+<li>事务模板（TransactionTemplate）</li>
+<li>事务管理器（PlateformTransactionManager）</li>
+</ul>
+</li>
+<li><p>业务逻辑处理</p>
+<ul>
+<li>基于JdbcTemplate完成业务处理。</li>
+</ul>
+</li>
+</ul>
+<h4 id="声明式事务管理"><a href="#声明式事务管理" class="headerlink" title="声明式事务管理"></a>声明式事务管理</h4><p>基于AOP模式机制，对方法前后进行拦截。</p>
+<ul>
+<li><p>声明式事务管理的配置类型：</p>
+<ul>
+<li><p>5种类型（?)：独立代理；共享代理；拦截器；</p>
+<p>tx.拦截器；全注释（前三类2.0版后不推荐使用）</p>
+</li>
+</ul>
+</li>
+<li><p>声明式事务管理配置实现方式：</p>
+<ul>
+<li>2种类型的配置实现参考</li>
+<li>声明式事务管理完整案例：书籍管理操作。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Spring-4" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/13/Spring-4/" class="article-date">
+      <time datetime="2018-10-13T09:25:36.000Z" itemprop="datePublished">2018-10-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/13/Spring-4/">Spring-4</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h4 id="JDBC-Template"><a href="#JDBC-Template" class="headerlink" title="JDBC Template"></a>JDBC Template</h4><p>使用Spring组件JDBC Template简化持久化操作
           
       
     </div>
@@ -411,198 +877,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2018/10/02/Java内存模型和线程/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-JVM类文件结构" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/09/22/JVM类文件结构/" class="article-date">
-      <time datetime="2018-09-22T09:07:06.000Z" itemprop="datePublished">2018-09-22</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/22/JVM类文件结构/">JVM类文件结构</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。</p>
-<p>Java语言中的各种变量、关键字和运算符号的语义最终都是由多条字节码命令组合而成的，因此字节码命令所能提供的语义描述能力肯定会比Java语言本身更加强大。因此，有一些Java语言本身无法有效支持的语言特性不代表字节码本身无法有效支持，这也为其他语言实现一些有别于Java的语言特性提供了基础。</p>
-<p>Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文件之中，中间没有添加任何分隔符，这使得整个Class文件中存储的内容几乎全部是程序运行的必要数据，没有空隙存在。当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
-<p>根据Java虚拟机规范的规定，Class文件格式采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表，后面的解析都要以这两种数据类型为基础，所以这里要先介绍这两个概念。</p>
-<p>无符号数属于基本的数据类型，以u1,u2,u4,u8来分别代表1个字节、2个字节、4个字节和8个字节的无符号数，无符号数可以用来描述数字、索引引用、数量值或者按照UTF-8编码构成字符串值。</p>
-<p>表是由多个无符号数或者其他表作为数据项构成的复合数据类型，所有表都习惯性地以”_info”结尾。表用于描述有层次关系的复合结构的数据，整个Class文件本质上就是一张表，它由表6-1所示的数据项构成。</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg" alt="屏幕快照 2018-09-22 下午8.43.21"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ipv6复习" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/09/22/ipv6复习/" class="article-date">
-      <time datetime="2018-09-22T00:52:25.000Z" itemprop="datePublished">2018-09-22</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/22/ipv6复习/">ipv6复习</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="Rule-1-Omit-leading-0s"><a href="#Rule-1-Omit-leading-0s" class="headerlink" title="Rule 1- Omit leading 0s"></a>Rule 1- Omit leading 0s</h4><p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fvi1ht14d6j311a04swf2.jpg" alt="屏幕快照 2018-09-22 上午11.02.28"></p>
-<p>The first rule to help reduce the notation of IPv6 addresses is to omit any leading 0s (zeros) in any 16-bit section or hextet. For example:
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2018/09/22/ipv6复习/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-jvm检测工具" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/09/21/jvm检测工具/" class="article-date">
-      <time datetime="2018-09-21T07:37:57.000Z" itemprop="datePublished">2018-09-21</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/21/jvm检测工具/">jvm检测工具</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h4 id="JConsole"><a href="#JConsole" class="headerlink" title="JConsole"></a>JConsole</h4><p>下图为macox平台上的JConsole，内存区域相当于可视化的jstat命令，用于监视受收集器管理的虚拟机内存（Java堆和永久代）的变化趋势。我们通过运行代码下图代码来体验一下它的监视功能。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/09/21/jvm检测工具/#more">阅读全文 >></a>
+          <a href="/2018/10/13/Spring-4/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -623,7 +898,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>

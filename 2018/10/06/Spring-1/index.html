@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="AdamZeng" />
+
+
+
+<meta name="description" content="Spring是一个开源框架">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring(1)">
+<meta property="og:url" content="http://adamzeng.site/2018/10/06/Spring-1/index.html">
+<meta property="og:site_name" content="AdamZeng">
+<meta property="og:description" content="Spring是一个开源框架">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fvyoyu6iwbj314y0pcdsw.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvypae46hoj30mi0d277g.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fvytgzq87fj30w00sqn77.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fvzsf0rdcwj30xq0h4dpw.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwly1fvzuf6vxohj30y40rck47.jpg">
+<meta property="og:updated_time" content="2018-10-10T09:36:01.305Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring(1)">
+<meta name="twitter:description" content="Spring是一个开源框架">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fvyoyu6iwbj314y0pcdsw.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="AdamZeng" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Spring(1) | AdamZeng</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7f446a8347e6278dac2da42f1e8204ad";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AdamZeng</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">start from zero</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Python</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AdamZeng</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AdamZeng</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">start from zero</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Spring-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/10/06/Spring-1/" class="article-date">
+      <time datetime="2018-10-06T09:34:36.000Z" itemprop="datePublished">2018-10-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring(1)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <ul>
+<li><p>Spring是一个开源框架<a id="more"></a></p>
+</li>
+<li><p>Spring为简化企业级应用开发而生，使用Spring可以使简单的JavaBean实现以前只有EJB才能实现的功能</p>
+</li>
+<li>Spring是JavaSE/EE的一站式框架</li>
+</ul>
+<p>####方便解耦，简化开发</p>
+<p>Spring就是一个大工厂，可以将所有对象创建和依赖关系维护，交给Spring管理</p>
+<h4 id="AOP编程的支持"><a href="#AOP编程的支持" class="headerlink" title="AOP编程的支持"></a>AOP编程的支持</h4><p>Spring提供面向切面编程，可以方便的实现对程序进行拦截、运行监控等功能</p>
+<h4 id="声明式事务的支持"><a href="#声明式事务的支持" class="headerlink" title="声明式事务的支持"></a>声明式事务的支持</h4><p>只需要通过配置就可以完成对事务的管理，而无需时候手动编程</p>
+<h4 id="方便程序的测试"><a href="#方便程序的测试" class="headerlink" title="方便程序的测试"></a>方便程序的测试</h4><p>Spring对Junit4支持，可以通过注解方便的测试Spring程序</p>
+<h4 id="方便集成各种优秀框架"><a href="#方便集成各种优秀框架" class="headerlink" title="方便集成各种优秀框架"></a>方便集成各种优秀框架</h4><p>Spring不排斥各种优秀框架</p>
+<h4 id="降低Java-EE-API的使用难度"><a href="#降低Java-EE-API的使用难度" class="headerlink" title="降低Java EE API的使用难度"></a>降低Java EE API的使用难度</h4><p>Spring封装了EE的较难用的API</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fvyoyu6iwbj314y0pcdsw.jpg" alt="屏幕快照 2018-10-06 下午8.43.36"></p>
+<h4 id="Spring-IOC的底层原理"><a href="#Spring-IOC的底层原理" class="headerlink" title="Spring IOC的底层原理"></a>Spring IOC的底层原理</h4><p>传统方式的开发</p>
+<p>UserService us=new UserService();</p>
+<p>但是我们要面向接口编程</p>
+<p>UserService us= new UserServiceImp1();</p>
+<p>但是这样也不好</p>
+<p>ocp原则：open-close原则，对程序扩展是open的，对修改程序代码是close。</p>
+<p>尽量做到不修改程序的源码，实现对程序的扩展。</p>
+<p>使用一个设计模式，工厂模式！！！！</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvypae46hoj30mi0d277g.jpg" alt="屏幕快照 2018-10-06 下午8.54.45"></p>
+<p>把获取UserService的方法放在FactoryBean中来管理。UserService与UserServiceImp1之间就没有直接的耦合关系了。</p>
+<p>但我们要达到真正的解耦，需要使用：</p>
+<ul>
+<li>工厂+反射+配置文件</li>
+</ul>
+<p>配置文件：\<bean id="us" class="com.adam.UserServiceImp1"></bean></p>
+<p>工厂类里面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FactoryBean</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getBean</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        ...</div><div class="line">        反射</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Spring-IOC的快速入门案例"><a href="#Spring-IOC的快速入门案例" class="headerlink" title="Spring IOC的快速入门案例"></a>Spring IOC的快速入门案例</h4><ul>
+<li>下载Spring开发包</li>
+<li>复制Spring开发jar包到工程</li>
+<li>理解IOC控制反转和DI依赖注入</li>
+<li>编写Spring核心配置文件</li>
+<li>在程序中读取Spring配置文件，通过Spring框架获得bean，完成相应操作</li>
+</ul>
+<h4 id="引入jar包"><a href="#引入jar包" class="headerlink" title="引入jar包"></a>引入jar包</h4><p>直接在pom.xml来编写dependency</p>
+<p>Maven会自动把相应的jar包加入External Library当中。</p>
+<h4 id="IOC到底是什么"><a href="#IOC到底是什么" class="headerlink" title="IOC到底是什么"></a>IOC到底是什么</h4><ul>
+<li><p>IOC Inverse of control反转控制的概念，就是将原本在程序中手动创建UserService对象的控制权，交由Spring框架管理。</p>
+</li>
+<li><p>简单说，就是创建UserService对象控制权被反转到了Spring框架</p>
+</li>
+<li>DI Dependency Injection依赖注入的概念，就是在Spring创建这个对象的过程中，将这个对象所依赖的属性注入进去。</li>
+</ul>
+<p>####Spring的工厂类</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fvytgzq87fj30w00sqn77.jpg" alt="屏幕快照 2018-10-06 下午11.18.56"></p>
+<h4 id="Spring的Bean管理（XML方式）"><a href="#Spring的Bean管理（XML方式）" class="headerlink" title="Spring的Bean管理（XML方式）"></a>Spring的Bean管理（XML方式）</h4><p>Spring是如何来生成实例的呢？</p>
+<p>三种实例化Bean的方式</p>
+<ul>
+<li>使用类构造器实例化（默认无参数）</li>
+<li>使用静态工厂的方式实例化（简单工厂模式）</li>
+<li>使用实例工厂方法实例化(工厂方法模式)</li>
+</ul>
+<p>一般情况下采用无参构造器的方式</p>
+<p>除非类特别复杂。</p>
+<h4 id="Bean常用的相关配置"><a href="#Bean常用的相关配置" class="headerlink" title="Bean常用的相关配置"></a>Bean常用的相关配置</h4><p>id和name</p>
+<ul>
+<li>一般情况下，装配一个Bean时，通过指定一个id属性作为Bean的名称。</li>
+<li><p>id属性在IOC容器中必须是唯一的</p>
+</li>
+<li><p>如果Bean的名称中含有特殊字符，就需要使用name属性。</p>
+</li>
+</ul>
+<p>class</p>
+<ul>
+<li><p>class用于设置一个类的完全路径名称，主要作用是IOC容器生成类的实例</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzsf0rdcwj30xq0h4dpw.jpg" alt="屏幕快照 2018-10-07 下午8.28.16"></p>
+<h4 id="Spring容器中Bean的生命周期"><a href="#Spring容器中Bean的生命周期" class="headerlink" title="Spring容器中Bean的生命周期"></a>Spring容器中Bean的生命周期</h4><p>Spring初始化bean或销毁bean时，有时需要做一些处理工作，因此spring可以在创建和销毁bean的时候调用bean的两个生命周期方法。</p>
+<bean id="xxx" class="...Yoo" init-method="init" destory-method="destory">
+
+<p>当bean被载入到容器的时候调用init</p>
+<p>当bean从容器中删除的时候调用destory(scope=singleton有效)</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fvzuf6vxohj30y40rck47.jpg" alt="屏幕快照 2018-10-07 下午9.37.51"></p>
+<ol>
+<li>instantiate bean对象</li>
+<li>populate properties封装属性</li>
+<li>如果Bean实现BeanNameAware执行setBeanName</li>
+<li>如果Bean实现BeanFactoryAware或者ApplicationContextAware设置工厂setBeanFactory或者上下文对象setApplicationContext</li>
+<li>如果存在类实现BeanPostProcessor(后处理Bean)，执行postProcessBeforeInitialization</li>
+<li>如果Bean实现InitializingBean执行afterPropertiesSet</li>
+<li>调用\<bean init-method="init">指定初始化方法init</bean></li>
+<li>如果过存在类实现BeanPostProcessor(处理Bean)，执行postProcessAfterInitialization。</li>
+<li>执行业务处理</li>
+<li>如果Bean实现DisposableBean执行destroy</li>
+<li>调用\<bean destroy-method="customerDestroy">指定销毁方法</bean></li>
+</ol>
+</bean></li>
+</ul>
+<h4 id="Spring的属性注入"><a href="#Spring的属性注入" class="headerlink" title="Spring的属性注入"></a>Spring的属性注入</h4><ul>
+<li>对于类成员变量，注入方式有三种</li>
+</ul>
+<ol>
+<li>构造函数注入</li>
+<li>属性setter方法注入</li>
+<li>接口注入</li>
+</ol>
+<ul>
+<li>Spring支持前两种</li>
+</ul>
+<h4 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h4><ul>
+<li>通过构造方法注入Bean的属性值或依赖的对象，它保证了Bean实例在实例化后就可以使用。</li>
+<li>构造器注入在\<constructor-arg>元素里声明的属性</constructor-arg></li>
+</ul>
+<h4 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h4><ul>
+<li>使用set方法注入，在Spring配置文件中，通过\<property>设置注入属性</property></li>
+<li>对于对象属性，同样需要在Spring配置文件的\<property>设置注入属性，而且还要在Spring配置文件中设置该对象的bean标签，且值标签不是value而是ref。</property></li>
+</ul>
+<h4 id="p名称空间注入"><a href="#p名称空间注入" class="headerlink" title="p名称空间注入"></a>p名称空间注入</h4><ul>
+<li>使用p命名空间</li>
+<li>为了简化XML文件配置，Spring从2.5开始引入一个新的p名称空间</li>
+<li>p:\&lt;属性名&gt;=”xxx”引入常量值</li>
+<li>p:\&lt;属性名&gt;-ref=”xxx”引用其他对象</li>
+</ul>
+<h4 id="SpEL注入"><a href="#SpEL注入" class="headerlink" title="SpEL注入"></a>SpEL注入</h4><ul>
+<li>SpEL：Spring expression language，spring表达式语言，对依赖注入进行简化</li>
+<li>语法:#{表达式}</li>
+<li>\<bean id="" value="#{表达式}"></bean></li>
+</ul>
+<p>SpEL表达式语言</p>
+<p>语法：#{}</p>
+<p>#{‘hello’}:使用字符串</p>
+<p>#{beanId}:使用另一个bean</p>
+<p>#{beanId.content.toUpperCase()}:使用指定名属性，并使用方法</p>
+<p>#{T(java.lang.Math).PI}:使用静态字段或方法</p>
+<h4 id="复杂类型的属性注入"><a href="#复杂类型的属性注入" class="headerlink" title="复杂类型的属性注入"></a>复杂类型的属性注入</h4><ul>
+<li>数组类型的属性注入</li>
+<li>List集合类型的属性注入</li>
+<li>Set集合类型的属性注入</li>
+<li>Map集合类型的属性注入</li>
+<li>Properties类型的属性注入</li>
+</ul>
+<h4 id="Spring的Bean管理-注解方式"><a href="#Spring的Bean管理-注解方式" class="headerlink" title="Spring的Bean管理(注解方式)"></a>Spring的Bean管理(注解方式)</h4><p>使用注解定义Bean</p>
+<ul>
+<li><p>Spring2.5引入使用注解去定义Bean</p>
+<ul>
+<li>@Component描述Spring框架中Bean</li>
+</ul>
+</li>
+<li><p>除了@Component外，Spring提供了3个功能基本和@Component等效的注解 </p>
+<ul>
+<li>@Repository用于对DAO实现类进行标注</li>
+<li>@Service用于对Service实现类进行标注</li>
+<li>@Controller用于对Controller实现类进行标注</li>
+</ul>
+</li>
+<li><p>这三个注解是为了让标注类本身的用途清晰，Spring在后续版本会对其增强</p>
+</li>
+</ul>
+<p>使用注解方式如果没有set方法，注解写在属性上</p>
+<p>如果有set方法，注解写在set方法上。</p>
+<ul>
+<li>使用@Autowired进行自动注入<ul>
+<li>如果存在两个相同Bean类型相同，则按照名称注入</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>@Autowired注入时可以针对成员变量或者set方法</li>
+<li>通过@Autowired的required属性，设置一定要找到匹配的Bean</li>
+<li>使用@Qualifier指定注入Bean的名称</li>
+<li>使用@Qualifier指定Bean名称后，注解Bean必须指定相同名称</li>
+<li>Spring提供对JSR-250中定义@Resource标准注解的支持</li>
+<li>@Resource和@Autowired注解方式类似</li>
+</ul>
+<h4 id="Spring的其他注解"><a href="#Spring的其他注解" class="headerlink" title="Spring的其他注解"></a>Spring的其他注解</h4><p>Spring初始化bean或销毁bean时，有时需要作一些处理工作，因此spring可以在创建和拆卸bean的时候调用bean的两个生命周期方法。</p>
+<bean id="xxx" class="...Yoo" init-method="init" destroy-method="destroy">
+
+<p>当bean被载入到容器的时候调用</p>
+<p>init</p>
+<p>注解方式下：</p>
+<ul>
+<li>@PostConstruct</li>
+<li>初始化</li>
+</ul>
+<p>当bean从容器中删除的时候调用</p>
+<p>destroy(scope=singleton有效)注解方式如下：</p>
+<ul>
+<li>@PreDestroy</li>
+<li>销毁</li>
+</ul>
+<h4 id="Bean的作用范围"><a href="#Bean的作用范围" class="headerlink" title="Bean的作用范围"></a>Bean的作用范围</h4><ul>
+<li>使用注解配置的Bean和\<bean>配置的一样，默认作用范围都是singleton</bean></li>
+<li>@Scope注解用于指定Bean的作用范围</li>
+<li>通过Scope来指定是单例还是多例（加一个@Scope(“prototype”)在Bean上面）</li>
+</ul>
+<p>传统XML配置和注解配置混合使用</p>
+<h4 id="XML方法的优势"><a href="#XML方法的优势" class="headerlink" title="XML方法的优势"></a>XML方法的优势</h4><ul>
+<li>结构清晰，易于阅读</li>
+</ul>
+<h4 id="注解方法的优势"><a href="#注解方法的优势" class="headerlink" title="注解方法的优势"></a>注解方法的优势</h4><ul>
+<li>开发便捷，属性注入方便</li>
+</ul>
+<p>各司其职，</p>
+<p>XML用于管理我们的类，注解用于完成属性注入</p>
+<h4 id="XML与注解的整合开发"><a href="#XML与注解的整合开发" class="headerlink" title="XML与注解的整合开发"></a>XML与注解的整合开发</h4><ul>
+<li>引入context命名空间</li>
+<li>在配置文件中添加context:annotation-config标签</li>
+</ul>
+</bean>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/10/06/Spring-1/">Spring(1)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
+        <p><span>发布时间:</span>2018-10-06, 19:34:36</p>
+        <p><span>最后更新:</span>2018-10-10, 20:36:01</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/10/06/Spring-1/" title="Spring(1)">http://adamzeng.site/2018/10/06/Spring-1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/10/06/Spring-1/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/10/07/常见命令/">
+                    常见命令
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/10/02/Java内存模型和线程/">
+                    Java内存模型和线程
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#AOP编程的支持"><span class="toc-number">1.</span> <span class="toc-text">AOP编程的支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#声明式事务的支持"><span class="toc-number">2.</span> <span class="toc-text">声明式事务的支持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方便程序的测试"><span class="toc-number">3.</span> <span class="toc-text">方便程序的测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方便集成各种优秀框架"><span class="toc-number">4.</span> <span class="toc-text">方便集成各种优秀框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#降低Java-EE-API的使用难度"><span class="toc-number">5.</span> <span class="toc-text">降低Java EE API的使用难度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-IOC的底层原理"><span class="toc-number">6.</span> <span class="toc-text">Spring IOC的底层原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring-IOC的快速入门案例"><span class="toc-number">7.</span> <span class="toc-text">Spring IOC的快速入门案例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#引入jar包"><span class="toc-number">8.</span> <span class="toc-text">引入jar包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IOC到底是什么"><span class="toc-number">9.</span> <span class="toc-text">IOC到底是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring的Bean管理（XML方式）"><span class="toc-number">10.</span> <span class="toc-text">Spring的Bean管理（XML方式）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean常用的相关配置"><span class="toc-number">11.</span> <span class="toc-text">Bean常用的相关配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring容器中Bean的生命周期"><span class="toc-number">12.</span> <span class="toc-text">Spring容器中Bean的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring的属性注入"><span class="toc-number">13.</span> <span class="toc-text">Spring的属性注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#构造方法注入"><span class="toc-number">14.</span> <span class="toc-text">构造方法注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set方法注入"><span class="toc-number">15.</span> <span class="toc-text">set方法注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#p名称空间注入"><span class="toc-number">16.</span> <span class="toc-text">p名称空间注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SpEL注入"><span class="toc-number">17.</span> <span class="toc-text">SpEL注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复杂类型的属性注入"><span class="toc-number">18.</span> <span class="toc-text">复杂类型的属性注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring的Bean管理-注解方式"><span class="toc-number">19.</span> <span class="toc-text">Spring的Bean管理(注解方式)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Spring的其他注解"><span class="toc-number">20.</span> <span class="toc-text">Spring的其他注解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean的作用范围"><span class="toc-number">21.</span> <span class="toc-text">Bean的作用范围</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XML方法的优势"><span class="toc-number">22.</span> <span class="toc-text">XML方法的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注解方法的优势"><span class="toc-number">23.</span> <span class="toc-text">注解方法的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XML与注解的整合开发"><span class="toc-number">24.</span> <span class="toc-text">XML与注解的整合开发</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Spring(1)　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2147425';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/10/07/常见命令/" title="上一篇: 常见命令">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/10/02/Java内存模型和线程/" title="下一篇: Java内存模型和线程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/01/并发一/">并发一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/MyBatis/">MyBatis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/Spring-5/">Spring-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/13/Spring-4/">Spring-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/Spring-3/">Spring-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/10/spring-2/">spring-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/常见命令/">常见命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/Spring-1/">Spring(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/02/Java内存模型和线程/">Java内存模型和线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/22/JVM类文件结构/">JVM类文件结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/22/ipv6复习/">ipv6复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/21/jvm检测工具/">jvm检测工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/20/minor-GC/">minor GC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/17/垃圾收集器与内存分配策略/">垃圾收集器与内存分配策略</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/static-route-and-dynamic-route/">static-route-and-dynamic-route</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/Java内存区域与内存溢出异常/">Java内存区域与内存溢出异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/15/JVM系列一走进JVM/">JVM系列一走进JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/java加载配置文件的三种方式/">java加载配置文件的三种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/13/primary-function-and-features-of-a-router/">primary-function-and-features-of-a-router</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/二叉查找树/">二叉查找树</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/26/heap堆排序/">heap堆排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/pgsql的总结/">pgsql的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/数据库与ERD/">数据库与ERD</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/07/使用大O符号来衡量算法效率/">使用大O符号来衡量算法效率</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/03/Java中的同步合集/">Java中的同步合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/01/Switch-Forwarding-Methods/">Switch-Forwarding-Methods</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/08/类设计原则/">类设计原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/08/八皇后/">八皇后</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Group-by/">Group by</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Pandas-Idioms/">Pandas Idioms</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/数据分析之四/">数据分析之四</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/05/数据分析第三节/">数据分析第三节</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/数据分析DataFrame-Data-Structure/">数据分析DataFrame Data Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/31/pandas的初步认识/">pandas的初步认识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/28/关于Python数据分析初解/">关于Python数据分析初解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/mysql学习笔记一/">mysql学习笔记一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/命名-统计-字典/">命名 统计 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/列表，字典，集合筛选数据/">列表，字典，集合筛选数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/Python中的-arg和-kwarg/">Python中的*arg和**kwarg</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/classmethod和staticmethod/">classmethod和staticmethod</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/scrapy了解/">scrapy了解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/动态Cookies池/">动态Cookies池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/未来打算/">未来打算</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/最近的生活总结/">最近的生活总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/爬虫动态代理池/">爬虫动态代理池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/BeautifulSoup/">BeautifulSoup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/getitem-and-setitem/">__getitem__ and __setitem__</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/排序和搜索/">排序和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/leetcode371/">leetcode371题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/TCP-IP与HTTP的关系/">TCP/IP与HTTP的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/动态规划/">动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/探索迷宫/">探索迷宫</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/04/短信轰炸机/">短信轰炸机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/leetcode190/">leetcode190题131题191题231题342题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/谢尔宾斯基三角形/">谢尔宾斯基三角形</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/可视化递归/">可视化递归</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/计算整数列表和/">计算整数列表和</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/Vue-js的数据/">Vue.js的数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/有序列表/">有序列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/列表/">列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是Deque/">什么是Deque</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是队列/">什么是队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/生活/">生活</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/中缀前缀和后缀表达式/">中缀前缀和后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/十进制转换成二进制/">十进制转换成二进制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/简单与复杂括号匹配/">简单与复杂括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/基本数据结构之一/">基本数据结构之一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Python数据结构的字典/">Python数据结构的字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/python数据结构的性能/">python数据结构的性能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/你好，这个世界/">你好，这个世界!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Git详细教程/">Git常用命令(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/Git常用命令/">Git常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/java设计模式/">java23种设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/hexo-nexT配置详情/">Hexo之NexT主题配置</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2018 AdamZeng
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
