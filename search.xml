@@ -3,10 +3,83 @@
   
     
     <entry>
+      <title><![CDATA[发布对象]]></title>
+      <url>/2018/11/04/%E5%8F%91%E5%B8%83%E5%AF%B9%E8%B1%A1/</url>
+      <content type="html"><![CDATA[<h4 id="发布对象"><a href="#发布对象" class="headerlink" title="发布对象"></a>发布对象</h4><ul>
+<li>发布对象：使一个对象能够被当前范围之外的代码所使用</li>
+<li>对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThisEscape</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> var;  </div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThisEscape</span><span class="params">(EventSource source)</span> </span>&#123;  </div><div class="line">        source.registerListener(  </div><div class="line">            <span class="keyword">new</span> EventListener() &#123;  </div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">                    doSomething(e);  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">        );  </div><div class="line">   </div><div class="line">        <span class="comment">// more initialization  </span></div><div class="line">        <span class="comment">// ...  </span></div><div class="line">   </div><div class="line">        var = <span class="number">10</span>;  </div><div class="line">    &#125;  </div><div class="line">   </div><div class="line">    <span class="comment">// result can be 0 or 10  </span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> var;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>事件监听器一旦注册成功，就能够监听用户的操作，调用对应的回调函数。比如出发了e这个事件，会执行doSomething()回调函数。这个时候由于是异步的，ThisEscape对象的构造函数很有可能还没有执行完（没有给var赋值），此时doSomething中获取到的数据很有可能是0，这不符合预期。</p>
+<p>结论 ：</p>
+<ol>
+<li><p>就是不要在构造函数随便创建匿名类然后 发布它们。</p>
+</li>
+<li><p>不用再构造函数中随便起线程， 如果起要看有没有发布匿名类对象。</p>
+</li>
+</ol>
+<h4 id="安全发布对象"><a href="#安全发布对象" class="headerlink" title="安全发布对象"></a>安全发布对象</h4><ul>
+<li><p>在静态初始化函数中初始化一个对象引用</p>
+</li>
+<li><p>将对象的引用保存到volatile类型域或者AtomicReference对象中</p>
+</li>
+<li><p>将对象的引用保存到某个正确构造对象的final类型域中</p>
+</li>
+<li><p>将对象的引用保存到一个由锁保护的域中</p>
+</li>
+</ul>
+<h4 id="不可变对象"><a href="#不可变对象" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
+<li><p>不可变对象需要满足的条件</p>
+<ul>
+<li>对象创建以后其状态就不能修改</li>
+<li>对象所有域都是final类型</li>
+<li>对象是正确创建的（在对象创建期间，this引用没有逸出）</li>
+</ul>
+</li>
+<li><p>final关键字：类、方法、变量</p>
+<ul>
+<li>修饰类：不能被继承</li>
+<li>修饰方法：1、锁定方法不被继承类修改；2、效率</li>
+<li>修饰变量：基本数据类型变量（初始化后不能修改）、（初始化后不能指向另外一个对象）引用类型变量</li>
+</ul>
+</li>
+</ul>
+<h4 id="不可变对象-1"><a href="#不可变对象-1" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
+<li><p>Collections.UnmodifiableXXX:Collection、List、Set、Map…</p>
+</li>
+<li><p>Guava:ImmutableXXX:Collection、List、Set、Map</p>
+</li>
+</ul>
+<h4 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h4><ul>
+<li>Ad-hoc线程封闭：程序控制实现，最糟糕，忽略</li>
+<li>堆栈封闭：局部变量，无并发问题</li>
+<li>ThreadLocal最好的线程封闭方法</li>
+</ul>
+<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>同一个ThreadLocal中所包含的对象，(对ThreadLocal\<string\>而言即为String类型变量)，在不同的Thread中有不同的副本（实际上是不同的实例，后文会详细阐述）。这里有几点需要注意：</string\></p>
+<ul>
+<li>因为每个Thread内有自己的实例副本，且该副本只能由当前的Thread使用。这就是ThreadLocal的由来</li>
+<li>既然每个Thread都有自己的实例副本，且其他Thread不可访问，那就不存在多线程间共享的问题。</li>
+<li>既无共享，何来同步问题，又何来解决同步问题一说</li>
+</ul>
+<blockquote>
+<p>This class provides thread-local variables. These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable. ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread (e.g., a user ID or Transaction ID).<br>Each thread holds an implicit reference to its copy of a thread-local variable as long as the thread is alive and the ThreadLocal instance is accessible; after a thread goes away, all of its copies of thread-local instances are subject to garbage collection (unless other references to these copies exist).</p>
+</blockquote>
+<p>核心意思是：</p>
+<blockquote>
+<p>ThreadLocal提供了线程本地的实例。它与普通变量的区别在于，每个使用使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常被private static修饰。当一个线程结束时，它所使用的所有ThreadLocal相对的实例副本都可被回收。</p>
+</blockquote>
+<p>总的来说，<strong>ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。</strong>后文会通过实例详细阐述该观点。另外，该场景下，并非必须使用 ThreadLocal ，其它方式完全可以实现同样的效果，只是 ThreadLocal 使得实现更简洁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalDemo</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">int</span> threads = <span class="number">3</span>;</div><div class="line">    CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(threads);</div><div class="line">    InnerClass innerClass = <span class="keyword">new</span> InnerClass();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= threads; i++) &#123;</div><div class="line">      <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</div><div class="line">          innerClass.add(String.valueOf(j));</div><div class="line">          innerClass.print();</div><div class="line">        &#125;</div><div class="line">        innerClass.set(<span class="string">"hello world"</span>);</div><div class="line">        countDownLatch.countDown();</div><div class="line">      &#125;, <span class="string">"thread - "</span> + i).start();</div><div class="line">    &#125;</div><div class="line">    countDownLatch.await();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String newStr)</span> </span>&#123;</div><div class="line">      StringBuilder str = Counter.counter.get();</div><div class="line">      Counter.counter.set(str.append(newStr));</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">      System.out.printf(<span class="string">"Thread name:%s , ThreadLocal hashcode:%s, Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String words)</span> </span>&#123;</div><div class="line">      Counter.counter.set(<span class="keyword">new</span> StringBuilder(words));</div><div class="line">      System.out.printf(<span class="string">"Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;StringBuilder&gt; counter = <span class="keyword">new</span> ThreadLocal&lt;StringBuilder&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">protected</span> StringBuilder <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder();</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ThreadLocal线程封闭：特别好的封闭方法</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[并发一]]></title>
       <url>/2018/11/01/%E5%B9%B6%E5%8F%91%E4%B8%80/</url>
-      <content type="html"><![CDATA[<a id="more"></a>
-<p>并发:同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时”存在”的，每个线程都处于执行过程中的某个状态，如果运行在多核处理器上，此时，程序中的每个线程都将分配到一个处理器核上，因此可以同时运行。</p>
+      <content type="html"><![CDATA[<p>并发:同时拥有两个或者多个线程，如果程序在单核处理器上运行，多个线程将交替地换入或者换出内存，这些线程是同时”存在”的，每个线程都处于执行过程中的某个状态，如果运行在多核处理器上，此时，程序中的每个线程都将分配到一个处理器核上，因此可以同时运行。<a id="more"></a></p>
 <p>高并发:高并发（High Concurrency)是互联网分布式系统架构设计中必须要考虑的因此之一，它通常是指，通过设计保证系统能够同时并行处理很多请求。</p>
 <p>并发:多个线程操作相同的资源，保证线程安全，合理使用资源。</p>
 <p>高并发:服务能同时处理很多请求，提高程序性能。</p>
@@ -261,7 +334,7 @@
       <title><![CDATA[Spring-5]]></title>
       <url>/2018/10/14/Spring-5/</url>
       <content type="html"><![CDATA[<h4 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h4><ul>
-<li><p>Java事务导引</p>
+<li><p>Java事务导引<a id="more"></a></p>
 <ul>
 <li>什么是事务</li>
 <li>事务与Java的关系</li>
@@ -439,6 +512,18 @@
 </ul>
 ]]></content>
       
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
         
     </entry>
     
@@ -1211,7 +1296,7 @@
     <entry>
       <title><![CDATA[JVM类文件结构]]></title>
       <url>/2018/09/22/JVM%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/</url>
-      <content type="html"><![CDATA[<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。</p>
+      <content type="html"><![CDATA[<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>记得在第一节计算机程序课上我的老师就讲过：“计算机只认识0和1，所以我们写的程序需要经编译器翻译成由0和1构成的二进制格式才能由计算机执行。”10多年时间过去了，今天的计算机仍然只能识别0和1，但由于最近10年内虚拟机以及大量建立在虚拟机之上的程序语言如雨后春笋般出现并蓬勃发展，将我们编写的程序编译成二进制本地机器码（Native Code）已不再是唯一的选择，越来越多的程序语言选择了与操作系统和机器指令集无关的、平台中立的格式作为程序编译后的存储格式。<a id="more"></a></p>
 <p>Java语言中的各种变量、关键字和运算符号的语义最终都是由多条字节码命令组合而成的，因此字节码命令所能提供的语义描述能力肯定会比Java语言本身更加强大。因此，有一些Java语言本身无法有效支持的语言特性不代表字节码本身无法有效支持，这也为其他语言实现一些有别于Java的语言特性提供了基础。</p>
 <p>Class文件是一组以8位字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑地排列在Class文件之中，中间没有添加任何分隔符，这使得整个Class文件中存储的内容几乎全部是程序运行的必要数据，没有空隙存在。当遇到需要占用8位字节以上空间的数据项时，则会按照高位在前的方式分割成若干个8位字节进行存储。</p>
 <p>根据Java虚拟机规范的规定，Class文件格式采用一种类似于C语言结构体的伪结构来存储数据，这种伪结构中只有两种数据类型：无符号数和表，后面的解析都要以这两种数据类型为基础，所以这里要先介绍这两个概念。</p>
@@ -1220,6 +1305,18 @@
 <p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fviia57et7j30wc0j2ahs.jpg" alt="屏幕快照 2018-09-22 下午8.43.21"></p>
 ]]></content>
       
+        <categories>
+            
+            <category> Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
         
     </entry>
     

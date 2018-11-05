@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
-<meta name="keywords" content="数据分析">
+<meta name="description" content="发布对象 发布对象：使一个对象能够被当前范围之外的代码所使用 对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见  1234567891011121314151617181920212223public class ThisEscape &amp;#123;      private final">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据分析之四">
-<meta property="og:url" content="http://adamzeng.site/2018/01/08/数据分析之四/index.html">
+<meta property="og:title" content="发布对象">
+<meta property="og:url" content="http://adamzeng.site/2018/11/04/发布对象/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
+<meta property="og:description" content="发布对象 发布对象：使一个对象能够被当前范围之外的代码所使用 对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见  1234567891011121314151617181920212223public class ThisEscape &amp;#123;      private final int var;         public ThisEscape(EventSou">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png">
-<meta property="og:updated_time" content="2018-01-09T07:22:54.994Z">
+<meta property="og:updated_time" content="2018-11-05T06:01:43.631Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据分析之四">
-<meta name="twitter:description" content="Merging DataFrames上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框">
-<meta name="twitter:image" content="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png">
+<meta name="twitter:title" content="发布对象">
+<meta name="twitter:description" content="发布对象 发布对象：使一个对象能够被当前范围之外的代码所使用 对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见  1234567891011121314151617181920212223public class ThisEscape &amp;#123;      private final int var;         public ThisEscape(EventSou">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>数据分析之四 | AdamZeng</title>
+<title>发布对象 | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -283,11 +280,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-数据分析之四" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-发布对象" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/01/08/数据分析之四/" class="article-date">
-      <time datetime="2018-01-08T09:17:07.000Z" itemprop="datePublished">2018-01-08</time>
+      <a href="/2018/11/04/发布对象/" class="article-date">
+      <time datetime="2018-11-04T08:21:53.000Z" itemprop="datePublished">2018-11-04</time>
 </a>
 
 
@@ -302,7 +299,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      数据分析之四
+      发布对象
     </h1>
   
 
@@ -310,16 +307,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -327,34 +316,72 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="Merging-DataFrames"><a href="#Merging-DataFrames" class="headerlink" title="Merging DataFrames"></a>Merging DataFrames</h3><p>上周，我们介绍了Pandas数据处理和分析的程序库。我们看到，是实际上两个非常相似的核心数据结构，一维的列表（series）物件和二维的数据框<a id="more"></a>（DataFrame）物件。查询这两个数据结构以几种不同的方式完成，例如使用iloc或loc属性进行对行（row）的查询，或者使用方括号在物件本身进行对于列（column）的查询。最重要的是，我们看到一个可以查询DataFrame和series物件通过布林遮蔽（boolean masking）。布林遮蔽是一种强大的过滤方法，它允许我们使用广播来确定在我们的分析中应该保留哪些数据。</p>
-<p>在本周的讲课中，我们将详细介绍如何操作DataFrame。我们将探讨如何使用GroupBy和Apply来减少和处理数据，以及如何将多个文件中的数据集合在一起。</p>
-<p>我们还将讨论pandas一些有用的功能，对传统统计分析和机器学习。我们从如何合并数据集开始吧。我们已经看到如何将新数据添加到现有的DataFrame中。只需使用带有新列名称的方括号运算符，只要索引被共用，数据就添加了。如果没有共享索引，并传入一个标量值，那么记住一个纯量只是一个整数或一个字串。添加在列的新值，是以纯量作为预设值。如果我们想为每一行分配一个不同的值呢？那么它变得更棘手。如果我们可以将值，写死程序到列表中，那么pandas将解拆解它们并将它们分配给行。但是，如果我们的列表不够长，那么我们不能这样做，因为pandas不知道丢失的值应该去哪里。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">df=pd.DataFrame([&#123;<span class="string">'Name'</span> : <span class="string">'Chris'</span>, <span class="string">'Item Purchased'</span>: <span class="string">'Sponge'</span>,<span class="string">'Cost'</span>:<span class="number">22.50</span>&#125;,</div><div class="line">                &#123;<span class="string">'Name'</span>:<span class="string">'Keyvyn'</span>,<span class="string">'Item Purchased'</span>: <span class="string">'Kitty Litter'</span>,<span class="string">'Cost'</span>:<span class="number">2.50</span>&#125;,</div><div class="line">                &#123;<span class="string">'Name'</span>:<span class="string">'Filip'</span>,<span class="string">'Item Purchased'</span>:<span class="string">'Spoon'</span>,<span class="string">'Cost'</span>:<span class="number">5.00</span>&#125;],</div><div class="line">               index=[<span class="string">'Store 1'</span>,<span class="string">'Store 1'</span>,<span class="string">'Store 2'</span>])</div><div class="line">df</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	Cost	Item Purchased	Name</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris</div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn</div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'data'</span>]=[<span class="string">'December 1'</span>,<span class="string">'January'</span>,<span class="string">'mid-May'</span>]</div><div class="line">df</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Cost	Item Purchased	Name	data</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span></div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January</div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Delivered'</span>]=<span class="keyword">True</span></div><div class="line">df</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">	Cost	Item Purchased	Name	data	Delivered</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span></div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span></div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span></div></pre></td></tr></table></figure>
-<p>当我们只添加几个项目时，会出现问题。为了使其工作，我们必须为pandas提供足够长的DataFrame的列表，以便可以填充每一行。这意味着我们必须自己输入none值。如果我们每行都有一个独特的索引，那么我们可以将新的列标识分配给该系列。例如，如果我们在此范例中重置索引，因此DataFrame索引标记为0到2，那么我们使用这些标记创建一个新的系列，我们可引用它。我们得到的结果是我们预期的。这种方法的好方面是，我们可以忽略项目中我们不知道的，Pandas会为我们放进丢失值。所以这是一个非常好的方法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Feedback'</span>]=[<span class="string">'Positive'</span>,<span class="keyword">None</span>,<span class="string">'Negative'</span>]</div><div class="line">df</div><div class="line"></div><div class="line">Cost	Item Purchased	Name	data	Delivered	Feedback</div><div class="line">Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span>	Positive</div><div class="line">Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span>	<span class="keyword">None</span></div><div class="line">Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span>	Negative</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">adf=df.reset_index()</div><div class="line">adf[<span class="string">'Date'</span>]=pd.Series(&#123;<span class="number">0</span>:<span class="string">'December 1'</span>,<span class="number">2</span>:<span class="string">'mid_May'</span>&#125;)</div><div class="line">adf</div><div class="line"></div><div class="line">	index	Cost	Item Purchased	Name	data	Delivered	Feedback	Date</div><div class="line"><span class="number">0</span>	Store <span class="number">1</span>	<span class="number">22.5</span>	Sponge	Chris	December <span class="number">1</span>	<span class="keyword">True</span>	Positive	December <span class="number">1</span></div><div class="line"><span class="number">1</span>	Store <span class="number">1</span>	<span class="number">2.5</span>	Kitty Litter	Keyvyn	January	<span class="keyword">True</span>	<span class="keyword">None</span>	NaN</div><div class="line"><span class="number">2</span>	Store <span class="number">2</span>	<span class="number">5.0</span>	Spoon	Filip	mid-May	<span class="keyword">True</span>	Negative	mid_May</div></pre></td></tr></table></figure>
-<p>更常见的是，我们想要结合两个较大的DataFrame在一起，这是一个比较复杂的。在我们跳入程序之前，我们需要解决一点关联理论，并设定一些语言的惯例。</p>
-<p><img src="http://oxufz8asv.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-08%20%E4%B8%8B%E5%8D%888.52.55.png" alt="image"></p>
-<p>这是韦恩图。韦恩图通常用于显示集合的关系。例如在左边圆圈的人口是一所大学的学生。在右边圈的人口是一所大学的工作人员。中间的重叠地区是那些也是学生也是工作人员的人。我们可以将这两个人群视为个别的DataFrames中的索引，可能有Person Name的标识。当我们想结合DataFrames时，我们有一些选择。首先，如果我们想要所有人的名单，无论 他们是工作人员还是学生，以及获得所有他们的信息呢？在数据库术语中，这称为完整的外连接（full outer join)。</p>
-<p>在集合中被称为union，在韦恩图中，它代表了任何一个圈子的每个人。很可能，我们只要那些我们拥有最多资料的人，那些既是工作人员又是学生的人。在数据库术语中，这称为内连接（inner join）。或者在集合理论中，交集（intersection）。这在韦恩图中被表示为重叠部分在每个圈中。好的，让我们来看一个我们如何在Pandas中做这个的例子，在那里我们将使用merge函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">staff_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'Kelly'</span>,<span class="string">'Role'</span>:<span class="string">'Director of HR'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'Role'</span>:<span class="string">'Course liaison'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'Role'</span>:<span class="string">'Grader'</span>&#125;])</div><div class="line">staff_df=staff_df.set_index(<span class="string">'Name'</span>)</div><div class="line">student_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'School'</span>:<span class="string">'Business'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Mike'</span>,<span class="string">'School'</span>:<span class="string">'Law'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'School'</span>:<span class="string">'Engineering'</span>&#125;])</div><div class="line">student_df=student_df.set_index(<span class="string">'Name'</span>)</div><div class="line"></div><div class="line">print(staff_df)</div><div class="line">print()</div><div class="line">print(student_df)</div><div class="line"></div><div class="line">                Role</div><div class="line">Name                 </div><div class="line">Kelly  Director of HR</div><div class="line">Sally  Course liaison</div><div class="line">James          Grader</div><div class="line"></div><div class="line">            School</div><div class="line">Name              </div><div class="line">James     Business</div><div class="line">Mike           Law</div><div class="line">Sally  Engineering</div></pre></td></tr></table></figure>
-<p>如果我们想要这些的union，我们将调用merge，传入在左边的DataFrame和在右边的DataFrame，并且告诉merge我们想要使用外连接（outer join）。我们告诉merge，我们要用左索引和右索引作为结合列。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'outer'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">James	Grader	Business</div><div class="line">Kelly	Director of HR	NaN</div><div class="line">Mike	NaN	Law</div><div class="line">Sally	Course liaison	Engineering</div></pre></td></tr></table></figure>
-<p>我们在结果的DataFrame中看到每个人都被列出。而且由于Mike没有任何role，而John没有School，那些单元被列为缺失值（NaN)。如果我们想要得到intersection，就是那些也是员工的学生，我们可以将how属性设置为inner。而我们设置的结果DataFrame只有James和Sally。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'inner'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">James	Grader	Business</div><div class="line">Sally	Course liaison	Engineering</div></pre></td></tr></table></figure>
-<p>现在，当合并DataFrames时，还有另外两个常见的用例。两个例子都是我们称之为集合加法（set addition）。第一个是当我们想要得到所有员工的名单，不管他们是否是学生。但如果他们是学生，我们想要获得他们的学生细节。为此，我们将使用使用左连接（left join）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'left'</span>,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">	Role	School</div><div class="line">Name		</div><div class="line">Kelly	Director of HR	NaN</div><div class="line">Sally	Course liaison	Engineering</div><div class="line">James	Grader	Business</div></pre></td></tr></table></figure>
-<p>你可能猜测到接下来会是什么。我们想要一个所有学生和他们的角色的列表，如果他们也是工作人员。为此，我们将使用右连接（right join）。合并方法有一些其他有趣的参数。首先，您不需要使用索引来加入，也可以使用列。这是一个例子。这里有个例子。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">staff_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'Kelly'</span>,<span class="string">'Role'</span>:<span class="string">'Director of HR'</span>,<span class="string">'Location'</span>:<span class="string">'State Street'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'Role'</span>:<span class="string">'Course liaison'</span>,<span class="string">'Location'</span>:<span class="string">'Washington Avenue'</span>&#125;,</div><div class="line">                      &#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'Role'</span>:<span class="string">'Grader'</span>,<span class="string">'Location'</span>:<span class="string">'Washington Avenue'</span>&#125;])</div><div class="line">student_df=pd.DataFrame([&#123;<span class="string">'Name'</span>:<span class="string">'James'</span>,<span class="string">'School'</span>:<span class="string">'Bussiness'</span>,<span class="string">'Location'</span>:<span class="string">'1024 Billiard Avenue'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Mike'</span>,<span class="string">'School'</span>:<span class="string">'Law'</span>,<span class="string">'Location'</span>:<span class="string">'Fraternity House #22'</span>&#125;,</div><div class="line">                        &#123;<span class="string">'Name'</span>:<span class="string">'Sally'</span>,<span class="string">'School'</span>:<span class="string">'Engineering'</span>,<span class="string">'Location'</span>:<span class="string">'512 Wilson Crescent'</span>&#125;])</div><div class="line">pd.merge(staff_df,student_df,how=<span class="string">'left'</span>,left_on=<span class="string">'Name'</span>,right_on=<span class="string">'Name'</span>)</div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Location_x	Name	Role	Location_y	School</div><div class="line"><span class="number">0</span>	State Street	Kelly	Director of HR	NaN	NaN</div><div class="line"><span class="number">1</span>	Washington Avenue	Sally	Course liaison	<span class="number">512</span> Wilson Crescent	Engineering</div><div class="line"><span class="number">2</span>	Washington Avenue	James	Grader	<span class="number">1024</span> Billiard Avenue	Bussiness</div></pre></td></tr></table></figure>
-<p>merge函数保留此资料，但附加_x或 _y以帮助区分哪个索引与哪个列的数据有关。__x始终是左边的DataFrame资料，而y始终是右边的DataFrame资料。</p>
-<p>你可以控制<strong>_</strong>x和y的名字使用附加参数，如果你想。现在你试试看。以下是产品和发票的DataFrame。该产品具有标识符和标价。发票列出了人员，产品，标识符和数量。假设我们要产生总计，我们如何将这两个DataFrames加在一起，以便我们有一个列出我们需要的所有信息？</p>
+        <h4 id="发布对象"><a href="#发布对象" class="headerlink" title="发布对象"></a>发布对象</h4><ul>
+<li>发布对象：使一个对象能够被当前范围之外的代码所使用</li>
+<li>对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThisEscape</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> var;  </div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThisEscape</span><span class="params">(EventSource source)</span> </span>&#123;  </div><div class="line">        source.registerListener(  </div><div class="line">            <span class="keyword">new</span> EventListener() &#123;  </div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">                    doSomething(e);  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">        );  </div><div class="line">   </div><div class="line">        <span class="comment">// more initialization  </span></div><div class="line">        <span class="comment">// ...  </span></div><div class="line">   </div><div class="line">        var = <span class="number">10</span>;  </div><div class="line">    &#125;  </div><div class="line">   </div><div class="line">    <span class="comment">// result can be 0 or 10  </span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> var;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>事件监听器一旦注册成功，就能够监听用户的操作，调用对应的回调函数。比如出发了e这个事件，会执行doSomething()回调函数。这个时候由于是异步的，ThisEscape对象的构造函数很有可能还没有执行完（没有给var赋值），此时doSomething中获取到的数据很有可能是0，这不符合预期。</p>
+<p>结论 ：</p>
+<ol>
+<li><p>就是不要在构造函数随便创建匿名类然后 发布它们。</p>
+</li>
+<li><p>不用再构造函数中随便起线程， 如果起要看有没有发布匿名类对象。</p>
+</li>
+</ol>
+<h4 id="安全发布对象"><a href="#安全发布对象" class="headerlink" title="安全发布对象"></a>安全发布对象</h4><ul>
+<li><p>在静态初始化函数中初始化一个对象引用</p>
+</li>
+<li><p>将对象的引用保存到volatile类型域或者AtomicReference对象中</p>
+</li>
+<li><p>将对象的引用保存到某个正确构造对象的final类型域中</p>
+</li>
+<li><p>将对象的引用保存到一个由锁保护的域中</p>
+</li>
+</ul>
+<h4 id="不可变对象"><a href="#不可变对象" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
+<li><p>不可变对象需要满足的条件</p>
+<ul>
+<li>对象创建以后其状态就不能修改</li>
+<li>对象所有域都是final类型</li>
+<li>对象是正确创建的（在对象创建期间，this引用没有逸出）</li>
+</ul>
+</li>
+<li><p>final关键字：类、方法、变量</p>
+<ul>
+<li>修饰类：不能被继承</li>
+<li>修饰方法：1、锁定方法不被继承类修改；2、效率</li>
+<li>修饰变量：基本数据类型变量（初始化后不能修改）、（初始化后不能指向另外一个对象）引用类型变量</li>
+</ul>
+</li>
+</ul>
+<h4 id="不可变对象-1"><a href="#不可变对象-1" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
+<li><p>Collections.UnmodifiableXXX:Collection、List、Set、Map…</p>
+</li>
+<li><p>Guava:ImmutableXXX:Collection、List、Set、Map</p>
+</li>
+</ul>
+<h4 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h4><ul>
+<li>Ad-hoc线程封闭：程序控制实现，最糟糕，忽略</li>
+<li>堆栈封闭：局部变量，无并发问题</li>
+<li>ThreadLocal最好的线程封闭方法</li>
+</ul>
+<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>同一个ThreadLocal中所包含的对象，(对ThreadLocal\<string\>而言即为String类型变量)，在不同的Thread中有不同的副本（实际上是不同的实例，后文会详细阐述）。这里有几点需要注意：</string\></p>
+<ul>
+<li>因为每个Thread内有自己的实例副本，且该副本只能由当前的Thread使用。这就是ThreadLocal的由来</li>
+<li>既然每个Thread都有自己的实例副本，且其他Thread不可访问，那就不存在多线程间共享的问题。</li>
+<li>既无共享，何来同步问题，又何来解决同步问题一说</li>
+</ul>
+<blockquote>
+<p>This class provides thread-local variables. These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable. ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread (e.g., a user ID or Transaction ID).<br>Each thread holds an implicit reference to its copy of a thread-local variable as long as the thread is alive and the ThreadLocal instance is accessible; after a thread goes away, all of its copies of thread-local instances are subject to garbage collection (unless other references to these copies exist).</p>
+</blockquote>
+<p>核心意思是：</p>
+<blockquote>
+<p>ThreadLocal提供了线程本地的实例。它与普通变量的区别在于，每个使用使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常被private static修饰。当一个线程结束时，它所使用的所有ThreadLocal相对的实例副本都可被回收。</p>
+</blockquote>
+<p>总的来说，<strong>ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。</strong>后文会通过实例详细阐述该观点。另外，该场景下，并非必须使用 ThreadLocal ，其它方式完全可以实现同样的效果，只是 ThreadLocal 使得实现更简洁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalDemo</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">int</span> threads = <span class="number">3</span>;</div><div class="line">    CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(threads);</div><div class="line">    InnerClass innerClass = <span class="keyword">new</span> InnerClass();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= threads; i++) &#123;</div><div class="line">      <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</div><div class="line">          innerClass.add(String.valueOf(j));</div><div class="line">          innerClass.print();</div><div class="line">        &#125;</div><div class="line">        innerClass.set(<span class="string">"hello world"</span>);</div><div class="line">        countDownLatch.countDown();</div><div class="line">      &#125;, <span class="string">"thread - "</span> + i).start();</div><div class="line">    &#125;</div><div class="line">    countDownLatch.await();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String newStr)</span> </span>&#123;</div><div class="line">      StringBuilder str = Counter.counter.get();</div><div class="line">      Counter.counter.set(str.append(newStr));</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">      System.out.printf(<span class="string">"Thread name:%s , ThreadLocal hashcode:%s, Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String words)</span> </span>&#123;</div><div class="line">      Counter.counter.set(<span class="keyword">new</span> StringBuilder(words));</div><div class="line">      System.out.printf(<span class="string">"Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;StringBuilder&gt; counter = <span class="keyword">new</span> ThreadLocal&lt;StringBuilder&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">protected</span> StringBuilder <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder();</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ThreadLocal线程封闭：特别好的封闭方法</p>
 
       
     </div>
@@ -363,13 +390,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/01/08/数据分析之四/">数据分析之四</a></p>
+        <p><span>本文标题:</span><a href="/2018/11/04/发布对象/">发布对象</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2018-01-08, 20:17:07</p>
-        <p><span>最后更新:</span>2018-01-09, 18:22:54</p>
+        <p><span>发布时间:</span>2018-11-04, 19:21:53</p>
+        <p><span>最后更新:</span>2018-11-05, 17:01:43</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/01/08/数据分析之四/" title="数据分析之四">http://adamzeng.site/2018/01/08/数据分析之四/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/01/08/数据分析之四/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/04/发布对象/" title="发布对象">http://adamzeng.site/2018/11/04/发布对象/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2018/11/04/发布对象/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -381,16 +408,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/01/09/Pandas-Idioms/">
-                    Pandas Idioms
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/01/05/数据分析第三节/">
-                    数据分析第三节
+                <a href="/2018/11/01/并发一/">
+                    并发一
                 </a>
             </div>
         
@@ -402,7 +423,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Merging-DataFrames"><span class="toc-number">1.</span> <span class="toc-text">Merging DataFrames</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#发布对象"><span class="toc-number">1.</span> <span class="toc-text">发布对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全发布对象"><span class="toc-number">2.</span> <span class="toc-text">安全发布对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不可变对象"><span class="toc-number">3.</span> <span class="toc-text">不可变对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不可变对象-1"><span class="toc-number">4.</span> <span class="toc-text">不可变对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程封闭"><span class="toc-number">5.</span> <span class="toc-text">线程封闭</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ThreadLocal"><span class="toc-number">6.</span> <span class="toc-text">ThreadLocal</span></a></li></ol>
         
     </div>
     <style>
@@ -438,7 +459,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"数据分析之四　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"发布对象　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -474,15 +495,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/01/09/Pandas-Idioms/" title="上一篇: Pandas Idioms">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/01/05/数据分析第三节/" title="下一篇: 数据分析第三节">
+            <a href="/2018/11/01/并发一/" title="下一篇: 并发一">
                 <i class="fa fa-angle-right"></i>
             </a>
         
