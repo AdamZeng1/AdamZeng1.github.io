@@ -3,74 +3,119 @@
   
     
     <entry>
-      <title><![CDATA[发布对象]]></title>
-      <url>/2018/11/04/%E5%8F%91%E5%B8%83%E5%AF%B9%E8%B1%A1/</url>
-      <content type="html"><![CDATA[<h4 id="发布对象"><a href="#发布对象" class="headerlink" title="发布对象"></a>发布对象</h4><ul>
-<li>发布对象：使一个对象能够被当前范围之外的代码所使用</li>
-<li>对象逸出：一种错误的发布。当一个对象还没有构造完成时，就使它被其他线程所见</li>
+      <title><![CDATA[Session与Cookie]]></title>
+      <url>/2018/11/14/Session%E4%B8%8ECookie/</url>
+      <content type="html"><![CDATA[<h4 id="深入理解Session与Cookie"><a href="#深入理解Session与Cookie" class="headerlink" title="深入理解Session与Cookie"></a>深入理解Session与Cookie</h4><p>这是一个既简单又复杂的问题，简单是因为它们本身只是HTTP中的一个配置项，在Servlet规范中也只是对应到一个类而已：说它复杂原因在于当我们的系统达到需要用到很多Cookie时，我们不得不考虑HTTP对Cookie数量和大小的限制，那么如何才能解决这个瓶颈呢？Session也会有同样的问题，当我们的一个应用系统有几百台服务器时，如何解决Session在多台服务器之间的共享的问题？他们还有一些安全问题，如Cookie被盗、Cookie伪造等问题应如何避免。</p>
+<p>Session与Cookie的作用都是为了保持访问用户与后端服务器的交互状态。它们有各自的优点，也有各自的缺陷，然而具有讽刺意味的是它们的优点和它们的使用场景又是矛盾的。例如，使用Cookie来传递信息时，随着Cookie个数的增多和访问量的增加，它占用网络带宽也很大，试想加入Cookie占用200个字节，如果一天的PV有几亿，那么它要占用多少带宽？所以有大访问量时希望用Session，但是Session的致命弱点是不容易在多台服务器之间共享，这也限制了Session的使用。</p>
+<h4 id="理解Cookie"><a href="#理解Cookie" class="headerlink" title="理解Cookie"></a>理解Cookie</h4><p>Cookie的作用是当一个用户通过HTTP访问一个服务器时，这个服务器会将一些Key/Value键值对返回给客户端浏览器，并给这些数据加上一些限制条件，在条件符合时这个用户下次访问这个服务器时，数据又被完整地带回给服务器。</p>
+<p>这个作用就像你去超时购物时，第一次给你办张购物卡，在这个购物卡里存放了一些你的个人信息，下次你再来这个连锁超市时，超时会识别你的购物卡，下次直接购物就好了。</p>
+<p>当初W3C在设计Cookie时实际上考虑的是为了记录用户在一段时间内访问Web应用的行为路径。由于HTTP是一种无状态协议，当用户的一次访问请求结束后，后端服务器就无法知道下一次来访问的还是不是上次访问的用户。在设计应用程序时，我们很容易想到两次访问是同一人访问与不同的两个人访问对程序设计和性能来说有很大的不同。例如，在一个很短的时间内，如果与用户相关的数据被频繁访问，可以针对这个数据做缓存，这样可以大大提高数据的访问性能。Cookie的作用正是如此，由于是同一个客户端发出的请求，每次发出的请求都会带有第一次访问时服务端设置的信息，这样服务端就可以根据Cookie值来划分访问的用户了。</p>
+<h4 id="InputStream"><a href="#InputStream" class="headerlink" title="InputStream"></a>InputStream</h4><p>InputStream为字节输入流，它本身为一个抽象类，必须依靠其子类实现各种功能，此抽象类是表示字节输入流的所有类的超类。继承自InputStream的流都是向程序中输入数据的，且数据单位为字节（8bit）；</p>
+<p>InputStream是输入字节数据用的类，所以InputStream类提供了3种重载的read方法。InputStream中的常用方法：</p>
+<ul>
+<li>public abtract int read(): 读取一个byte的数据，返回值是高位补0的int类型值。若返回值=-1说明没有读取到任何字节读取工作结束。</li>
+<li>public int read(byte b[]): 读取b.length个字节的数据放到b数组中。返回值是读取的字节数。该方法实际上调用下一个方法实现的。</li>
+<li>public int read(byte b[],int off, int len):从输入流中最多读取len个字节的数据，存放在偏移量为off的b数组中。</li>
+<li>public int available():返回输入流中可以读取的字节数。注意：若输入阻塞，当前线程将被挂起，如果InputStream对象调用这个方法的话，它只会返回0，这个方法必须由继承InputSteam类的子类对象调用才有用。</li>
+<li>public long skip(long n):忽略输入流中的n个字节，返回值是实际上忽略的字节数，跳过一些字节来读取</li>
+<li>public int close():使用完后，必须对我们打开的流进行关闭。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThisEscape</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> var;  </div><div class="line">   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThisEscape</span><span class="params">(EventSource source)</span> </span>&#123;  </div><div class="line">        source.registerListener(  </div><div class="line">            <span class="keyword">new</span> EventListener() &#123;  </div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">                    doSomething(e);  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">        );  </div><div class="line">   </div><div class="line">        <span class="comment">// more initialization  </span></div><div class="line">        <span class="comment">// ...  </span></div><div class="line">   </div><div class="line">        var = <span class="number">10</span>;  </div><div class="line">    &#125;  </div><div class="line">   </div><div class="line">    <span class="comment">// result can be 0 or 10  </span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">(Event e)</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> var;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>事件监听器一旦注册成功，就能够监听用户的操作，调用对应的回调函数。比如出发了e这个事件，会执行doSomething()回调函数。这个时候由于是异步的，ThisEscape对象的构造函数很有可能还没有执行完（没有给var赋值），此时doSomething中获取到的数据很有可能是0，这不符合预期。</p>
-<p>结论 ：</p>
+<p>来看看几种不同的InputStream：</p>
 <ol>
-<li><p>就是不要在构造函数随便创建匿名类然后 发布它们。</p>
-</li>
-<li><p>不用再构造函数中随便起线程， 如果起要看有没有发布匿名类对象。</p>
-</li>
+<li>FileInputStream把一个文件作为InputStream，实现对文件的读取操作</li>
+<li>ByteArrayInputStream：把内存中的一个缓冲区作为InputStream使用</li>
+<li>StringBufferInputStream：把一个String对象作为InputStream</li>
+<li>PipedInputStream：实现了pipe的概念，主要在线程中使用</li>
+<li>SequenceInputSteam：把多个InputStream合并为一个InputStream</li>
 </ol>
-<h4 id="安全发布对象"><a href="#安全发布对象" class="headerlink" title="安全发布对象"></a>安全发布对象</h4><ul>
-<li><p>在静态初始化函数中初始化一个对象引用</p>
-</li>
-<li><p>将对象的引用保存到volatile类型域或者AtomicReference对象中</p>
-</li>
-<li><p>将对象的引用保存到某个正确构造对象的final类型域中</p>
-</li>
-<li><p>将对象的引用保存到一个由锁保护的域中</p>
-</li>
-</ul>
-<h4 id="不可变对象"><a href="#不可变对象" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
-<li><p>不可变对象需要满足的条件</p>
+<h4 id="OutputStream"><a href="#OutputStream" class="headerlink" title="OutputStream"></a>OutputStream</h4><p>OutputStream提供了3个write方法来做数据的输出，这个是和InputStream相对应的。</p>
 <ul>
-<li>对象创建以后其状态就不能修改</li>
-<li>对象所有域都是final类型</li>
-<li>对象是正确创建的（在对象创建期间，this引用没有逸出）</li>
+<li>public void write(byte b[]):将参数b中的字节写到输出流。</li>
+<li>public void write(byte b[],int off,int len):将参数b从偏移量off开始的len个字节写到输出流。</li>
+<li>public void flush():将数据缓冲区中数据全部输出，并清空缓冲区。</li>
+<li>public void close():关闭输出流并释放与流相关的系统资源。</li>
 </ul>
-</li>
-<li><p>final关键字：类、方法、变量</p>
+<p>几种不同的OutputStream</p>
+<ol>
+<li>ByteArrayOutputStream:把信息存入内存中的一个缓冲区中</li>
+<li>FileOutputStream:把信息存入文件中</li>
+<li>PipedOutputStream：实现了pipe的概念，主要在线程中使用。</li>
+<li>SequenceOutputStream: 把多个OutStream合并为一个OutStream</li>
+</ol>
+<p>Reader和InputStream类似；writer和OutputStream类似。</p>
+<p>有两个需要注意的：</p>
+<ol>
+<li>InputStreamReader：从输入流读取字节，再将它们转换成字符。</li>
+<li>BufferReader：接受Reader对象作为参数，并对其添加字符缓冲器，使用readline()方法可以读取一行。</li>
+</ol>
+<h4 id="如何选择I-O流"><a href="#如何选择I-O流" class="headerlink" title="如何选择I/O流"></a>如何选择I/O流</h4><ol>
+<li>确定是输入还是输出</li>
+</ol>
+<p>输入：输入流InputStream Reader</p>
+<p>输出：输出流OutputStream Writer</p>
+<ol>
+<li>明确操作的数据对象是否是纯文本</li>
+</ol>
+<p>是：字符流Reader，Writer</p>
+<p>否：字节流InputStream，OutputStream</p>
+<ol>
+<li>明确具体的设备。</li>
+</ol>
 <ul>
-<li>修饰类：不能被继承</li>
-<li>修饰方法：1、锁定方法不被继承类修改；2、效率</li>
-<li>修饰变量：基本数据类型变量（初始化后不能修改）、（初始化后不能指向另外一个对象）引用类型变量</li>
+<li>文件：</li>
 </ul>
-</li>
-</ul>
-<h4 id="不可变对象-1"><a href="#不可变对象-1" class="headerlink" title="不可变对象"></a>不可变对象</h4><ul>
-<li><p>Collections.UnmodifiableXXX:Collection、List、Set、Map…</p>
-</li>
-<li><p>Guava:ImmutableXXX:Collection、List、Set、Map</p>
-</li>
-</ul>
-<h4 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h4><ul>
-<li>Ad-hoc线程封闭：程序控制实现，最糟糕，忽略</li>
-<li>堆栈封闭：局部变量，无并发问题</li>
-<li>ThreadLocal最好的线程封闭方法</li>
-</ul>
-<h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><p>同一个ThreadLocal中所包含的对象，(对ThreadLocal\<string\>而言即为String类型变量)，在不同的Thread中有不同的副本（实际上是不同的实例，后文会详细阐述）。这里有几点需要注意：</string\></p>
+<p>读：FileInputStream，FileReader</p>
+<p>写：FileOutputStream，FileWriter</p>
 <ul>
-<li>因为每个Thread内有自己的实例副本，且该副本只能由当前的Thread使用。这就是ThreadLocal的由来</li>
-<li>既然每个Thread都有自己的实例副本，且其他Thread不可访问，那就不存在多线程间共享的问题。</li>
-<li>既无共享，何来同步问题，又何来解决同步问题一说</li>
+<li>数组：</li>
 </ul>
-<blockquote>
-<p>This class provides thread-local variables. These variables differ from their normal counterparts in that each thread that accesses one (via its get or set method) has its own, independently initialized copy of the variable. ThreadLocal instances are typically private static fields in classes that wish to associate state with a thread (e.g., a user ID or Transaction ID).<br>Each thread holds an implicit reference to its copy of a thread-local variable as long as the thread is alive and the ThreadLocal instance is accessible; after a thread goes away, all of its copies of thread-local instances are subject to garbage collection (unless other references to these copies exist).</p>
-</blockquote>
-<p>核心意思是：</p>
-<blockquote>
-<p>ThreadLocal提供了线程本地的实例。它与普通变量的区别在于，每个使用使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常被private static修饰。当一个线程结束时，它所使用的所有ThreadLocal相对的实例副本都可被回收。</p>
-</blockquote>
-<p>总的来说，<strong>ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。</strong>后文会通过实例详细阐述该观点。另外，该场景下，并非必须使用 ThreadLocal ，其它方式完全可以实现同样的效果，只是 ThreadLocal 使得实现更简洁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalDemo</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">    <span class="keyword">int</span> threads = <span class="number">3</span>;</div><div class="line">    CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(threads);</div><div class="line">    InnerClass innerClass = <span class="keyword">new</span> InnerClass();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= threads; i++) &#123;</div><div class="line">      <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</div><div class="line">          innerClass.add(String.valueOf(j));</div><div class="line">          innerClass.print();</div><div class="line">        &#125;</div><div class="line">        innerClass.set(<span class="string">"hello world"</span>);</div><div class="line">        countDownLatch.countDown();</div><div class="line">      &#125;, <span class="string">"thread - "</span> + i).start();</div><div class="line">    &#125;</div><div class="line">    countDownLatch.await();</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String newStr)</span> </span>&#123;</div><div class="line">      StringBuilder str = Counter.counter.get();</div><div class="line">      Counter.counter.set(str.append(newStr));</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</div><div class="line">      System.out.printf(<span class="string">"Thread name:%s , ThreadLocal hashcode:%s, Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(String words)</span> </span>&#123;</div><div class="line">      Counter.counter.set(<span class="keyword">new</span> StringBuilder(words));</div><div class="line">      System.out.printf(<span class="string">"Set, Thread name:%s , ThreadLocal hashcode:%s,  Instance hashcode:%s, Value:%s\n"</span>,</div><div class="line">      Thread.currentThread().getName(),</div><div class="line">      Counter.counter.hashCode(),</div><div class="line">      Counter.counter.get().hashCode(),</div><div class="line">      Counter.counter.get().toString());</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;StringBuilder&gt; counter = <span class="keyword">new</span> ThreadLocal&lt;StringBuilder&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">protected</span> StringBuilder <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder();</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ThreadLocal线程封闭：特别好的封闭方法</p>
+<p>byte[] ByteArrayInputStream，ByteArrayOutputStream </p>
+<p>char[] CharArrayReader,CharArrayWriter</p>
+<ul>
+<li>String:</li>
+</ul>
+<p>StringBufferInputStream(已过时，因为其职能用于String的每个字符都是8位的字符串)，StringReader，StringWriter</p>
+<ul>
+<li>Socket流</li>
+</ul>
+<p>键盘：用System.in（是一个InputStream对象）读取，用System.out（是一个OutputStream对象）打印</p>
+<ol>
+<li>是否需要转换流</li>
+</ol>
+<p>是，就使用转换流，从Stream转化为Reader、Writer：InputStreamReader，OutputStreamWriter</p>
+<ol>
+<li>是否需要缓冲提高效率</li>
+</ol>
+<p>是就加上Buffered：BufferedInputStream，BufferedOutputStream，BufferedReader，BufferedWriter</p>
+<ol>
+<li>是否需要格式化输出</li>
+</ol>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Web请求过程]]></title>
+      <url>/2018/11/13/Web%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/</url>
+      <content type="html"><![CDATA[<h4 id="CDN动态加速"><a href="#CDN动态加速" class="headerlink" title="CDN动态加速"></a>CDN动态加速</h4><p>CDN的动态加速技术也是当前比较流行的一种优化技术，它的技术原理就是在CDN的DNS解析中通过动态地链路探测来寻找回源最好的一条路径，然后通过DNS的调度将所有的请求调度到选定的这条路径上回源，从而加速用户访问效率。</p>
+<p>由于CDN节点是遍布全国的，所以用户接入一个CDN节点后，可以选择一条从离用户最近的CDN节点到源站链路最好的路径让用户走。一个简单的原则就是在每个CDN节点上从源站下载一个一定大小的文件，看哪个链路的总耗时最短，这样可以构成一个链路列表，然后绑定到DNS解析上，更新到CDN的Local DNS。当然是否走这个链路并不一定根据耗时这个唯一条件，有时也要考虑网络成本，例如走某个节点虽然可以节省10ms，但是网络带宽的成本却增加了很多，还有其他网络链路的安全等因素也要综合考虑。</p>
+<h4 id="Tomcat总体设计"><a href="#Tomcat总体设计" class="headerlink" title="Tomcat总体设计"></a>Tomcat总体设计</h4><ul>
+<li>如何分发请求</li>
+<li>如何处理多用户同时请求</li>
+<li>它的多级容器是如何协调工作的角度来分析它的工作原理</li>
+</ul>
+<h4 id="Tomcat总体结构"><a href="#Tomcat总体结构" class="headerlink" title="Tomcat总体结构"></a>Tomcat总体结构</h4><p>Tomcat的结构很复杂，但是Tomcat也非常模块化，找到了Tomcat最核心的模块，你就抓住Tomcat的”七寸”了。</p>
+<h4 id="Connector组件"><a href="#Connector组件" class="headerlink" title="Connector组件"></a>Connector组件</h4><p>Connector组件是Tomcat中的两个核心组件之一，它的主要任务是负责接收浏览器浏览器发过来的TCP连接请求，创建一个Request和Reponse对象分别用于和请求端交换数据。然后会产生一个线程来处理这个请求并把产生的Request和Response对象传给处理这个请求的线程，处理这个请求的线程就是Container组件要做的事。</p>
+<p>在Tomcat 5中默认的Connector是Cyyote，这个Connector是可以选择替换的。Connector最重要的功能就是接收连接请求，然后分配线程让Container来处理这个请求，所以这必然是多线程的，多线程的处理是Connector设计的核心。Tomcat 5将这个过程更加细化，它将Connector划分为Connector、Processor、Protocol，另外Coyote也定义自己的Request和Response对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> <span class="keyword">throws</span> LifecycleException </span>&#123;</div><div class="line">    <span class="keyword">if</span> (started)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> LifeCycleException</div><div class="line">          (sm.getString(<span class="string">"httpConnector.alreadyStarted"</span>));</div><div class="line">    threadName = <span class="string">"HttpConnector["</span>+port+<span class="string">"]"</span>;</div><div class="line">    lifecycle.fireLifecycleEvent(START_EVENT,<span class="keyword">null</span>);</div><div class="line">    </div><div class="line">    started = <span class="keyword">true</span>;</div><div class="line">    threadStarted();</div><div class="line">    <span class="keyword">while</span> (curProcessors &lt; minProcessors) &#123;</div><div class="line">        <span class="keyword">if</span> ((maxProcessors &gt; <span class="number">0</span>) &amp;&amp; (curProcessors &gt;= maxProcessors))</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        HttpProcessor processor = <span class="keyword">new</span> Processor();</div><div class="line">        recycle(processor);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当执行到threadStart()方法时，就会进入等待请求的状态，直到一个新的请求到来才会激活它继续执行，这个激活是在HttpProcessor的assign方法中，这个方法的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">assign</span><span class="params">(Socket socket)</span></span>&#123;</div><div class="line">    <span class="keyword">while</span> (available)&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            wait();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e)&#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">this</span>.socket = socket;</div><div class="line">    available = <span class="keyword">true</span>;</div><div class="line">    notifyAll();</div><div class="line">    <span class="keyword">if</span> ((debug &gt;= <span class="number">1</span>) &amp;&amp; (socket != <span class="keyword">null</span>)) &#123;</div><div class="line">        log(<span class="string">" An incoming request is being Assigned"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建HttpProcessor对象时会把available设为false，所以当请求到来时不会进入while循环，将请求的Socket赋给当前处理的Socket，并将available设为true，当available设置为true时，HttpProcessor的run方法将被激活，接下来将被激活，接下来将会处理这次请求。</p>
+<p>run方法的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (!stopped) &#123;</div><div class="line">        Socket socket = await();</div><div class="line">        <span class="keyword">if</span> (socket == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            process(socket);</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">            log(<span class="string">"process.invoke"</span>,t);</div><div class="line">        &#125;</div><div class="line">        connector.recycle(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">synchronized</span> (threadSync) &#123;</div><div class="line">        threadSync.notifyAll();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>机械Socket的过程在process方法中，process方法的代码片段如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(Socket socket)</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span> ok = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">boolean</span> finishResponse = <span class="keyword">true</span>;</div><div class="line">    SocketInputStream input = <span class="keyword">null</span>;</div><div class="line">    OutputStream output = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        input = <span class="keyword">new</span> SocketInputStream(socket.getInputStream(),connector.getBufferSize())</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e)&#123;</div><div class="line">        log(<span class="string">"process.create"</span>,e);</div><div class="line">        ok = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    keepAlive = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">while</span> (!stopped &amp;&amp; ok &amp;&amp; keepAlive) &#123;</div><div class="line">        finishResponse = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            request.setStream(input);</div><div class="line">            request.setResponse(response);</div><div class="line">            output = socket.getOutputStream();</div><div class="line">            response.setStream(output);</div><div class="line">            response.setRequest(request);</div><div class="line">            ((HttpServletResponse) response.getResponse()).setHeader(<span class="string">"Server"</span>,SERVER_INFO);</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            log(<span class="string">"process.create"</span>,e);</div><div class="line">            ok = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (ok) &#123;</div><div class="line">                parseConnection(socket);</div><div class="line">                parseRequest(input,output);</div><div class="line">                <span class="keyword">if</span> (!request.getRequest().getProtocol().startsWith(<span class="string">"HTTP/0"</span>)) &#123;</div><div class="line">                    parseHeaders(input);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (http11) &#123;</div><div class="line">                    ackRequest(output);</div><div class="line">                    <span class="keyword">if</span> (connector.isChunkingAllowed()) &#123;</div><div class="line">                        response.setAllowChunking(<span class="keyword">true</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                ((HttpServletResponse) response).setHeader(<span class="string">"Date"</span>,FastHttpDateFormat.getCurrentDate());</div><div class="line">                <span class="keyword">if</span> (ok) &#123;</div><div class="line">                    connector.getContainer().invoke(request,response);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        shutdownInput(input);</div><div class="line">        socket.close();</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">        ;</div><div class="line">    &#125; <span class="keyword">catch</span> (Throwable e) &#123;</div><div class="line">        log (<span class="string">"process.invoke"</span>,e);</div><div class="line">    &#125;</div><div class="line">    socket =  <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
       
         
@@ -5215,65 +5260,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[java23种设计模式]]></title>
       <url>/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
@@ -5416,6 +5402,65 @@
             <tag> Java </tag>
             
             <tag> 设计模式 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
             
         </tags>
         
