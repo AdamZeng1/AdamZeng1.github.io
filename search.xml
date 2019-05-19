@@ -3,6 +3,265 @@
   
     
     <entry>
+      <title><![CDATA[关于Linking]]></title>
+      <url>/2019/05/18/%E5%85%B3%E4%BA%8ELinking/</url>
+      <content type="html"><![CDATA[<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* main.c */</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> val = sum(<span class="built_in">array</span>,<span class="number">2</span>);</div><div class="line">  <span class="keyword">return</span> val;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* sum.c*/</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> i,s = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++) &#123;</div><div class="line">    s += a[i];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> s;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="static-linking"><a href="#static-linking" class="headerlink" title="static linking"></a>static linking</h4><ul>
+<li>programs are translated and linked using a compiler driver;<a id="more"></a><ul>
+<li>linux &gt; gcc -0g -o prog main.c sum.c</li>
+<li>linux&gt;./prog</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g35gut0kgvj30lc0ban0i.jpg" alt="屏幕快照 2019-05-18 下午4.44.28"></p>
+<h4 id="Why-Linkers"><a href="#Why-Linkers" class="headerlink" title="Why Linkers?"></a>Why Linkers?</h4><ul>
+<li>Reason 1:Modularity<ul>
+<li>Program can be written as a collection of smaller source files, rather than one monolithic mass.</li>
+<li>Can build libraries of common functions(more on this later)<ul>
+<li>e.g.,Math library, standard C library</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Reason 2:Efficiency<ul>
+<li>Time:Separate compilation<ul>
+<li>Change one source file, compile, and then relink</li>
+<li>No need to recompile other source files</li>
+</ul>
+</li>
+<li>Space:Libraries<ul>
+<li>Common functions can be aggregated into a single file</li>
+<li>Yet executable files and running memory images contain only code for the functions they actually use.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="What-Do-Linkers-Do"><a href="#What-Do-Linkers-Do" class="headerlink" title="What Do Linkers Do?"></a>What Do Linkers Do?</h4><p>#####Step 1: Symbol resolution</p>
+<ul>
+<li><p>Programs define and reference symbols(global variables and functions):</p>
+<ul>
+<li>void swap() {…} /* define symbol swap */</li>
+<li>swap(); /* reference symbol swap */</li>
+<li>int <em>xp = &x; /\</em> define symbol xp, reference x */</li>
+</ul>
+</li>
+<li><p>Symbol definitions are stored in object file(by assembler) om symbol table.</p>
+<ul>
+<li>Symbol table is an array of structs</li>
+<li>Each entry includes name,size,and location of symbol.</li>
+</ul>
+</li>
+<li>During symbol resolution step, the linker associates each symbol reference with exactly one symbol definition.</li>
+</ul>
+<h5 id="Step-2-Relocation"><a href="#Step-2-Relocation" class="headerlink" title="Step 2: Relocation"></a>Step 2: Relocation</h5><ul>
+<li>Merges separate code and data sections into single sections</li>
+<li>Relocates symbols from their relative locations in the .o files to their final absolute memory locations in the executable.</li>
+<li>Updates all references to these symbols to reflect their new postions.</li>
+</ul>
+<h4 id="Three-kinds-of-object-files-Modules"><a href="#Three-kinds-of-object-files-Modules" class="headerlink" title="Three kinds of object files(Modules)"></a>Three kinds of object files(Modules)</h4><ul>
+<li>Relocatable object file(.o file)<ul>
+<li>Contains code and data in a form that can be combined with other relocatable object files to form executable object file.<ul>
+<li>Each .o file is produced from exactly one source(.c) file</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Executable object file(a .out file)<ul>
+<li>Contains code and data in a form that can be copied directly into memory and then executed.</li>
+</ul>
+</li>
+<li>Shared object file(.so file)<ul>
+<li>Special type of relocatable object file that can be loaded into memory and linked dynamically, at either load time or run-time.</li>
+<li>Called Dynamic Link Libraries(DLLs) by Windows.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Executable-and-Linkable-Format-ELF"><a href="#Executable-and-Linkable-Format-ELF" class="headerlink" title="Executable and Linkable Format(ELF)"></a>Executable and Linkable Format(ELF)</h4><ul>
+<li>Standard binary format for object files</li>
+<li>One unified format for <ul>
+<li>Relocatable object files(.o)</li>
+<li>Executable object files(a.out)</li>
+<li>Shared object files(.so)</li>
+</ul>
+</li>
+<li>Generic name:ELF binaries</li>
+</ul>
+<h4 id="ELF-Object-File-Format"><a href="#ELF-Object-File-Format" class="headerlink" title="ELF Object File Format"></a>ELF Object File Format</h4><ul>
+<li>ELF header<ul>
+<li>Word size,byte ordering, file type(.o,exec,.so)machine type,etc.</li>
+</ul>
+</li>
+<li>Segment header table<ul>
+<li>Page size,virtual addresses memory segments(sections),segment sizes.</li>
+</ul>
+</li>
+<li>.text section</li>
+<li>rodata section<ul>
+<li>Read only data:jump tables,…</li>
+</ul>
+</li>
+<li>.data section<ul>
+<li>initialized global variables</li>
+</ul>
+</li>
+<li>.bss section<ul>
+<li>Unintialized global variables</li>
+<li>“Block Started by Symbol”</li>
+<li>“Better Save Space”</li>
+<li>Has section header but occupies no space</li>
+</ul>
+</li>
+</ul>
+<h4 id="Linker-Symbols"><a href="#Linker-Symbols" class="headerlink" title="Linker Symbols"></a>Linker Symbols</h4><ul>
+<li>Global symbols<ul>
+<li>Symbols defined by module m that can be referenced by other modules.</li>
+<li>E.g.:non-static C functions and non-static global variables.</li>
+</ul>
+</li>
+<li>External symbols<ul>
+<li>Global symbols that are referenced by module m but defined by some other module.</li>
+</ul>
+</li>
+<li>Local symbols<ul>
+<li>Symbols that are defined and referenced exclusively by module m.</li>
+<li>E.g.:C functions and global variables defined with the static attribute.</li>
+<li>Local linker symbols are not local program variables.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Step1-Symbol-Resolution"><a href="#Step1-Symbol-Resolution" class="headerlink" title="Step1:Symbol Resolution"></a>Step1:Symbol Resolution</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// main.c</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> val = sum(<span class="built_in">array</span>,<span class="number">2</span>);</div><div class="line">  <span class="keyword">return</span> val;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> i,s =<span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++) &#123;</div><div class="line">    s += a[i];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> s;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Local-Symbols"><a href="#Local-Symbols" class="headerlink" title="Local Symbols"></a>Local Symbols</h4><ul>
+<li>Local non-static C variable vs. local static C variable<ul>
+<li>local non-static C variables:stored on the stack</li>
+<li>local static C variables:stored ineither .bss, or .data</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">0</span>;</div><div class="line">  <span class="keyword">return</span> x;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">g</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">1</span>;</div><div class="line">  <span class="keyword">return</span> x;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Compiler allocates space in .data for each definition of x</p>
+<p>Creates local symbols in the symbol table with unique names, e.g.,x.1 and x.2.</p>
+<h4 id="How-Linker-Resolves-Duplicate-Symbol-Definitions"><a href="#How-Linker-Resolves-Duplicate-Symbol-Definitions" class="headerlink" title="How Linker Resolves Duplicate Symbol Definitions"></a>How Linker Resolves Duplicate Symbol Definitions</h4><ul>
+<li>Program symbols are either strong or weak<ul>
+<li>Strong:procedures and initialized globals</li>
+<li>Weak:unintialized globals</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g35kbtqpbqj30mc082q3z.jpg" alt="屏幕快照 2019-05-18 下午6.44.36"></p>
+<h4 id="Linker’s-Symbol-Rules"><a href="#Linker’s-Symbol-Rules" class="headerlink" title="Linker’s Symbol Rules"></a>Linker’s Symbol Rules</h4><ul>
+<li>Rule 1:Multiple strong symbols are not allowed<ul>
+<li>Each item can be defined only once</li>
+<li>Otherwise: Linker error</li>
+</ul>
+</li>
+<li>Rule 2:Given a strong symbol and multiple weak symbols,choose the strong symbol<ul>
+<li>References to the weak symbol resolve to the strong symbol</li>
+</ul>
+</li>
+<li>Rule 3:If there are multiple weak symbols,pick an arbitrary one<ul>
+<li>Can override this with gcc -fno-common</li>
+</ul>
+</li>
+</ul>
+<h4 id="Linker-Puzzles"><a href="#Linker-Puzzles" class="headerlink" title="Linker Puzzles "></a>Linker Puzzles <img src="http://ww2.sinaimg.cn/large/006tNc79ly1g35klx1t5wj30na0eojwa.jpg" alt="屏幕快照 2019-05-18 下午6.54.16"></h4><p>Nightmare scenario:two identical weak structs, compiled by different compilers with different alignment rules. </p>
+<h4 id="Global-Variables"><a href="#Global-Variables" class="headerlink" title="Global Variables"></a>Global Variables</h4><ul>
+<li>Avoid if you can</li>
+<li>Otherwise<ul>
+<li>Use static if you can</li>
+<li>Initialize if you define a global variable</li>
+<li>Use extern if you reference an external global variable</li>
+</ul>
+</li>
+</ul>
+<h4 id="Step2-Relocation"><a href="#Step2-Relocation" class="headerlink" title="Step2:Relocation"></a>Step2:Relocation</h4><h5 id="Relocatable-Object-Files"><a href="#Relocatable-Object-Files" class="headerlink" title="Relocatable Object Files"></a>Relocatable Object Files</h5><p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g35pvgh33fj30mc0dk41u.jpg" alt="屏幕快照 2019-05-18 下午9.54.36"></p>
+<h4 id="Relocation-Entries"><a href="#Relocation-Entries" class="headerlink" title="Relocation Entries"></a>Relocation Entries</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">2</span>] =&#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> val = sum(<span class="built_in">array</span>,<span class="number">2</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g35qsgyi7yj30nk0fegqt.jpg" alt="屏幕快照 2019-05-18 下午10.28.11"></p>
+<ul>
+<li>When an assembler generates an object module, it does not know where the code and data will ultimately<br>be stored in memory. </li>
+<li>Relocation entries for code are placed in .relo.text.<br>Relocation entries for initialized data are placed in .relo.data.</li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g35rl7hsinj30n60gi7ao.jpg" alt="屏幕快照 2019-05-18 下午10.54.35"></p>
+<h4 id="Packaging-Commonly-Used-Functions"><a href="#Packaging-Commonly-Used-Functions" class="headerlink" title="Packaging Commonly Used Functions"></a>Packaging Commonly Used Functions</h4><ul>
+<li>How to package functions commonly used by programmers?<ul>
+<li>Math, I/O, memory management, string manipulation,etc.</li>
+</ul>
+</li>
+<li>Awkward, given the linker framework so far:<ul>
+<li>Option 1:Put all functions into a single source file<ul>
+<li>Programmers link big object file into their programs</li>
+<li>Space and time inefficient</li>
+</ul>
+</li>
+<li>Option 2: Put each function in a separate source file<ul>
+<li>Programmers explicitly link appropriate binaries into their programs</li>
+<li>More efficient, but burdensome on the programmer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Old-fashioned-Solution-Static-Libraries"><a href="#Old-fashioned-Solution-Static-Libraries" class="headerlink" title="Old-fashioned Solution: Static Libraries"></a>Old-fashioned Solution: Static Libraries</h4><ul>
+<li>Static libraries(.a archive files)<ul>
+<li>Concatenate related relocatable object files into a single file with an index(called an archive).</li>
+</ul>
+</li>
+<li>Enhance linker so that it tries to resolve unresolved external references by looking for the symbols in one or more archives.</li>
+<li><p>If an archive member file resolves reference,link it into the executable.</p>
+</li>
+<li><p>Archiver allows incremental updates</p>
+</li>
+<li>Recompile function that changes and replace .o file in archive.</li>
+</ul>
+<h4 id="Commonly-Used-Libraries"><a href="#Commonly-Used-Libraries" class="headerlink" title="Commonly Used Libraries"></a>Commonly Used Libraries</h4><p>libc.a(the C standard library)</p>
+<ul>
+<li>4.6MB archive of 1496 object files.</li>
+<li>I/O,memory allocation,signal handling,string handling,data and time,random numbers,integer math</li>
+<li>libm.a(the C math library)<ul>
+<li>2MB archive of 444 object files.</li>
+<li>floating point math(sin,cos.tan,log.exp.sqrt,…)</li>
+</ul>
+</li>
+</ul>
+<h4 id="Resolution"><a href="#Resolution" class="headerlink" title="Resolution"></a>Resolution</h4><p>Once the linker has completed the symbol resolution step, it has associated each symbol reference in the code with exactly one symbol definition(i.e， a symbol table entry in one of its input object modules)</p>
+<h4 id="static-library"><a href="#static-library" class="headerlink" title="static library"></a>static library</h4><p>比较老式的做法就是所谓的静态库(Static Library，.a表示archive files)</p>
+<p>静态库是一个外部函数与变量的集合体。静态库的文件内容，通常包含一堆程序员自定的变量与函数，其内容不像动态链接库那么复杂，在编译期间由编译器与连接器将它集成至应用程序内，并制作成目标文件以及可以独立运作的可执行文件。而这个可执行文件与编译可执行文件的程序，都是一种程序的静态创建(static build)；</p>
+<p>具体过程就是把不同文件的.o</p>
+<h4 id="Modern-Solution-Shared-Lirabries"><a href="#Modern-Solution-Shared-Lirabries" class="headerlink" title="Modern Solution:Shared Lirabries"></a>Modern Solution:Shared Lirabries</h4><ul>
+<li><p>Static libraries have the following disadvantages:</p>
+<ul>
+<li>Duplication in the stored executabels(every function needs libc)</li>
+<li>Duplication in the running executables</li>
+<li>Minor bug fixes of system libraries require each applicatoin to explicitly relink</li>
+</ul>
+</li>
+<li><p>Modern solution: Shared Libraries</p>
+<ul>
+<li>Object files that contain code and data that are loaded and linked into an application dynamically, at either load-time or run-time</li>
+<li>Also called:dynamic link libraries,DLLs,.so files </li>
+</ul>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g36uakidf8j30pe0ho438.jpg" alt="屏幕快照 2019-05-19 下午9.14.53"></p>
+</li>
+</ul>
+<h4 id="Shared-Libraries-cont"><a href="#Shared-Libraries-cont" class="headerlink" title="Shared Libraries(cont.)"></a>Shared Libraries(cont.)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> x[<span class="number">2</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"><span class="keyword">int</span> y[<span class="number">2</span>]=&#123;<span class="number">3</span>,<span class="number">4</span>&#125;;</div><div class="line"><span class="keyword">int</span> z[<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">void</span> *handle;</div><div class="line">  <span class="keyword">void</span> (*addvec)(<span class="keyword">int</span> *,<span class="keyword">int</span> *,<span class="keyword">int</span> *,<span class="keyword">int</span>);</div><div class="line">  <span class="keyword">char</span> *error;</div><div class="line">  <span class="comment">/* Dynamically load the shared library that contains addvec() */</span></div><div class="line">  handle = dlopen(<span class="string">"./libvector.so"</span>,RTLD_LAZY);</div><div class="line">  <span class="keyword">if</span>(!handle) &#123;</div><div class="line"> <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"%s\n"</span>,dlerror());</div><div class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/* Get a pointer to the addvec() function we just loaded*/</span></div><div class="line">  addvec = dlsym(handle,<span class="string">"addvec"</span>);</div><div class="line">  <span class="keyword">if</span>((error = dlerror())!=<span class="literal">NULL</span>) &#123;</div><div class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"%s\n"</span>,error);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/* Now we can call addvec() just like any other function */</span></div><div class="line">  addvec(x,y,z,<span class="number">2</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"z = [%d %d]\n"</span>,z[<span class="number">0</span>],z[<span class="number">1</span>]);</div><div class="line">  </div><div class="line">  <span class="comment">/* Unload the shared library */</span></div><div class="line">  <span class="keyword">if</span>(dlclose(handle)&lt;<span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"%s\n"</span>,dlerror());</div><div class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Today"><a href="#Today" class="headerlink" title="Today"></a>Today</h4><p>Case Study: Library Interpositioning</p>
+<ul>
+<li>Library interpositioning: powerful linking technique that allows programmers to intercept calls to arbitray functions</li>
+<li>Interpositioning can occur at:<ul>
+<li>Compile time: When the source code is compiled</li>
+<li>Link time: When the relocatable object files are statically liked to form an executable object file</li>
+<li>Load/run time: when an executable object file is loaded into memory, dynamically linked, and then executed.</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[coding杂记]]></title>
       <url>/2019/01/20/coding%E6%9D%82%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>最近一直在看关于基础算法，目前看的这些书不是什么高深的编程工具书籍或者是高深的计算机原理，而是能够让我体会到其中精妙的一本关于算法的书籍，在看这本书的过程当中，我始终在反思C语言实现的算法与Python与Java之间的或多或少的区别，我发现区别其实不是太大，但是有一些C语言的粗糙的可爱存在，比如C中的数组实际上就是一段连续的内存，数组名其实是代表数组第一个元素的所在地址，数组可以用索引来取值，也可以用数组名加相应的数来取值，这个是一个非常有意思的地方。</p>

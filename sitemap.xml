@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adamzeng.site/2019/05/18/%E5%85%B3%E4%BA%8ELinking/</loc>
+    
+    <lastmod>2019-05-19T11:40:55.906Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://adamzeng.site/2019/01/20/coding%E6%9D%82%E8%AE%B0/</loc>
     
     <lastmod>2019-01-25T06:06:32.004Z</lastmod>
@@ -569,7 +576,7 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/categories/index.html</loc>
+    <loc>http://adamzeng.site/page/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
@@ -583,7 +590,7 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/page/index.html</loc>
+    <loc>http://adamzeng.site/categories/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
