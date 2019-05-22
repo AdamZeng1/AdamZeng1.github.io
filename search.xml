@@ -3,6 +3,372 @@
   
     
     <entry>
+      <title><![CDATA[Exceptional Control Flow]]></title>
+      <url>/2019/05/19/Exceptional-Control-Flow/</url>
+      <content type="html"><![CDATA[<h4 id="Exceptional-Control-Flow"><a href="#Exceptional-Control-Flow" class="headerlink" title="Exceptional Control Flow"></a>Exceptional Control Flow</h4><ul>
+<li><p>Exists at all levels of computer system</p>
+</li>
+<li><p>Low level mechanisms<a id="more"></a></p>
+<ul>
+<li><ol>
+<li>Exceptions</li>
+</ol>
+<ul>
+<li>Change in control flow in response to a system event</li>
+<li>implemented using combination of hardware and OS software</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Higher elvel mechanisms</p>
+<ul>
+<li><ol>
+<li>Process context switch<ul>
+<li>Implemented by OS software and hardware timer</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>Signals<ul>
+<li>Implemented by OS software</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>Nonlocal jumps:setjmp() and longjmp()<ul>
+<li>Implemented by C runtime library</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Exceptions"><a href="#Exceptions" class="headerlink" title="Exceptions"></a>Exceptions</h4><ul>
+<li>An exception is a transfer of control to the OS kernel in response to some event(i.e.,change in processor state)<ul>
+<li>Kernel is the memory-resident part of the OS</li>
+<li>Examples of events: Divide by 0, arithmetic overflow,page fault,I?O request completes,typing Ctrl-C</li>
+</ul>
+</li>
+</ul>
+<h4 id="Asynchronous-Exceptions-interrupts"><a href="#Asynchronous-Exceptions-interrupts" class="headerlink" title="Asynchronous Exceptions(interrupts)"></a>Asynchronous Exceptions(interrupts)</h4><ul>
+<li>Caused by events external to the processor<ul>
+<li>Indicated by setting the processor’s interrupt pin</li>
+<li>Handler returns to “next” instruction</li>
+</ul>
+</li>
+<li>Examples:<ul>
+<li>Timer interrupt<ul>
+<li>Every few ms,an external timer chip triggers an interrupt</li>
+<li>Used by the kernel to take back control from user programs</li>
+</ul>
+</li>
+<li>I/O interrupt from external device<ul>
+<li>Hitting interrupt from external keyboard</li>
+<li>Arrival of a packet from a network</li>
+<li>Arrival of data from a disk</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Synchronous-Exceptions"><a href="#Synchronous-Exceptions" class="headerlink" title="Synchronous Exceptions"></a>Synchronous Exceptions</h4><ul>
+<li>Caused by events that occur as a result of executing an instruction:<ul>
+<li>Traps<ul>
+<li>Intentional</li>
+<li>Examples: system calls, breakpoint traps,special instructions</li>
+<li>Returns control to “next” instruction</li>
+</ul>
+</li>
+<li>Faults<ul>
+<li>Unintentional but possibly recoverable</li>
+<li>Examples:page faults(recoverable),protection faults(unrecoverable),floating point exceptions</li>
+<li>Either re-executes faulting(“current”) instruction or aborts</li>
+</ul>
+</li>
+<li>Aborts<ul>
+<li>Unintentional and unrecoverable</li>
+<li>Examples:illegal instruction,parity error,machine check</li>
+<li>Aborts current program</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="System-Calls"><a href="#System-Calls" class="headerlink" title="System Calls"></a>System Calls</h4><ul>
+<li><p>Each x86-64 system call has a unique ID number</p>
+</li>
+<li><p>Examples:</p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2019-05-19 下午11.18.31.png" alt="屏幕快照 2019-05-19 下午11.18.31"></p>
+<p>System Call Example: Opening File</p>
+</li>
+<li><p>User calls:open(filename,options)</p>
+</li>
+<li>Calls _open function, which invokes system call instruction syscall<ul>
+<li>%rax contains syscall number</li>
+<li>Other arguments in %rsi,%rdx,%r10,%r8,%9</li>
+<li>Return value in %rax</li>
+<li>Negative value is an error corresponding to negative errno</li>
+</ul>
+</li>
+</ul>
+<p>Fault Example: Page Fault</p>
+<ul>
+<li>User writes to memory location</li>
+<li>That portion(page) of user’s memory is currently on disk</li>
+</ul>
+<p>Fault Example: Invalid Memory Reference</p>
+<ul>
+<li>Sends SIGSEGV signal to user process</li>
+<li>User process exits with “segmentation fault”</li>
+</ul>
+<h4 id="Processes"><a href="#Processes" class="headerlink" title="Processes"></a>Processes</h4><ul>
+<li><p>Definition:A process is an instance of a running program.</p>
+<ul>
+<li>One of the most profound ideas in computer science</li>
+<li>Not the same as “program” or “processor”</li>
+</ul>
+</li>
+<li><p>Process provides each program with two key abstractions:</p>
+<ul>
+<li>Logical control flow<ul>
+<li>Each program seems to have exclusive use of the CPU</li>
+<li>Provided by kernel mechanism called context switching</li>
+</ul>
+</li>
+<li>Private address space<ul>
+<li>Each program seems to have exclusive use of main memory.</li>
+<li>Provided by kernel mechanism called virtual memory</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Multiprocessing：The-Traditional-Reality"><a href="#Multiprocessing：The-Traditional-Reality" class="headerlink" title="Multiprocessing：The(Traditional) Reality"></a>Multiprocessing：The(Traditional) Reality</h4><ul>
+<li><p>Single processor executes multiple processes concurrently</p>
+<ul>
+<li>Process executions interleaved(multitasking)</li>
+<li>Address spaces managed by virtual memory system(later in course)</li>
+<li>Register values for nonexecuting processes saved in memory</li>
+</ul>
+</li>
+<li><p>Save current registers in memory</p>
+</li>
+<li>Schedule next process for execution</li>
+<li>Load saved registers and switch address space(context switch)</li>
+</ul>
+<h4 id="Multiprocessing-The-Modern-Reality"><a href="#Multiprocessing-The-Modern-Reality" class="headerlink" title="Multiprocessing:The (Modern) Reality"></a>Multiprocessing:The (Modern) Reality</h4><ul>
+<li>Multicore processors<ul>
+<li>Multiple CPUs on single chip</li>
+<li>Share main memory(and some of the caches)</li>
+<li>Each can execute a separate process<ul>
+<li>Scheduling of processors onto cores done by kernel</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Concurrent-Processes"><a href="#Concurrent-Processes" class="headerlink" title="Concurrent Processes"></a>Concurrent Processes</h4><ul>
+<li>Each process is a logical control flow.</li>
+<li>Two processes run concurrently(are concurrent) if their flows overlap in time</li>
+<li>Otherwise,they are sequential</li>
+<li>Examples(running on single core):<ul>
+<li>Concurrent：A&amp;B,A&amp;B</li>
+<li>Sequantial: B&amp;C</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47101186204_c401e6a135_o.png" alt="屏幕快照 2019-05-20 下午11.50.46"></p>
+<h4 id="User-View-of-Concurrent-Processes"><a href="#User-View-of-Concurrent-Processes" class="headerlink" title="User View of Concurrent Processes"></a>User View of Concurrent Processes</h4><ul>
+<li>Control flows for concurrent processes are physically disjoint in time</li>
+<li>However,we can think of concurrent processes as running in parallel with each other</li>
+</ul>
+<p>Context Switching</p>
+<ul>
+<li>Processes are managed by a shared chunk of memory-resident OS code called the kernel<ul>
+<li>Important: the kernel is not a separate process,but rather runs as part of some exsting process.</li>
+</ul>
+</li>
+<li>Control flow passes from one process to another via a context switch</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47101277094_d371699490_o.png" alt="屏幕快照 2019-05-21 上午12.26.47"></p>
+<h4 id="System-Call-Error-Handling"><a href="#System-Call-Error-Handling" class="headerlink" title="System Call Error Handling"></a>System Call Error Handling</h4><ul>
+<li><p>On error, Linux system-level functions typically return -1 and set global variable errono to indicate cause.</p>
+</li>
+<li><p>Hard and fast rule:</p>
+<ul>
+<li>You must check the return status of every system-level function</li>
+<li>Only exception is the handful of functions that return void</li>
+</ul>
+</li>
+<li><p>Example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>((pid=fork())&lt;<span class="number">0</span>) &#123;</div><div class="line">  <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"fork error:%s\n"</span>,strerror(errno));</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Error-reporting-functions"><a href="#Error-reporting-functions" class="headerlink" title="Error-reporting functions"></a>Error-reporting functions</h4><ul>
+<li><p>Can simplify somewhat using an error-reporting function:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">unix_error</span><span class="params">(<span class="keyword">char</span> *msg)</span> </span>&#123; <span class="comment">/*   Unix-style error */</span></div><div class="line">  <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,<span class="string">"%s: %s\n"</span>,msg,strerror(errno));</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pid = Fork();</div></pre></td></tr></table></figure>
+<h4 id="Error-handling-Wrappers"><a href="#Error-handling-Wrappers" class="headerlink" title="Error-handling Wrappers"></a>Error-handling Wrappers</h4><ul>
+<li><p>We simplify the code we present to you even further by using Stevens-style error-handling wrappers:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">pid_t</span> Fork(<span class="keyword">void</span>) &#123;</div><div class="line">  <span class="keyword">pid_t</span> pid;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>((pid = fork()) &lt; <span class="number">0</span>) &#123;</div><div class="line">    unix_error(<span class="string">"Fork error"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> pid;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>pid = Fork();</p>
+<h4 id="Obtaining-Process-IDs"><a href="#Obtaining-Process-IDs" class="headerlink" title="Obtaining Process IDs"></a>Obtaining Process IDs</h4><ul>
+<li>pid_t getpid(void)<ul>
+<li>Returns PID of current process</li>
+</ul>
+</li>
+<li>pid_t getppid(void)<ul>
+<li>Returns PID of parrent process</li>
+</ul>
+</li>
+</ul>
+<h4 id="Creating-and-Terminating-Processes"><a href="#Creating-and-Terminating-Processes" class="headerlink" title="Creating and Terminating Processes"></a>Creating and Terminating Processes</h4><p>From a programmer’s perspective, we can think of a process as being in one of three states</p>
+<ul>
+<li>Running<ul>
+<li>Process is either executing, or waiting to be executed and will eventually be scheduled(i.e.,chosen to execute) by kernel</li>
+</ul>
+</li>
+<li>Stopped<ul>
+<li>Process execution is suspended and will not be scheduled until further notice(next lecture when we study signals)</li>
+</ul>
+</li>
+<li>Terminated<ul>
+<li>Process is stopped pernamanently</li>
+</ul>
+</li>
+</ul>
+<h4 id="Terminating-Processes"><a href="#Terminating-Processes" class="headerlink" title="Terminating Processes"></a>Terminating Processes</h4><ul>
+<li>Process becomes terminated for one of three reasons:<ul>
+<li>Receiving a signal whose default action is to terminate(next lecture)</li>
+<li>Returning from the main routine</li>
+<li>Calling the exit function</li>
+</ul>
+</li>
+<li>void exit(int status)<ul>
+<li>Terminates with an exit status of status</li>
+<li>Convention: normal return status is 0,nonzero on error</li>
+<li>Another way to explicitly set the exit status is to return an integer value from the main routine</li>
+</ul>
+</li>
+<li>exit is called once but never returns.</li>
+</ul>
+<h4 id="Creating-Processes"><a href="#Creating-Processes" class="headerlink" title="Creating Processes"></a>Creating Processes</h4><ul>
+<li>Parent process creates a new running child process by calling fork</li>
+<li>int fork(void)<ul>
+<li>Returns 0 to the child process, child’s PID to parent process</li>
+<li>Child is almost identical to parent<ul>
+<li>Child get an identical(but separate) copy of the parent’s virtual address space.</li>
+<li>Child gets identical copies of the parent’s open file descriptors</li>
+<li>Child has a different PID than the parent </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>fork is interesting(and often confusing) because it is called once but returns twice</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid;</div><div class="line">  <span class="keyword">int</span> x = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  pid = Fork();</div><div class="line">  <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123; <span class="comment">/* Child */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"child :x=%d\n"</span>,++x);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/* Parent */</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"parent: x=%d\n"</span>,--x);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Call once, return twice</li>
+<li>Concurrent execution<ul>
+<li>Can’t predict execution order of parent and child</li>
+</ul>
+</li>
+<li>Duplicate but separate address space<ul>
+<li>x has a value of 1 when fork returns in parent and child</li>
+<li>Subsequent changes to x are independent</li>
+</ul>
+</li>
+<li>Shared open files<ul>
+<li>stdout is the same both parent and child</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">linux&gt;./fork</div><div class="line">parent: x=0</div><div class="line">child : x=2</div></pre></td></tr></table></figure>
+<h4 id="Modeling-fork-with-Process-Graphs"><a href="#Modeling-fork-with-Process-Graphs" class="headerlink" title="Modeling fork with Process Graphs"></a>Modeling fork with Process Graphs</h4><ul>
+<li>A process graph is a useful tool for capturing the partial ordering of statements in a concurent programs:<ul>
+<li>Each vertex is the execution of a statement</li>
+<li>a-&gt;b means a happens before b</li>
+<li>Edges can be labeled with current value of variables</li>
+<li>printf vertices can be labeled with output</li>
+<li>Each graph begins with a vertex with no inedges</li>
+</ul>
+</li>
+<li>Any topological sort of the graph corresponds to a feasible total ordering<ul>
+<li>Total ordering vertices where all edges point from left to right</li>
+</ul>
+</li>
+</ul>
+<h4 id="fork-Example-Two-consecutive-forks"><a href="#fork-Example-Two-consecutive-forks" class="headerlink" title="fork Example:Two consecutive forks"></a>fork Example:Two consecutive forks</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork2</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"L0\n"</span>);</div><div class="line">  fork();</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"L1\n"</span>);</div><div class="line">  fork();</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Bye\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork4</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"L0/n"</span>);</div><div class="line">  <span class="keyword">if</span>(fork()!=<span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"L1\n"</span>);</div><div class="line">    <span class="keyword">if</span>(fork()!=<span class="number">0</span>) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"L2\n"</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Bye\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Reaping-Child-Processes"><a href="#Reaping-Child-Processes" class="headerlink" title="Reaping Child Processes"></a>Reaping Child Processes</h4><ul>
+<li><p>Idea</p>
+<ul>
+<li>When process terminates,it still consumes system resources<ul>
+<li>Examples:Exit status,various OS tables</li>
+</ul>
+</li>
+<li>Called a “zombie”<ul>
+<li>Living corpse, half alive and half dead</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Reaping</p>
+<ul>
+<li>Performed by parent on terminated child(using wait or waitpid)</li>
+<li>Parent is given exit status information</li>
+<li>Kernel then  deletes zombie child process</li>
+</ul>
+</li>
+<li>What if parent doesn’t reap?<ul>
+<li>If any parent terniates without reaping a child, then the orphaned child will be reaped by init process(pid==1)</li>
+<li>So, only need expilicit reaping in long-running processes<ul>
+<li>e.g.,shells and servers</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>####Zombie Example</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork7</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(fork()==<span class="number">0</span>) &#123;</div><div class="line">    <span class="comment">/* Child */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Terminating Child,PID = %d\n"</span>,getpid());</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Running Parent, PID = %d\n"</span>,getpid());</div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">      ;<span class="comment">/* Infinite loop*/</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Non-terminating-Child-Example"><a href="#Non-terminating-Child-Example" class="headerlink" title="Non-terminating Child Example"></a>Non-terminating Child Example</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork8</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(fork() == <span class="number">0</span>) &#123;</div><div class="line">    <span class="comment">/* Child */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Running Child, PID = %d\n"</span>,getpid());</div><div class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">      ; <span class="comment">/* Infinite loop*/</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Terminating Parent,PID=%d\n"</span>,getpid());</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="wait-Synchronizing-with-Children"><a href="#wait-Synchronizing-with-Children" class="headerlink" title="wait: Synchronizing with Children"></a>wait: Synchronizing with Children</h4><ul>
+<li>Parent reaps a child by calling the wait function</li>
+<li>int wait(int *child_status)<ul>
+<li>Suspends current process until one of its children terminates</li>
+<li>Return value is the pid of the child process that terminated</li>
+<li>If child_status != NULL, then the integer it points to will be set to a value that indicates reason the child terminated and the exit status:<ul>
+<li>Checked using macros defined in wait.h<ul>
+<li>WIFEXITED,WEXITSTTATIS,WIFSIGNALED,WTERMSIG,WIFSTOPPED,WSTOPSIG,WIFCONTINUED</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork9</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> child_status;</div><div class="line">  </div><div class="line">  <span class="keyword">if</span>(fork()==<span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"HC: hello from child\n"</span>);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"HP: hello from parent\n"</span>);</div><div class="line">    wait(&amp;child_status);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"CT: child has terminated\n"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Bye\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Another-wait-example"><a href="#Another-wait-example" class="headerlink" title="Another wait example"></a>Another wait example</h4><ul>
+<li>If multiple children completed,will take in arbitrary order</li>
+<li>Can use macros WIFEXITED and WEXITSTATUS to get information about exit status</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork10</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid[N];</div><div class="line">  <span class="keyword">int</span> i,child_status;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++) &#123;</div><div class="line">    <span class="keyword">if</span>((pid[i]=fork())==<span class="number">0</span>) &#123;</div><div class="line">      <span class="built_in">exit</span>(<span class="number">100</span>+i); <span class="comment">/* Child*/</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++)&#123;<span class="comment">/* Parent */</span></div><div class="line">    <span class="keyword">pid_t</span> wpid = wait(&amp;child_status);</div><div class="line">    <span class="keyword">if</span>(WIFEXITED(child_status))</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"Child %d terminated with exit status %d\n"</span>,wpid,WEXITSTATUS(child_status));</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Child %d terminate abnormally\n"</span>,wpid);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="execve-Loading-and-Running-Programs"><a href="#execve-Loading-and-Running-Programs" class="headerlink" title="execve: Loading and Running Programs"></a>execve: Loading and Running Programs</h4><ul>
+<li>int execve(char <em> filename,char </em>argv[],char *envp[])</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[关于Linking]]></title>
       <url>/2019/05/18/%E5%85%B3%E4%BA%8ELinking/</url>
       <content type="html"><![CDATA[<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* main.c */</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n)</span></span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">2</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> val = sum(<span class="built_in">array</span>,<span class="number">2</span>);</div><div class="line">  <span class="keyword">return</span> val;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -5529,6 +5895,65 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Git常用命令]]></title>
+      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
+<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
+<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
+<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
+<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
+<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
+<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
+<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
+<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
+<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
+<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
+<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
+<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
+<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
+<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
+<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
+<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
+<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
+<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
+<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
+<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
+<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
+<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
+<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
+<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
+<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
+<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
+<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
+<p>删除子模块：（分4步走哦）</p>
+<blockquote>
+<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
+</blockquote>
+<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
+<hr>
+<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> GIT </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[java23种设计模式]]></title>
       <url>/2017/06/29/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
@@ -5671,65 +6096,6 @@
             <tag> Java </tag>
             
             <tag> 设计模式 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Git常用命令]]></title>
-      <url>/2017/06/29/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"><a href="#Git-是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。" class="headerlink" title="Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。"></a><strong>Git 是一个很强大的分布式版本控制系统。它不但适用于管理大型开源软件的源代码，管理私人的文档和源代码也有很多优势。</strong></h2><p>Git常用操作命令：</p>
-<h3 id="远程仓库相关命令"><a href="#远程仓库相关命令" class="headerlink" title="远程仓库相关命令"></a><strong>远程仓库相关命令</strong></h3><p>检出仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git://github.com/jquery/jquery.git</div></pre></td></tr></table></figure></p>
-<p>查看远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote -v</div></pre></td></tr></table></figure></p>
-<p>添加远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add [name] [url]</div></pre></td></tr></table></figure></p>
-<p>删除远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote rm [name]</div></pre></td></tr></table></figure></p>
-<p>修改远程仓库：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote <span class="built_in">set</span>-url --push [name] [newUrl]</div></pre></td></tr></table></figure></p>
-<p>拉取远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p>推送远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push [remoteName] [localBranchName]</div></pre></td></tr></table></figure></p>
-<p><strong>如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:master // 提交本地<span class="built_in">test</span>分支作为远程的master分支</div><div class="line"></div><div class="line"><span class="variable">$git</span> push origin <span class="built_in">test</span>:<span class="built_in">test</span>  // 提交本地<span class="built_in">test</span>分支作为远程的<span class="built_in">test</span>分支</div></pre></td></tr></table></figure></p>
-<h3 id="分支-branch-操作相关命令"><a href="#分支-branch-操作相关命令" class="headerlink" title="分支(branch)操作相关命令"></a><strong>分支(branch)操作相关命令</strong></h3><p>查看本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure></p>
-<p>查看远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -r</div></pre></td></tr></table></figure></p>
-<p>创建本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch [name] //----注意新分支创建后不会自动切换为当前分支</div></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout [name]</div></pre></td></tr></table></figure></p>
-<p>创建新分支并立即切换到新分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b [name]</div></pre></td></tr></table></figure></p>
-<p>删除分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ git branch -d [name] </div><div class="line"></div><div class="line">// -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项</div><div class="line"> </div><div class="line">$ git merge [name] //----将名称为[name]的分支与当前分支合并</div></pre></td></tr></table></figure></p>
-<p>创建远程分支(本地分支push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :heads/[name] 或 $ gitpush origin :[name]</div></pre></td></tr></table></figure></p>
-<p><strong>创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔)</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> symbolic-ref HEAD refs/heads/[name]</div><div class="line"><span class="variable">$rm</span> .git/index</div><div class="line"><span class="variable">$git</span> clean -fdx</div></pre></td></tr></table></figure>
-<h2 id="版本-tag-操作相关命令"><a href="#版本-tag-操作相关命令" class="headerlink" title="版本(tag)操作相关命令"></a><strong>版本(tag)操作相关命令</strong></h2><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag</div></pre></td></tr></table></figure></p>
-<p>创建版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag [name]</div></pre></td></tr></table></figure></p>
-<p>删除版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -d [name]</div></pre></td></tr></table></figure></p>
-<p>查看远程版本：$ git tag -r<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -r</div></pre></td></tr></table></figure></p>
-<p>创建远程版本(本地版本push到远程)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin [name]</div></pre></td></tr></table></figure></p>
-<p>删除远程版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :refs/tags/[name]</div></pre></td></tr></table></figure></p>
-<p>合并远程仓库的tag到本地：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git pull origin --tags</div></pre></td></tr></table></figure></p>
-<p>上传本地tag到远程仓库：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin --tags</div></pre></td></tr></table></figure></p>
-<p>创建带注释的tag：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag -a [name] -m <span class="string">'yourMessage'</span></div></pre></td></tr></table></figure></p>
-<h2 id="子模块-submodule-相关操作命令"><a href="#子模块-submodule-相关操作命令" class="headerlink" title="子模块(submodule)相关操作命令"></a><strong>子模块(submodule)相关操作命令</strong></h2><p>添加子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule add [url] [path]</div></pre></td></tr></table></figure></p>
-<p>如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs</div></pre></td></tr></table></figure></p>
-<p>初始化子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule init  //----只在首次检出仓库时运行一次就行</div></pre></td></tr></table></figure></p>
-<p>更新子模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git submodule update //----每次更新或切换分支后都需要运行一下</div></pre></td></tr></table></figure></p>
-<p>删除子模块：（分4步走哦）</p>
-<blockquote>
-<p>$ git rm –cached [path]<br>  编辑“.gitmodules”文件，将子模块的相关配置节点删除掉<br>  编辑“ .git/config”文件，将子模块的相关配置节点删除掉<br>  手动删除子模块残留的目录</p>
-</blockquote>
-<h2 id="忽略一些文件、文件夹不提交"><a href="#忽略一些文件、文件夹不提交" class="headerlink" title="忽略一些文件、文件夹不提交"></a><strong>忽略一些文件、文件夹不提交</strong></h2><p>在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如<br>target<br>bin<br>*.db</p>
-<hr>
-<p><strong>Git 常用命令</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">git branch 查看本地所有分支</div><div class="line">git status 查看当前状态 </div><div class="line">git commit 提交 </div><div class="line">git branch -a 查看所有的分支</div><div class="line">git branch -r 查看本地所有分支</div><div class="line">git commit -am <span class="string">"init"</span> 提交并且加注释 </div><div class="line">git remote add origin git@192.168.1.119:ndshow</div><div class="line">git push origin master 将文件给推到服务器上 </div><div class="line">git remote show origin 显示远程库origin里的资源 </div><div class="line">git push origin master:develop</div><div class="line">git push origin master:hb-dev 将本地库与服务器上的库进行关联 </div><div class="line">git checkout --track origin/dev 切换到远程dev分支</div><div class="line">git branch -D master develop 删除本地库develop</div><div class="line">git checkout -b dev 建立一个新的本地分支dev</div><div class="line">git merge origin/dev 将分支dev与当前分支进行合并</div><div class="line">git checkout dev 切换到本地dev分支</div><div class="line">git remote show 查看远程库</div><div class="line">git add .</div><div class="line">git rm 文件名(包括路径) 从git中删除指定文件</div><div class="line">git <span class="built_in">clone</span> git://github.com/schacon/grit.git 从服务器上将代码给拉下来</div><div class="line">git config --list 看所有用户</div><div class="line">git ls-files 看已经被提交的</div><div class="line">git rm [file name] 删除一个文件</div><div class="line">git commit -a 提交当前repos的所有的改变</div><div class="line">git add [file name] 添加一个文件到git index</div><div class="line">git commit -v 当你用－v参数的时候可以看commit的差异</div><div class="line">git commit -m <span class="string">"This is the message describing the commit"</span> 添加commit信息</div><div class="line">git commit -a -a是代表add，把所有的change加到git index里然后再commit</div><div class="line">git commit -a -v 一般提交命令</div><div class="line">git <span class="built_in">log</span> 看你commit的日志</div><div class="line">git diff 查看尚未暂存的更新</div><div class="line">git rm a.a 移除文件(从暂存区和工作区中删除)</div><div class="line">git rm --cached a.a 移除文件(只从暂存区中删除)</div><div class="line">git commit -m <span class="string">"remove"</span> 移除文件(从Git中删除)</div><div class="line">git rm -f a.a 强行移除修改后文件(从暂存区和工作区中删除)</div><div class="line">git diff --cached 或 $ git diff --staged 查看尚未提交的更新</div><div class="line">git stash push 将文件给push到一个临时空间中</div><div class="line">git stash pop 将文件从临时空间pop下来</div><div class="line"></div><div class="line">git remote add origin git@github.com:username/Hello-World.git</div><div class="line">git push origin master 将本地项目给提交到服务器中</div><div class="line"></div><div class="line">git pull 本地与服务器端同步</div><div class="line"></div><div class="line">git push (远程仓库名) (分支名) 将本地分支推送到服务器上去。</div><div class="line">git push origin serverfix:awesomebranch</div><div class="line"></div><div class="line">git fetch 相当于是从远程获取最新版本到本地，不会自动merge</div><div class="line">git commit -a -m <span class="string">"log_message"</span> (-a是提交所有改动，-m是加入<span class="built_in">log</span>信息) 本地修改同步至服务器端 ：</div><div class="line">git branch branch_0.1 master 从主分支master创建branch_0.1分支</div><div class="line">git branch -m branch_0.1 branch_1.0 将branch_0.1重命名为branch_1.0</div><div class="line">git checkout branch_1.0/master 切换到branch_1.0/master分支</div><div class="line">du -hs</div></pre></td></tr></table></figure></p>
-]]></content>
-      
-        <categories>
-            
-            <category> GIT </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Git </tag>
             
         </tags>
         
