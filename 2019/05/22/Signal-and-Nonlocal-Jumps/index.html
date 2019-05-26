@@ -15,21 +15,24 @@
 
 
 
-<meta name="description" content="类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。">
-<meta name="keywords" content="Python">
+<meta name="description" content="ECF Exists at All Levels of a System Exceptions Hardware and operating system kernel software">
 <meta property="og:type" content="article">
-<meta property="og:title" content="classmethod和staticmethod">
-<meta property="og:url" content="http://adamzeng.site/2017/11/25/classmethod和staticmethod/index.html">
+<meta property="og:title" content="Signal and Nonlocal Jumps">
+<meta property="og:url" content="http://adamzeng.site/2019/05/22/Signal-and-Nonlocal-Jumps/index.html">
 <meta property="og:site_name" content="AdamZeng">
-<meta property="og:description" content="类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。">
+<meta property="og:description" content="ECF Exists at All Levels of a System Exceptions Hardware and operating system kernel software">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://pic4.zhimg.com/50/a2173bce20299607befc10abf8c7041b_hd.jpg">
-<meta property="og:image" content="https://pic3.zhimg.com/50/8a82a7f295c855c39b0d21f5bb1352c2_hd.jpg">
-<meta property="og:updated_time" content="2017-11-25T08:44:45.946Z">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47907973531_cbe07da989_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47928046472_5fa40ba92f_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47928052968_073a591ae0_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47928047407_d7b6b53b4b_o.png">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47928047632_3fd5297502_o.jpg">
+<meta property="og:image" content="https://live.staticflickr.com/65535/47928047937_b3e13006e2_o.jpg">
+<meta property="og:updated_time" content="2019-05-26T11:17:27.097Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="classmethod和staticmethod">
-<meta name="twitter:description" content="类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。">
-<meta name="twitter:image" content="https://pic4.zhimg.com/50/a2173bce20299607befc10abf8c7041b_hd.jpg">
+<meta name="twitter:title" content="Signal and Nonlocal Jumps">
+<meta name="twitter:description" content="ECF Exists at All Levels of a System Exceptions Hardware and operating system kernel software">
+<meta name="twitter:image" content="https://live.staticflickr.com/65535/47907973531_cbe07da989_o.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -61,7 +64,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>classmethod和staticmethod | AdamZeng</title>
+<title>Signal and Nonlocal Jumps | AdamZeng</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -284,11 +287,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-classmethod和staticmethod" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Signal-and-Nonlocal-Jumps" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/11/25/classmethod和staticmethod/" class="article-date">
-      <time datetime="2017-11-25T04:49:34.000Z" itemprop="datePublished">2017-11-25</time>
+      <a href="/2019/05/22/Signal-and-Nonlocal-Jumps/" class="article-date">
+      <time datetime="2019-05-22T12:03:18.000Z" itemprop="datePublished">2019-05-22</time>
 </a>
 
 
@@ -303,7 +306,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      classmethod和staticmethod
+      Signal and Nonlocal Jumps
     </h1>
   
 
@@ -311,16 +314,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -328,48 +323,221 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>类中最常用的方法是实例方法，即通过实例作为第一个参数的方法。<a id="more"></a></p>
-<p>举一个例子，一个基本的实例方法就向下面这个：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">printd</span><span class="params">(self)</span>:</span></div><div class="line">    print(self.data)</div><div class="line">ik1=Kls(<span class="string">'arun'</span>)</div><div class="line">ik2=Kls(<span class="string">'seema'</span>)</div><div class="line">ik1.printd()</div><div class="line">ik2.printd()</div></pre></td></tr></table></figure>
-<p>这会给出如下的输出：<br>arun</p>
-<p>seema</p>
-<p><img src="https://pic4.zhimg.com/50/a2173bce20299607befc10abf8c7041b_hd.jpg" alt="image"></p>
-<p>然后看一下代码和示例图片：</p>
-<ul>
-<li>1，2参数传递给方法。</li>
-<li>3 self参数指向当前实例自身。</li>
-<li>4 我们不需要传递实例自身给方法，Python解释器自己会做这些操作。</li>
+        <h4 id="ECF-Exists-at-All-Levels-of-a-System"><a href="#ECF-Exists-at-All-Levels-of-a-System" class="headerlink" title="ECF Exists at All Levels of a System"></a>ECF Exists at All Levels of a System</h4><ul>
+<li>Exceptions<ul>
+<li>Hardware and operating system kernel software<a id="more"></a></li>
 </ul>
-<p>如果现在我们想写一些仅仅与类交互而不是和实例交互的方法会怎么样呢？我们可以在类外面写一个简单的方法来做这些，但是这样做就扩散了类代码的关系到类定义的外面。如果像下面这样写就会导致以后代码维护的困难：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_no_of_instances</span><span class="params">(cls_obj)</span>:</span></div><div class="line">  <span class="keyword">return</span> cls_obj.no_inst</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line">print(get_no_of_instances(Kls))</div></pre></td></tr></table></figure>
-<p>输出：</p>
-<p>2</p>
-<p>@classmethod</p>
-<p>我们要写一个只在类中运行而不在实例中运行的方法。如果我们想让方法不在实例中运行，可以这么做：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">iget_no_of_instance</span><span class="params">(ins_obj)</span>:</span></div><div class="line">  <span class="keyword">return</span> ins_obj.__class__.no_inst</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line"><span class="keyword">print</span> iget_no_of_instance(ik1)</div></pre></td></tr></table></figure>
-<p>输出</p>
-<p>2</p>
-<p>Python2.2以后可以使用@classmethod装饰器来创建类方法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  no_inst=<span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    Kls.no_inst=Kls.no_inst+<span class="number">1</span></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_no_instance</span><span class="params">(cls_obj)</span>:</span></div><div class="line">      <span class="keyword">return</span> cls_obj.no_inst</div><div class="line">ik1=Kls()</div><div class="line">ik2=Kls()</div><div class="line">print(ik1.get_no_of_instance())</div><div class="line">print(Kls.get_no_of_instance())</div></pre></td></tr></table></figure>
-<p>输出：<br>2</p>
-<p>2</p>
-<p>这样的好处是：不管这个方式是从实例调用还是从类调用，它都用第一个参数把类传递过来。</p>
-<p>@staticmethod</p>
-<p>经常有一些跟类有关系的功能但在运行时又不需要实例和类参与的情况下需要用到静态方法。比如更改环境变量或者修改其他类的属性等能用到静态方法。这种情况可以直接用函数解决，但这样同样会扩散类内部的代码，造成维护困难。</p>
-<p>比如这样：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">IND=<span class="string">'ON'</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkind</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">return</span> (IND==<span class="string">'ON'</span>)</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_reset</span><span class="params">(self)</span>:</span></div><div class="line">  <span class="keyword">if</span> checkind():</div><div class="line">    print(<span class="string">'Reset done for:'</span>,self.data)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_db</span><span class="params">(self)</span>:</span></div><div class="line">  <span class="keyword">if</span> checkind():</div><div class="line">    self.db=<span class="string">'new db connection'</span></div><div class="line">    print(<span class="string">'DB connection made for:'</span>,self.data)</div><div class="line">ik1=Kls(<span class="number">12</span>)</div><div class="line">ik1.do_rest</div><div class="line">ik1.set_db()</div></pre></td></tr></table></figure>
-<p>输出：</p>
-<p>Reset done for:12</p>
-<p>DB connection made for:12</p>
-<p>如果使用@staticmethod就能把相关代码放到对应的位置了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">IND=<span class="string">'ON'</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kls</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,data)</span>:</span></div><div class="line">    self.data=data</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">checkind</span><span class="params">()</span>:</span></div><div class="line">      <span class="keyword">return</span> (IND==<span class="string">'ON'</span>)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">de_reset</span><span class="params">(self)</span>:</span></div><div class="line">      <span class="keyword">if</span> self.checkind():</div><div class="line">        print(<span class="string">'Reset done for:'</span>,self.data)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_db</span><span class="params">(self)</span>:</span></div><div class="line">      <span class="keyword">if</span> self.checkind():</div><div class="line">        self.db=<span class="string">'New db connection'</span></div><div class="line">        print(<span class="string">'DB connection made for:'</span>,self.data)</div><div class="line">ik1=Kls(<span class="number">12</span>)</div><div class="line">ik1.do_reset()</div><div class="line">ik1.set_db()</div></pre></td></tr></table></figure>
-<p>输出：</p>
-<p>Reset done for:12</p>
-<p>DB connection made for:12</p>
-<p>下面这个更全面的代码和图示来展示这两种方法的不同</p>
-<p>@staticmethod和@classmethod的不同</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Kls(object):</div><div class="line">  def __init__(self,data):</div><div class="line">    self.data=data</div><div class="line">  def printd(self):</div><div class="line">    print(self.data)</div><div class="line">  @staticmethod</div><div class="line">  def smethod(*arg):</div><div class="line">    print('Static:',arg)</div><div class="line">  @classmethod</div><div class="line">  def cmethod(*arg):</div><div class="line">    print('Class',arg)</div><div class="line">    </div><div class="line">&gt;&gt;&gt; ik = Kls(23)</div><div class="line">&gt;&gt;&gt; ik.printd()</div><div class="line">23</div><div class="line">&gt;&gt;&gt; ik.smethod()</div><div class="line">Static: ()</div><div class="line">&gt;&gt;&gt; ik.cmethod()</div><div class="line">Class: (&lt;class '__main__.Kls'&gt;,)</div><div class="line">&gt;&gt;&gt; Kls.printd()</div><div class="line">TypeError: unbound method printd() must be called with Kls instance as first argument (got nothing instead)</div><div class="line">&gt;&gt;&gt; Kls.smethod()</div><div class="line">Static: ()</div><div class="line">&gt;&gt;&gt; Kls.cmethod()</div><div class="line">Class: (&lt;class '__main__.Kls'&gt;,)</div></pre></td></tr></table></figure>
-<p>下面这个图解释了以上代码是怎么运行的:<br><img src="https://pic3.zhimg.com/50/8a82a7f295c855c39b0d21f5bb1352c2_hd.jpg" alt="image"></p>
+</li>
+<li>Process Context Switch<ul>
+<li>Hardware timer and kernel software</li>
+</ul>
+</li>
+<li>Signals<ul>
+<li>Kernel software and application software</li>
+</ul>
+</li>
+<li>Nonlocal jumps<ul>
+<li>Application code</li>
+</ul>
+</li>
+</ul>
+<h4 id="Shell-Programs"><a href="#Shell-Programs" class="headerlink" title="Shell Programs"></a>Shell Programs</h4><ul>
+<li>A shell is an application program that runs programs on behalf of user.<ul>
+<li>sh Original Unix shell</li>
+<li>csh/tcsh  BSD Unix C shell</li>
+<li>bash         “Bourne-Again” Shell(default Linux shell)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> cmdline[MAXLINE]; <span class="comment">/* command line*/</span></div><div class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">    <span class="comment">/* read */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"&gt; "</span>);</div><div class="line">    Fgets(cmdline,MAXLINE,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">if</span> (feof(<span class="built_in">stdin</span>))</div><div class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/* evaluate*/</span></div><div class="line">    eval(cmdline);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">eval</span><span class="params">(<span class="keyword">char</span> *cmdline)</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> *argv[MAXARGS];<span class="comment">/* Argument list execve()*/</span></div><div class="line">  <span class="keyword">char</span> buf[MAXLINE]; <span class="comment">/* Holds modified command line */</span></div><div class="line">  <span class="keyword">int</span> bg; <span class="comment">/* Should the job run in bg or fg? */</span></div><div class="line">  <span class="keyword">pid_t</span> pid; <span class="comment">/* Process id */</span></div><div class="line">  </div><div class="line">  <span class="built_in">strcpy</span>(buf,cmdline);</div><div class="line">  bg = parseline(buf,argv);</div><div class="line">  <span class="keyword">if</span>(argv[<span class="number">0</span>] == <span class="literal">NULL</span>) </div><div class="line">    <span class="keyword">return</span>;<span class="comment">/* Ignore empty lines */</span></div><div class="line">  <span class="keyword">if</span>(!builtin_command(argv)) &#123;</div><div class="line">    <span class="keyword">if</span>((pid==Fork())==<span class="number">0</span>) &#123;<span class="comment">/* Child runs user job*/</span></div><div class="line">      <span class="keyword">if</span>(execve(argv[<span class="number">0</span>],argv,environ)&lt;<span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s: Command not found.\n"</span>,argv[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">      &#125; </div><div class="line">    &#125;</div><div class="line">    <span class="comment">/* Parent waits for foregound job to terminate*/</span></div><div class="line">    <span class="keyword">if</span>(!bg) &#123;</div><div class="line">      <span class="keyword">int</span> status;</div><div class="line">      <span class="keyword">if</span>(waitpid(pid,&amp;status,<span class="number">0</span>)&lt;<span class="number">0</span>) &#123;</div><div class="line">        unix_error(<span class="string">"waitfg: waitpid error"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d %s"</span>,pid,cmdline);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>waitpid: foreground job and background job</p>
+<ul>
+<li>But what about background jobs?<ul>
+<li>Will become zombies when they terminate</li>
+<li>Will never be reaped because shell(typically) will not terminate</li>
+<li>Will create a memory leak that could run the kernel out of memory</li>
+</ul>
+</li>
+</ul>
+<p>####ECF to the Rescue!</p>
+<ul>
+<li>Solution: Exceptional control flow<ul>
+<li>The kernel will interrupt regular processing to alert us when a background process completes</li>
+<li>In Unix,the alert mechanism is called <em>signal</em></li>
+</ul>
+</li>
+</ul>
+<p>####Signals</p>
+<ul>
+<li>A signal is a small message that notifies a process that an event of some type has occurred in the system<ul>
+<li>Akin to exceptions and interrupts</li>
+<li>Sent from the kernel(sometimes at the request of another process) to a process</li>
+<li>Signal type is identified by small integer ID’s(1-30)</li>
+<li>Only information in a signal is its ID and the fact that it arrived</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47907973531_cbe07da989_o.png" alt="屏幕快照 2019-05-22 下午10.54.53"></p>
+<h4 id="Signal-Concepts-Sending-a-Signal"><a href="#Signal-Concepts-Sending-a-Signal" class="headerlink" title="Signal Concepts: Sending  a Signal"></a>Signal Concepts: Sending  a Signal</h4><ul>
+<li>Kernel sends(delivers) a signal to a destination process by updating some state in the context of the destination process</li>
+<li>Kernel sends a signal for one of the following reasons:<ul>
+<li>Kernel has detected a system event such as divide-by-zero(SIGFPE) or the termination of a child process(SIGCHLD)</li>
+<li>Another process has invoked the kill system call to explicitly request the kernel to send a signal to the destination process</li>
+</ul>
+</li>
+</ul>
+<h4 id="Signal-Concepts-Receiving-a-Signal"><a href="#Signal-Concepts-Receiving-a-Signal" class="headerlink" title="Signal Concepts: Receiving a Signal"></a>Signal Concepts: Receiving a Signal</h4><ul>
+<li>A destination process receives a signal when it is forced by the kernel to react in some way to the delivery of the signal</li>
+<li>Some possible ways to react:<ul>
+<li>Ignore the signal(do nothing)</li>
+<li>Terminate the process(with optional core dump)</li>
+<li>Catch the signal by executing a user-level function called signal handler<ul>
+<li>Akin to a hardware exception handler being called in response to an asynchronous interrupt:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Pending-and-Blocked-Signals"><a href="#Pending-and-Blocked-Signals" class="headerlink" title="Pending and Blocked Signals"></a>Pending and Blocked Signals</h4><ul>
+<li>A signal is pending if sent but not yet received<ul>
+<li>There can be at most one pending signal of any particular type</li>
+<li>Important: Signals are not queued<ul>
+<li>If a process has a pending signal of type k, then subsequent signals of type k that are sent to that process are discarded</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A process can block the receipt of certain signals<ul>
+<li>Blocked signals can be delivered, but will not be received until the signal is unblocked</li>
+</ul>
+</li>
+<li>A pending signal is received at most once</li>
+</ul>
+<p>####Signal Concepts: Pending/Blocked Bits</p>
+<ul>
+<li>Kernel maintains pending and blocked bit vectors in the context of each process<ul>
+<li>pending:represents the set of pending signals<ul>
+<li>Kernel sets bit k in pending when a signal of type k is delivered</li>
+<li>Kernel clears bit k in pending when a signal of type k is received</li>
+</ul>
+</li>
+<li>blocked:represents the set of blocked signals<ul>
+<li>Can be set and cleared by using <em>sigprocmask</em> function</li>
+<li>Also referred to as the <em>signal mask</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Sending-Signals-Process-Group"><a href="#Sending-Signals-Process-Group" class="headerlink" title="Sending Signals:Process Group"></a>Sending Signals:Process Group</h4><ul>
+<li>Every process belong s to exactly one process group</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47928046472_5fa40ba92f_o.png" alt="屏幕快照 2019-05-23 下午2.58.10"></p>
+<p>getpgrp()</p>
+<p>Return process group of current process</p>
+<p>setpgid()</p>
+<p>Change process group of a process(see the text for detail)</p>
+<h4 id="Sending-Signals-with-bin-kill-Program"><a href="#Sending-Signals-with-bin-kill-Program" class="headerlink" title="Sending Signals with /bin/kill Program"></a>Sending Signals with /bin/kill Program</h4><ul>
+<li><p>/bin/kill program sends arbitrary signal to a process or process group</p>
+</li>
+<li><p>Examples</p>
+<ul>
+<li><p>/bin/kill - 24818</p>
+<p>Send SIGKILL to process 24818</p>
+</li>
+<li><p>/bin/kill -9 -24817</p>
+<p>Send SIGKILL to every process in process group 24817</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Sending-Signals-from-the-Keyboard"><a href="#Sending-Signals-from-the-Keyboard" class="headerlink" title="Sending Signals from the Keyboard"></a>Sending Signals from the Keyboard</h4><ul>
+<li>Typing ctrl-c(ctrl-z) cause the kernel to send a SIGINT(SIGTSTP) to every job in the  foreground process group.<ul>
+<li>SIGINT - default action is to terminate each process</li>
+<li>SIGTSTP - default action is to stop (suspend) each process</li>
+</ul>
+</li>
+</ul>
+<h4 id="Example-of-ctrl-c-and-ctrl-z"><a href="#Example-of-ctrl-c-and-ctrl-z" class="headerlink" title="Example of ctrl-c and ctrl-z"></a>Example of ctrl-c and ctrl-z</h4><p><img src="https://live.staticflickr.com/65535/47928052968_073a591ae0_o.png" alt="屏幕快照 2019-05-23 下午3.13.13"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork12</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid[N];</div><div class="line">  <span class="keyword">int</span> i;</div><div class="line">  <span class="keyword">int</span> child_status;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++) &#123;</div><div class="line">    <span class="keyword">if</span>((pid[i]=fork())==<span class="number">0</span>) &#123;</div><div class="line">      <span class="comment">/* Child: Infinite Loop */</span></div><div class="line">      <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">        ;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Killing process %d\n"</span>.pid[i]);</div><div class="line">    kill(pid[i],SIGINT);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt; N;i++) &#123;</div><div class="line">    <span class="keyword">pid_t</span> wpid = wait(&amp;child_Status);</div><div class="line">    <span class="keyword">if</span>(WIFEXITED(child_Status)) &#123;</div><div class="line">      prinf(<span class="string">"Child %d terminated with exit status %d\n"</span>,wpid,WEXITSTATUS(child_status));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"Child %d terminated abnormally\n"</span>,wpid);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Receiving-Signals"><a href="#Receiving-Signals" class="headerlink" title="Receiving Signals"></a>Receiving Signals</h4><ul>
+<li>Suppose kernel is returning from an exception handler and is ready to pass control to process p</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47928047407_d7b6b53b4b_o.png" alt="屏幕快照 2019-05-23 下午6.42.27"></p>
+<ul>
+<li>Kernel computes pnb = pending &amp; ~blocked<ul>
+<li>The set of pending(等待中) nonblocked signals for process p</li>
+</ul>
+</li>
+<li><p>If (pnb==0)</p>
+<ul>
+<li>Pass control to next instruction in the logical flow for p</li>
+</ul>
+</li>
+<li><p>Else</p>
+<ul>
+<li>Choose least nonzero bit k in pnb and force process p to receive signal k</li>
+<li>The receipt of the signal triggers some action by p</li>
+<li>Repeat for all nonzero k in pnb</li>
+<li>Pass control to next instruction in logical flow for p</li>
+</ul>
+</li>
+</ul>
+<h4 id="Default-Actions"><a href="#Default-Actions" class="headerlink" title="Default Actions"></a>Default Actions</h4><ul>
+<li>Each signal type has a predefined default action,which is one of:<ul>
+<li>The process terminates</li>
+<li>The process stops until restarted by a SIGCONT signal</li>
+<li>The process ignores the signal</li>
+</ul>
+</li>
+</ul>
+<h4 id="Installing-Signal-Handler"><a href="#Installing-Signal-Handler" class="headerlink" title="Installing Signal Handler"></a>Installing Signal Handler</h4><ul>
+<li><p>The signal function modifies the default action associated with the receipt of signal <em>signum</em>:</p>
+<ul>
+<li>handler_t <em>signal(int signum,handler_t </em>handler)</li>
+</ul>
+</li>
+<li><p>Different values for handler:</p>
+<ul>
+<li>SIG_IGN:ignore signals of type signum</li>
+<li>SIG_DFL:revert to the default action on receipt of signals of type signum</li>
+<li>Otherwise,handler is the address of a user-level signal handler<ul>
+<li>Called when process receives signal of type signum</li>
+<li>Referred to as “installing” the handler</li>
+<li>Executing handler is called “catching” or “handling” the signal</li>
+<li>When the handler executes its return statement, control passes back to instruction in the control flow of the process that was interrupted by receipt of the signal</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sigint_handler</span><span class="params">(<span class="keyword">int</span> sig)</span> </span>&#123;<span class="comment">/* SIGINT handler */</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"So you think you can stop the bomb with ctrl-c, do you?\n"</span>);</div><div class="line">  sleep(<span class="number">2</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Well..."</span>);</div><div class="line">  fflush(<span class="built_in">stdout</span>);</div><div class="line">  sleep(<span class="number">1</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"OK. :-)\n"</span>);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">/* Install the SIGINT handler */</span></div><div class="line">  <span class="keyword">if</span>(signal(SIGINT,sigint_handler)==SIG_ERR) &#123;</div><div class="line">    unix_error(<span class="string">"signal error"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">/* Wait for the receipt of a signal */</span></div><div class="line">  pause();</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Signals-Handlers-as-Concurrent-Flows"><a href="#Signals-Handlers-as-Concurrent-Flows" class="headerlink" title="Signals Handlers as Concurrent Flows"></a>Signals Handlers as Concurrent Flows</h4><ul>
+<li><p>A signal handler is a separate logical flow(not process) that runs concurrently with the main program</p>
+<p>share global variable</p>
+<p><img src="https://live.staticflickr.com/65535/47928047632_3fd5297502_o.jpg" alt="屏幕快照 2019-05-23 下午11.25.38"></p>
+<p><img src="https://live.staticflickr.com/65535/47928047937_b3e13006e2_o.jpg" alt="屏幕快照 2019-05-23 下午11.29.39"></p>
+<ul>
+<li>Implicit blocking mechanism<ul>
+<li>Kernel blocks any pending signals of type currently being handled</li>
+<li>E.g., A SIGINT handler can’t be interrupted by another SIGINT</li>
+</ul>
+</li>
+<li>Explicit blocking and unblocking mechanism<ul>
+<li>Sigprocmask function</li>
+</ul>
+</li>
+<li>Supporting functions<ul>
+<li>sigemptyset - Create empty set</li>
+<li>sigfillset - Add every signal number to set</li>
+<li>sigaddset - Add signal number to set</li>
+<li>sigdelset - Delete signal number from set</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -378,13 +546,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/11/25/classmethod和staticmethod/">classmethod和staticmethod</a></p>
+        <p><span>本文标题:</span><a href="/2019/05/22/Signal-and-Nonlocal-Jumps/">Signal and Nonlocal Jumps</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
-        <p><span>发布时间:</span>2017-11-25, 15:49:34</p>
-        <p><span>最后更新:</span>2017-11-25, 19:44:45</p>
+        <p><span>发布时间:</span>2019-05-22, 22:03:18</p>
+        <p><span>最后更新:</span>2019-05-26, 21:17:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/25/classmethod和staticmethod/" title="classmethod和staticmethod">http://adamzeng.site/2017/11/25/classmethod和staticmethod/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2017/11/25/classmethod和staticmethod/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/05/22/Signal-and-Nonlocal-Jumps/" title="Signal and Nonlocal Jumps">http://adamzeng.site/2019/05/22/Signal-and-Nonlocal-Jumps/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2019/05/22/Signal-and-Nonlocal-Jumps/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -396,16 +564,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/11/25/Python中的-arg和-kwarg/">
-                    Python中的*arg和**kwarg
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/11/24/scrapy了解/">
-                    scrapy了解
+                <a href="/2019/05/19/Exceptional-Control-Flow/">
+                    Exceptional Control Flow
                 </a>
             </div>
         
@@ -417,7 +579,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#ECF-Exists-at-All-Levels-of-a-System"><span class="toc-number">1.</span> <span class="toc-text">ECF Exists at All Levels of a System</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shell-Programs"><span class="toc-number">2.</span> <span class="toc-text">Shell Programs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Signal-Concepts-Sending-a-Signal"><span class="toc-number">3.</span> <span class="toc-text">Signal Concepts: Sending  a Signal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Signal-Concepts-Receiving-a-Signal"><span class="toc-number">4.</span> <span class="toc-text">Signal Concepts: Receiving a Signal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pending-and-Blocked-Signals"><span class="toc-number">5.</span> <span class="toc-text">Pending and Blocked Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sending-Signals-Process-Group"><span class="toc-number">6.</span> <span class="toc-text">Sending Signals:Process Group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sending-Signals-with-bin-kill-Program"><span class="toc-number">7.</span> <span class="toc-text">Sending Signals with /bin/kill Program</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sending-Signals-from-the-Keyboard"><span class="toc-number">8.</span> <span class="toc-text">Sending Signals from the Keyboard</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Example-of-ctrl-c-and-ctrl-z"><span class="toc-number">9.</span> <span class="toc-text">Example of ctrl-c and ctrl-z</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Receiving-Signals"><span class="toc-number">10.</span> <span class="toc-text">Receiving Signals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-Actions"><span class="toc-number">11.</span> <span class="toc-text">Default Actions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Signal-Handler"><span class="toc-number">12.</span> <span class="toc-text">Installing Signal Handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Signals-Handlers-as-Concurrent-Flows"><span class="toc-number">13.</span> <span class="toc-text">Signals Handlers as Concurrent Flows</span></a></li></ol>
         
     </div>
     <style>
@@ -453,7 +615,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"classmethod和staticmethod　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Signal and Nonlocal Jumps　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -489,15 +651,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/11/25/Python中的-arg和-kwarg/" title="上一篇: Python中的*arg和**kwarg">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/11/24/scrapy了解/" title="下一篇: scrapy了解">
+            <a href="/2019/05/19/Exceptional-Control-Flow/" title="下一篇: Exceptional Control Flow">
                 <i class="fa fa-angle-right"></i>
             </a>
         

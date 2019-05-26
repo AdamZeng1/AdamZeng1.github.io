@@ -3,6 +3,229 @@
   
     
     <entry>
+      <title><![CDATA[Signal and Nonlocal Jumps]]></title>
+      <url>/2019/05/22/Signal-and-Nonlocal-Jumps/</url>
+      <content type="html"><![CDATA[<h4 id="ECF-Exists-at-All-Levels-of-a-System"><a href="#ECF-Exists-at-All-Levels-of-a-System" class="headerlink" title="ECF Exists at All Levels of a System"></a>ECF Exists at All Levels of a System</h4><ul>
+<li>Exceptions<ul>
+<li>Hardware and operating system kernel software<a id="more"></a></li>
+</ul>
+</li>
+<li>Process Context Switch<ul>
+<li>Hardware timer and kernel software</li>
+</ul>
+</li>
+<li>Signals<ul>
+<li>Kernel software and application software</li>
+</ul>
+</li>
+<li>Nonlocal jumps<ul>
+<li>Application code</li>
+</ul>
+</li>
+</ul>
+<h4 id="Shell-Programs"><a href="#Shell-Programs" class="headerlink" title="Shell Programs"></a>Shell Programs</h4><ul>
+<li>A shell is an application program that runs programs on behalf of user.<ul>
+<li>sh Original Unix shell</li>
+<li>csh/tcsh  BSD Unix C shell</li>
+<li>bash         “Bourne-Again” Shell(default Linux shell)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> cmdline[MAXLINE]; <span class="comment">/* command line*/</span></div><div class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">    <span class="comment">/* read */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"&gt; "</span>);</div><div class="line">    Fgets(cmdline,MAXLINE,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">if</span> (feof(<span class="built_in">stdin</span>))</div><div class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/* evaluate*/</span></div><div class="line">    eval(cmdline);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">eval</span><span class="params">(<span class="keyword">char</span> *cmdline)</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> *argv[MAXARGS];<span class="comment">/* Argument list execve()*/</span></div><div class="line">  <span class="keyword">char</span> buf[MAXLINE]; <span class="comment">/* Holds modified command line */</span></div><div class="line">  <span class="keyword">int</span> bg; <span class="comment">/* Should the job run in bg or fg? */</span></div><div class="line">  <span class="keyword">pid_t</span> pid; <span class="comment">/* Process id */</span></div><div class="line">  </div><div class="line">  <span class="built_in">strcpy</span>(buf,cmdline);</div><div class="line">  bg = parseline(buf,argv);</div><div class="line">  <span class="keyword">if</span>(argv[<span class="number">0</span>] == <span class="literal">NULL</span>) </div><div class="line">    <span class="keyword">return</span>;<span class="comment">/* Ignore empty lines */</span></div><div class="line">  <span class="keyword">if</span>(!builtin_command(argv)) &#123;</div><div class="line">    <span class="keyword">if</span>((pid==Fork())==<span class="number">0</span>) &#123;<span class="comment">/* Child runs user job*/</span></div><div class="line">      <span class="keyword">if</span>(execve(argv[<span class="number">0</span>],argv,environ)&lt;<span class="number">0</span>) &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s: Command not found.\n"</span>,argv[<span class="number">0</span>]);</div><div class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">      &#125; </div><div class="line">    &#125;</div><div class="line">    <span class="comment">/* Parent waits for foregound job to terminate*/</span></div><div class="line">    <span class="keyword">if</span>(!bg) &#123;</div><div class="line">      <span class="keyword">int</span> status;</div><div class="line">      <span class="keyword">if</span>(waitpid(pid,&amp;status,<span class="number">0</span>)&lt;<span class="number">0</span>) &#123;</div><div class="line">        unix_error(<span class="string">"waitfg: waitpid error"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d %s"</span>,pid,cmdline);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>waitpid: foreground job and background job</p>
+<ul>
+<li>But what about background jobs?<ul>
+<li>Will become zombies when they terminate</li>
+<li>Will never be reaped because shell(typically) will not terminate</li>
+<li>Will create a memory leak that could run the kernel out of memory</li>
+</ul>
+</li>
+</ul>
+<p>####ECF to the Rescue!</p>
+<ul>
+<li>Solution: Exceptional control flow<ul>
+<li>The kernel will interrupt regular processing to alert us when a background process completes</li>
+<li>In Unix,the alert mechanism is called <em>signal</em></li>
+</ul>
+</li>
+</ul>
+<p>####Signals</p>
+<ul>
+<li>A signal is a small message that notifies a process that an event of some type has occurred in the system<ul>
+<li>Akin to exceptions and interrupts</li>
+<li>Sent from the kernel(sometimes at the request of another process) to a process</li>
+<li>Signal type is identified by small integer ID’s(1-30)</li>
+<li>Only information in a signal is its ID and the fact that it arrived</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47907973531_cbe07da989_o.png" alt="屏幕快照 2019-05-22 下午10.54.53"></p>
+<h4 id="Signal-Concepts-Sending-a-Signal"><a href="#Signal-Concepts-Sending-a-Signal" class="headerlink" title="Signal Concepts: Sending  a Signal"></a>Signal Concepts: Sending  a Signal</h4><ul>
+<li>Kernel sends(delivers) a signal to a destination process by updating some state in the context of the destination process</li>
+<li>Kernel sends a signal for one of the following reasons:<ul>
+<li>Kernel has detected a system event such as divide-by-zero(SIGFPE) or the termination of a child process(SIGCHLD)</li>
+<li>Another process has invoked the kill system call to explicitly request the kernel to send a signal to the destination process</li>
+</ul>
+</li>
+</ul>
+<h4 id="Signal-Concepts-Receiving-a-Signal"><a href="#Signal-Concepts-Receiving-a-Signal" class="headerlink" title="Signal Concepts: Receiving a Signal"></a>Signal Concepts: Receiving a Signal</h4><ul>
+<li>A destination process receives a signal when it is forced by the kernel to react in some way to the delivery of the signal</li>
+<li>Some possible ways to react:<ul>
+<li>Ignore the signal(do nothing)</li>
+<li>Terminate the process(with optional core dump)</li>
+<li>Catch the signal by executing a user-level function called signal handler<ul>
+<li>Akin to a hardware exception handler being called in response to an asynchronous interrupt:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Pending-and-Blocked-Signals"><a href="#Pending-and-Blocked-Signals" class="headerlink" title="Pending and Blocked Signals"></a>Pending and Blocked Signals</h4><ul>
+<li>A signal is pending if sent but not yet received<ul>
+<li>There can be at most one pending signal of any particular type</li>
+<li>Important: Signals are not queued<ul>
+<li>If a process has a pending signal of type k, then subsequent signals of type k that are sent to that process are discarded</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A process can block the receipt of certain signals<ul>
+<li>Blocked signals can be delivered, but will not be received until the signal is unblocked</li>
+</ul>
+</li>
+<li>A pending signal is received at most once</li>
+</ul>
+<p>####Signal Concepts: Pending/Blocked Bits</p>
+<ul>
+<li>Kernel maintains pending and blocked bit vectors in the context of each process<ul>
+<li>pending:represents the set of pending signals<ul>
+<li>Kernel sets bit k in pending when a signal of type k is delivered</li>
+<li>Kernel clears bit k in pending when a signal of type k is received</li>
+</ul>
+</li>
+<li>blocked:represents the set of blocked signals<ul>
+<li>Can be set and cleared by using <em>sigprocmask</em> function</li>
+<li>Also referred to as the <em>signal mask</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Sending-Signals-Process-Group"><a href="#Sending-Signals-Process-Group" class="headerlink" title="Sending Signals:Process Group"></a>Sending Signals:Process Group</h4><ul>
+<li>Every process belong s to exactly one process group</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47928046472_5fa40ba92f_o.png" alt="屏幕快照 2019-05-23 下午2.58.10"></p>
+<p>getpgrp()</p>
+<p>Return process group of current process</p>
+<p>setpgid()</p>
+<p>Change process group of a process(see the text for detail)</p>
+<h4 id="Sending-Signals-with-bin-kill-Program"><a href="#Sending-Signals-with-bin-kill-Program" class="headerlink" title="Sending Signals with /bin/kill Program"></a>Sending Signals with /bin/kill Program</h4><ul>
+<li><p>/bin/kill program sends arbitrary signal to a process or process group</p>
+</li>
+<li><p>Examples</p>
+<ul>
+<li><p>/bin/kill - 24818</p>
+<p>Send SIGKILL to process 24818</p>
+</li>
+<li><p>/bin/kill -9 -24817</p>
+<p>Send SIGKILL to every process in process group 24817</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Sending-Signals-from-the-Keyboard"><a href="#Sending-Signals-from-the-Keyboard" class="headerlink" title="Sending Signals from the Keyboard"></a>Sending Signals from the Keyboard</h4><ul>
+<li>Typing ctrl-c(ctrl-z) cause the kernel to send a SIGINT(SIGTSTP) to every job in the  foreground process group.<ul>
+<li>SIGINT - default action is to terminate each process</li>
+<li>SIGTSTP - default action is to stop (suspend) each process</li>
+</ul>
+</li>
+</ul>
+<h4 id="Example-of-ctrl-c-and-ctrl-z"><a href="#Example-of-ctrl-c-and-ctrl-z" class="headerlink" title="Example of ctrl-c and ctrl-z"></a>Example of ctrl-c and ctrl-z</h4><p><img src="https://live.staticflickr.com/65535/47928052968_073a591ae0_o.png" alt="屏幕快照 2019-05-23 下午3.13.13"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fork12</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid[N];</div><div class="line">  <span class="keyword">int</span> i;</div><div class="line">  <span class="keyword">int</span> child_status;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++) &#123;</div><div class="line">    <span class="keyword">if</span>((pid[i]=fork())==<span class="number">0</span>) &#123;</div><div class="line">      <span class="comment">/* Child: Infinite Loop */</span></div><div class="line">      <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">        ;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;N;i++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Killing process %d\n"</span>.pid[i]);</div><div class="line">    kill(pid[i],SIGINT);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>;i&lt; N;i++) &#123;</div><div class="line">    <span class="keyword">pid_t</span> wpid = wait(&amp;child_Status);</div><div class="line">    <span class="keyword">if</span>(WIFEXITED(child_Status)) &#123;</div><div class="line">      prinf(<span class="string">"Child %d terminated with exit status %d\n"</span>,wpid,WEXITSTATUS(child_status));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"Child %d terminated abnormally\n"</span>,wpid);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Receiving-Signals"><a href="#Receiving-Signals" class="headerlink" title="Receiving Signals"></a>Receiving Signals</h4><ul>
+<li>Suppose kernel is returning from an exception handler and is ready to pass control to process p</li>
+</ul>
+<p><img src="https://live.staticflickr.com/65535/47928047407_d7b6b53b4b_o.png" alt="屏幕快照 2019-05-23 下午6.42.27"></p>
+<ul>
+<li>Kernel computes pnb = pending &amp; ~blocked<ul>
+<li>The set of pending(等待中) nonblocked signals for process p</li>
+</ul>
+</li>
+<li><p>If (pnb==0)</p>
+<ul>
+<li>Pass control to next instruction in the logical flow for p</li>
+</ul>
+</li>
+<li><p>Else</p>
+<ul>
+<li>Choose least nonzero bit k in pnb and force process p to receive signal k</li>
+<li>The receipt of the signal triggers some action by p</li>
+<li>Repeat for all nonzero k in pnb</li>
+<li>Pass control to next instruction in logical flow for p</li>
+</ul>
+</li>
+</ul>
+<h4 id="Default-Actions"><a href="#Default-Actions" class="headerlink" title="Default Actions"></a>Default Actions</h4><ul>
+<li>Each signal type has a predefined default action,which is one of:<ul>
+<li>The process terminates</li>
+<li>The process stops until restarted by a SIGCONT signal</li>
+<li>The process ignores the signal</li>
+</ul>
+</li>
+</ul>
+<h4 id="Installing-Signal-Handler"><a href="#Installing-Signal-Handler" class="headerlink" title="Installing Signal Handler"></a>Installing Signal Handler</h4><ul>
+<li><p>The signal function modifies the default action associated with the receipt of signal <em>signum</em>:</p>
+<ul>
+<li>handler_t <em>signal(int signum,handler_t </em>handler)</li>
+</ul>
+</li>
+<li><p>Different values for handler:</p>
+<ul>
+<li>SIG_IGN:ignore signals of type signum</li>
+<li>SIG_DFL:revert to the default action on receipt of signals of type signum</li>
+<li>Otherwise,handler is the address of a user-level signal handler<ul>
+<li>Called when process receives signal of type signum</li>
+<li>Referred to as “installing” the handler</li>
+<li>Executing handler is called “catching” or “handling” the signal</li>
+<li>When the handler executes its return statement, control passes back to instruction in the control flow of the process that was interrupted by receipt of the signal</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sigint_handler</span><span class="params">(<span class="keyword">int</span> sig)</span> </span>&#123;<span class="comment">/* SIGINT handler */</span></div><div class="line">  <span class="built_in">printf</span>(<span class="string">"So you think you can stop the bomb with ctrl-c, do you?\n"</span>);</div><div class="line">  sleep(<span class="number">2</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Well..."</span>);</div><div class="line">  fflush(<span class="built_in">stdout</span>);</div><div class="line">  sleep(<span class="number">1</span>);</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"OK. :-)\n"</span>);</div><div class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">/* Install the SIGINT handler */</span></div><div class="line">  <span class="keyword">if</span>(signal(SIGINT,sigint_handler)==SIG_ERR) &#123;</div><div class="line">    unix_error(<span class="string">"signal error"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">/* Wait for the receipt of a signal */</span></div><div class="line">  pause();</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Signals-Handlers-as-Concurrent-Flows"><a href="#Signals-Handlers-as-Concurrent-Flows" class="headerlink" title="Signals Handlers as Concurrent Flows"></a>Signals Handlers as Concurrent Flows</h4><ul>
+<li><p>A signal handler is a separate logical flow(not process) that runs concurrently with the main program</p>
+<p>share global variable</p>
+<p><img src="https://live.staticflickr.com/65535/47928047632_3fd5297502_o.jpg" alt="屏幕快照 2019-05-23 下午11.25.38"></p>
+<p><img src="https://live.staticflickr.com/65535/47928047937_b3e13006e2_o.jpg" alt="屏幕快照 2019-05-23 下午11.29.39"></p>
+<ul>
+<li>Implicit blocking mechanism<ul>
+<li>Kernel blocks any pending signals of type currently being handled</li>
+<li>E.g., A SIGINT handler can’t be interrupted by another SIGINT</li>
+</ul>
+</li>
+<li>Explicit blocking and unblocking mechanism<ul>
+<li>Sigprocmask function</li>
+</ul>
+</li>
+<li>Supporting functions<ul>
+<li>sigemptyset - Create empty set</li>
+<li>sigfillset - Add every signal number to set</li>
+<li>sigaddset - Add signal number to set</li>
+<li>sigdelset - Delete signal number from set</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Exceptional Control Flow]]></title>
       <url>/2019/05/19/Exceptional-Control-Flow/</url>
       <content type="html"><![CDATA[<h4 id="Exceptional-Control-Flow"><a href="#Exceptional-Control-Flow" class="headerlink" title="Exceptional Control Flow"></a>Exceptional Control Flow</h4><ul>

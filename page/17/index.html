@@ -21,7 +21,7 @@
 <meta name="description" content="Python与web相关分享">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AdamZeng">
-<meta property="og:url" content="http://adamzeng.site/page/7/index.html">
+<meta property="og:url" content="http://adamzeng.site/page/17/index.html">
 <meta property="og:site_name" content="AdamZeng">
 <meta property="og:description" content="Python与web相关分享">
 <meta property="og:locale" content="zh-Hans">
@@ -286,11 +286,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-使用大O符号来衡量算法效率" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-java设计模式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/08/07/使用大O符号来衡量算法效率/" class="article-date">
-      <time datetime="2018-08-07T10:02:18.000Z" itemprop="datePublished">2018-08-07</time>
+      <a href="/2017/06/29/java设计模式/" class="article-date">
+      <time datetime="2017-06-28T14:00:00.000Z" itemprop="datePublished">2017-06-29</time>
 </a>
 
 
@@ -305,7 +305,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/07/使用大O符号来衡量算法效率/">使用大O符号来衡量算法效率</a>
+      <a class="article-title" href="/2017/06/29/java设计模式/">java23种设计模式</a>
     </h1>
   
 
@@ -315,7 +315,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="大O符号标记可以基于输入的大小得到一种衡量算法的时间复杂度的函数。可以忽略函数中的倍乘常量和非主导项。"><a href="#大O符号标记可以基于输入的大小得到一种衡量算法的时间复杂度的函数。可以忽略函数中的倍乘常量和非主导项。" class="headerlink" title="大O符号标记可以基于输入的大小得到一种衡量算法的时间复杂度的函数。可以忽略函数中的倍乘常量和非主导项。"></a>大O符号标记可以基于输入的大小得到一种衡量算法的时间复杂度的函数。可以忽略函数中的倍乘常量和非主导项。</h3><p>假定两个算法执行相同的任务，比如查找（线性查找和二分查找），哪个算法更好？为了回答这个问题，我们可以实现这两个算法，并运行程序得到执行时间。但是这种方法存在以下两个问题：
+              <h1 id="java23种设计模式（Design-Patterns）"><a href="#java23种设计模式（Design-Patterns）" class="headerlink" title="java23种设计模式（Design Patterns）"></a><strong><center>java23种设计模式（Design Patterns）</center></strong></h1><blockquote>
+<p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理的运用设计模式可以完美的解决很多问题，每种模式在现在中都有相应的原理来与之对应，每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是它能被广泛应用的原因。本章系Java之美[从菜鸟到高手演变]系列之设计模式，我们会以理论与实践相结合的方式来进行本章的学习，希望广大程序爱好者，学好设计模式，做一个优秀的软件工程师！<br>
           
       
     </div>
@@ -330,278 +331,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2018/08/07/使用大O符号来衡量算法效率/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Java中的同步合集" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/03/Java中的同步合集/" class="article-date">
-      <time datetime="2018-08-03T05:50:37.000Z" itemprop="datePublished">2018-08-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/03/Java中的同步合集/">Java中的同步合集</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="在Java当中的合集框架中的类不是线程安全的；也就是说，如果它们被多个线程访问和更新，它们的内容可能遭到破坏。可以通过锁定合集或者同步合集来保护合集中的数据。"><a href="#在Java当中的合集框架中的类不是线程安全的；也就是说，如果它们被多个线程访问和更新，它们的内容可能遭到破坏。可以通过锁定合集或者同步合集来保护合集中的数据。" class="headerlink" title="在Java当中的合集框架中的类不是线程安全的；也就是说，如果它们被多个线程访问和更新，它们的内容可能遭到破坏。可以通过锁定合集或者同步合集来保护合集中的数据。"></a>在Java当中的合集框架中的类不是线程安全的；也就是说，如果它们被多个线程访问和更新，它们的内容可能遭到破坏。可以通过锁定合集或者同步合集来保护合集中的数据。</h2><p>同步合集可以很安全地被多个线程并发地访问和修改。</p>
-<p>开启Task1线程不断向同步的HashSet中插入数字，开启Task2线程不断的迭代显示Task1中同步HashSet的中的数字。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/03/Java中的同步合集/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Switch-Forwarding-Methods" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/01/Switch-Forwarding-Methods/" class="article-date">
-      <time datetime="2018-08-01T04:29:28.000Z" itemprop="datePublished">2018-08-01</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/01/Switch-Forwarding-Methods/">Switch-Forwarding-Methods</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-类设计原则" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/08/类设计原则/" class="article-date">
-      <time datetime="2018-05-08T02:33:59.000Z" itemprop="datePublished">2018-05-08</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/08/类设计原则/">类设计原则</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="类的设计原则"><a href="#类的设计原则" class="headerlink" title="类的设计原则"></a>类的设计原则</h1><h4 id="1-内聚性"><a href="#1-内聚性" class="headerlink" title="1.内聚性"></a>1.内聚性</h4><p>类应该描述一个单一的实体，而所有的类操作应该在逻辑上互相配合，支持一个一致的目的。例如：可以设计一个类用于学生，但不应该将学生与教职工组合在同一个类中，因为学生和教职工是不同的实体。</p>
-<p>如果一个实体负担太多的职责，就应该按各自的职责分成几个类。例如:String类、StringBuffer类和StringBuilder类都用于处理字符串，但是它们的职责不同。String类处理不可变字符串，StringBuilder类创建可变字符串，StringBuffer与StringBuilder类似，只是StringBuffer类还包含更行字符串的同步方法。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/05/08/类设计原则/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-八皇后" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/03/08/八皇后/" class="article-date">
-      <time datetime="2018-03-08T09:53:04.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/八皇后/">八皇后</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>首先，可归纳问题的条件为，八皇后之间需要满足：</p>
-<ol>
-<li>不在同一行上。</li>
-<li>不在同一列上。</li>
-<li>不在同一斜线上。</li>
-<li>不在同一反斜线上。
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/03/08/八皇后/#more">阅读全文 >></a>
+          <a href="/2017/06/29/java设计模式/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -622,7 +357,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span>
     </nav>
   
 </div>

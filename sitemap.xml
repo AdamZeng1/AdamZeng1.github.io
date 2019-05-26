@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://adamzeng.site/2019/05/22/Signal-and-Nonlocal-Jumps/</loc>
+    
+    <lastmod>2019-05-26T11:17:27.097Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://adamzeng.site/2019/05/19/Exceptional-Control-Flow/</loc>
     
     <lastmod>2019-05-22T04:18:32.298Z</lastmod>
@@ -569,14 +576,14 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/baidu_verify_zBYi1Aga90.html</loc>
+    <loc>http://adamzeng.site/404.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adamzeng.site/categories/index.html</loc>
+    <loc>http://adamzeng.site/baidu_verify_zBYi1Aga90.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
@@ -590,14 +597,14 @@
   </url>
   
   <url>
-    <loc>http://adamzeng.site/tags/index.html</loc>
+    <loc>http://adamzeng.site/categories/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adamzeng.site/404.html</loc>
+    <loc>http://adamzeng.site/tags/index.html</loc>
     
     <lastmod>2017-06-30T10:29:34.000Z</lastmod>
     
