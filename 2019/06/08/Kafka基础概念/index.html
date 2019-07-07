@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="AdamZeng" />
+
+
+
+<meta name="description" content="两种消息引擎范型是消息队列模型和发布/订阅模型。消息队列(message queue)模型基于队列提供消息传输服务的，多用于进程间通信(inter-process communication,IPC)以及线程间通信。该模型定义了消息队列(queue)、发送者(sender)和接收者(receiver)，提供了一种点对点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka基础概念">
+<meta property="og:url" content="http://adamzeng.site/2019/06/08/Kafka基础概念/index.html">
+<meta property="og:site_name" content="AdamZeng">
+<meta property="og:description" content="两种消息引擎范型是消息队列模型和发布/订阅模型。消息队列(message queue)模型基于队列提供消息传输服务的，多用于进程间通信(inter-process communication,IPC)以及线程间通信。该模型定义了消息队列(queue)、发送者(sender)和接收者(receiver)，提供了一种点对点(point-to-point,p2p)的消息传递方式，即发送者发送每条消息到队">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://adamzeng.site/Users/adamzeng/Desktop/屏幕快照%202019-06-08%20上午10.53.46.png">
+<meta property="og:image" content="http://adamzeng.site/Users/adamzeng/Desktop/屏幕快照%202019-06-08%20上午10.57.27.png">
+<meta property="og:updated_time" content="2019-07-01T07:36:23.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka基础概念">
+<meta name="twitter:description" content="两种消息引擎范型是消息队列模型和发布/订阅模型。消息队列(message queue)模型基于队列提供消息传输服务的，多用于进程间通信(inter-process communication,IPC)以及线程间通信。该模型定义了消息队列(queue)、发送者(sender)和接收者(receiver)，提供了一种点对点(point-to-point,p2p)的消息传递方式，即发送者发送每条消息到队">
+<meta name="twitter:image" content="http://adamzeng.site/Users/adamzeng/Desktop/屏幕快照%202019-06-08%20上午10.53.46.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="AdamZeng" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Kafka基础概念 | AdamZeng</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?7f446a8347e6278dac2da42f1e8204ad";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AdamZeng</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">start from zero</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hext/">hext</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/">next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Python</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AdamZeng</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AdamZeng</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">start from zero</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:1532011544@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/AdamZeng1" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Kafka基础概念" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/06/08/Kafka基础概念/" class="article-date">
+      <time datetime="2019-06-08T01:48:20.000Z" itemprop="datePublished">2019-06-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kafka基础概念
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>两种消息引擎范型是消息队列模型和发布/订阅模型。消息队列(message queue)模型基于队列提供消息传输服务的，多用于进程间通信(inter-process communication,IPC)以及线程间通信。该模型定义了消息队列(queue)、发送者(sender)和接收者(receiver)，提供了一种点对点(point-to-point,p2p)的消息传递方式，即发送者发送每条消息到队列的指定位置，接收者从指定位置获取消息。一旦信息被消费(consumed)，就会从队列中移除该消息。每条信息由一个发送者生产出来，且只被一个消费者(consumer)处理——发送者和消费者之间是一对一的关系。生活中接线生的工作就是一个典型的基于队列的消息引擎模型。每个打进来的电话都进入一个排队队列，然后只由一个接线生进行处理。<em>同一个客户不会被第二个接线生处理</em>。<a id="more"></a></p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2019-06-08 上午10.53.46.png" alt="屏幕快照 2019-06-08 上午10.53.46"></p>
+<p>另一个模型就是发布订阅模型(publish/subscribe,或简称为pub/sub)，与前一种模型不同，它有主题(topic)的概念：一个topic可以理解为逻辑语义相近的消息的容器。</p>
+<p>另一种模型就是发布/订阅模型(publish/subscribe,简称pub/sub),与前一种模型不同，它有主题(topic)的概念：一个topic可以理解为逻辑语义相近的消息的容器。这种模型也定义了类似于生产者/消费者这样的角色，即发布者(publisher)和订阅者(subscriber)。发布者将消息生产出来发送到指定的topic中，所有订阅了该topic的订阅者都可以接收到该topic下的所有消息。通常具有相同订阅topic的所有订阅者将接收到同样的消息。</p>
+<p><img src="/Users/adamzeng/Desktop/屏幕快照 2019-06-08 上午10.57.27.png" alt="屏幕快照 2019-06-08 上午10.57.27"></p>
+<p>Kafka同时支持这两种消息引擎模型。在后续的章节中，我们将引入消息组(consumer group)的概念来同时支持这两种模型。</p>
+<h4 id="Java-消息服务"><a href="#Java-消息服务" class="headerlink" title="Java 消息服务"></a>Java 消息服务</h4><p>Java Message Service(JMS)。严格来说，它只是一套API规范，提供了很多接口用于实现分布式系统间的消息传递。JMS同时支持上面两种消息引擎模型。Kafka没有完全遵守JMS规范。</p>
+<h4 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h4><ul>
+<li>吞吐量/延时</li>
+<li>消息持久化</li>
+<li>负载均衡和故障转移</li>
+<li>伸缩性</li>
+</ul>
+<h4 id="吞吐量-延时"><a href="#吞吐量-延时" class="headerlink" title="吞吐量/延时"></a>吞吐量/延时</h4><p>吞吐量：每秒能够处理的消息数或者每秒能够处理的字节数。</p>
+<p>延时：客户端发起请求与服务器处理请求并发送响应给客户端之间的这一段时间。</p>
+<p>两者是矛盾体：优化一个会使得另一个变差。</p>
+<p>我们采用批处理(batching)的思想，还是使用上面的例子，情况就可以大不一样。这一次我们不是一条一条发送信息，而是一小批一小批(micro-batch)地发送。假设我们在发送前我们首先会等待一段时间(假设8毫秒)那么此时消息发送的延时变成了10毫秒(2+8)，即延时增加了4倍，但假设在这8毫秒中我们总共累积了1000条消息，那么系统整体的吞吐量就变成了100000条/秒(1000/0.01=100000),吞吐量提升了近200倍！这就是micro-batch的威力。这也是Storm Trident和Spark Streaming等消息处理平台所采用的处理语义思路。</p>
+<h4 id="高吞吐与低延时的原因"><a href="#高吞吐与低延时的原因" class="headerlink" title="高吞吐与低延时的原因"></a>高吞吐与低延时的原因</h4><p>写入快：每次写入只是将数据写入到操作系统页缓存(page cache)中，操作系统自己决定什么时候写回磁盘。</p>
+<p>3个优势：</p>
+<ul>
+<li>页缓存位于内存中，所以写入快</li>
+<li>Kafka不与文件系统打交道，I/O由操作系统完成</li>
+<li>写入采用追加写入(append)的方式，避免了磁盘随机写操作。</li>
+</ul>
+<p>磁盘的随机写入很慢</p>
+<p>磁盘的顺序读写甚至可以匹敌内存的随机I/O速度</p>
+<h4 id="消费端"><a href="#消费端" class="headerlink" title="消费端"></a>消费端</h4><p>读取消息时会首先尝试从OS的页缓存中读取，如果命中便把消息经页缓存直接发送到网络的Socket上。这个过程是利用Linux平台的sendfile系统调用做到的，这种技术就是零拷贝(Zero Copy)技术。</p>
+<ol>
+<li>不存在用户态与内核态的切换，节省了内核缓冲区与用户态应用程序缓冲区之间的数据拷贝。</li>
+<li>使用直接存储器访问技术(Direct Memory Access,DMA)执行I/O操作，因此也避免了OS内核缓冲区之间的数据拷贝。</li>
+</ol>
+<h4 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h4><p>Kafka持久化消息，且要把消息持久化到磁盘上。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/06/08/Kafka基础概念/">Kafka基础概念</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">AdamZeng</a></p>
+        <p><span>发布时间:</span>2019-06-08, 09:48:20</p>
+        <p><span>最后更新:</span>2019-07-01, 15:36:23</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/06/08/Kafka基础概念/" title="Kafka基础概念">http://adamzeng.site/2019/06/08/Kafka基础概念/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://adamzeng.site/2019/06/08/Kafka基础概念/　　作者: AdamZeng" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/05/22/Signal-and-Nonlocal-Jumps/">
+                    Signal and Nonlocal Jumps
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-消息服务"><span class="toc-number">1.</span> <span class="toc-text">Java 消息服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#概要"><span class="toc-number">2.</span> <span class="toc-text">概要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#吞吐量-延时"><span class="toc-number">3.</span> <span class="toc-text">吞吐量/延时</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高吞吐与低延时的原因"><span class="toc-number">4.</span> <span class="toc-text">高吞吐与低延时的原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消费端"><span class="toc-number">5.</span> <span class="toc-text">消费端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#消息持久化"><span class="toc-number">6.</span> <span class="toc-text">消息持久化</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Kafka基础概念　| AdamZeng　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2147425';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/05/22/Signal-and-Nonlocal-Jumps/" title="下一篇: Signal and Nonlocal Jumps">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/08/Kafka基础概念/">Kafka基础概念</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/22/Signal-and-Nonlocal-Jumps/">Signal and Nonlocal Jumps</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/19/Exceptional-Control-Flow/">Exceptional Control Flow</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/18/关于Linking/">关于Linking</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/20/coding杂记/">coding杂记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/14/Session与Cookie/">Session与Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/13/Web请求过程/">Web请求过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/01/并发一/">并发一</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/MyBatis/">MyBatis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/14/Spring-5/">Spring-5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/13/Spring-4/">Spring-4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/Spring-3/">Spring-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/10/spring-2/">spring-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/常见命令/">常见命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/Spring-1/">Spring(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/02/Java内存模型和线程/">Java内存模型和线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/22/JVM类文件结构/">JVM类文件结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/22/ipv6复习/">ipv6复习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/21/jvm检测工具/">jvm检测工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/20/minor-GC/">minor GC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/17/垃圾收集器与内存分配策略/">垃圾收集器与内存分配策略</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/static-route-and-dynamic-route/">static-route-and-dynamic-route</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/16/Java内存区域与内存溢出异常/">Java内存区域与内存溢出异常</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/15/JVM系列一走进JVM/">JVM系列一走进JVM</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/14/java加载配置文件的三种方式/">java加载配置文件的三种方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/13/primary-function-and-features-of-a-router/">primary-function-and-features-of-a-router</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/二叉查找树/">二叉查找树</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/26/heap堆排序/">heap堆排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/pgsql的总结/">pgsql的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/数据库与ERD/">数据库与ERD</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/07/使用大O符号来衡量算法效率/">使用大O符号来衡量算法效率</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/03/Java中的同步合集/">Java中的同步合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/01/Switch-Forwarding-Methods/">Switch-Forwarding-Methods</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/08/类设计原则/">类设计原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/08/八皇后/">八皇后</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Group-by/">Group by</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Pandas-Idioms/">Pandas Idioms</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/数据分析之四/">数据分析之四</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/05/数据分析第三节/">数据分析第三节</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/数据分析DataFrame-Data-Structure/">数据分析DataFrame Data Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/31/pandas的初步认识/">pandas的初步认识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/28/关于Python数据分析初解/">关于Python数据分析初解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/19/mysql学习笔记一/">mysql学习笔记一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/命名-统计-字典/">命名 统计 字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/03/列表，字典，集合筛选数据/">列表，字典，集合筛选数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/Python中的-arg和-kwarg/">Python中的*arg和**kwarg</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/25/classmethod和staticmethod/">classmethod和staticmethod</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/24/scrapy了解/">scrapy了解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/动态Cookies池/">动态Cookies池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/未来打算/">未来打算</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/最近的生活总结/">最近的生活总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/18/爬虫动态代理池/">爬虫动态代理池</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/BeautifulSoup/">BeautifulSoup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/10/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/09/getitem-and-setitem/">__getitem__ and __setitem__</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/07/排序和搜索/">排序和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/leetcode371/">leetcode371题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/06/TCP-IP与HTTP的关系/">TCP/IP与HTTP的关系</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/动态规划/">动态规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/05/探索迷宫/">探索迷宫</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/04/短信轰炸机/">短信轰炸机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/leetcode190/">leetcode190题131题191题231题342题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/谢尔宾斯基三角形/">谢尔宾斯基三角形</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/03/可视化递归/">可视化递归</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/计算整数列表和/">计算整数列表和</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/02/Vue-js的数据/">Vue.js的数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/有序列表/">有序列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/列表/">列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是Deque/">什么是Deque</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/29/什么是队列/">什么是队列</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/生活/">生活</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/中缀前缀和后缀表达式/">中缀前缀和后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/十进制转换成二进制/">十进制转换成二进制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/简单与复杂括号匹配/">简单与复杂括号匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/基本数据结构之一/">基本数据结构之一</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/Python数据结构的字典/">Python数据结构的字典</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/python数据结构的性能/">python数据结构的性能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/27/你好，这个世界/">你好，这个世界!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Git详细教程/">Git常用命令(转)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/java设计模式/">java23种设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/29/Git常用命令/">Git常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/hexo-nexT配置详情/">Hexo之NexT主题配置</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2017-2019 AdamZeng
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -290,7 +290,7 @@
   
     <div class="article-meta">
       <a href="/2017/06/28/hexo-nexT配置详情/" class="article-date">
-      <time datetime="2017-06-27T14:00:00.000Z" itemprop="datePublished">2017-06-28</time>
+      <time datetime="2017-06-27T16:00:00.000Z" itemprop="datePublished">2017-06-28</time>
 </a>
 
 
@@ -362,11 +362,71 @@
 
 
   
+    <article id="post-Kafka基础概念" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/06/08/Kafka基础概念/" class="article-date">
+      <time datetime="2019-06-08T01:48:20.000Z" itemprop="datePublished">2019-06-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/08/Kafka基础概念/">Kafka基础概念</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>两种消息引擎范型是消息队列模型和发布/订阅模型。消息队列(message queue)模型基于队列提供消息传输服务的，多用于进程间通信(inter-process communication,IPC)以及线程间通信。该模型定义了消息队列(queue)、发送者(sender)和接收者(receiver)，提供了一种点对点(point-to-point,p2p)的消息传递方式，即发送者发送每条消息到队列的指定位置，接收者从指定位置获取消息。一旦信息被消费(consumed)，就会从队列中移除该消息。每条信息由一个发送者生产出来，且只被一个消费者(consumer)处理——发送者和消费者之间是一对一的关系。生活中接线生的工作就是一个典型的基于队列的消息引擎模型。每个打进来的电话都进入一个排队队列，然后只由一个接线生进行处理。<em>同一个客户不会被第二个接线生处理</em>。
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+      
+        <p class="article-more-link">
+          <a href="/2019/06/08/Kafka基础概念/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Signal-and-Nonlocal-Jumps" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2019/05/22/Signal-and-Nonlocal-Jumps/" class="article-date">
-      <time datetime="2019-05-22T12:03:18.000Z" itemprop="datePublished">2019-05-22</time>
+      <time datetime="2019-05-22T14:03:18.000Z" itemprop="datePublished">2019-05-22</time>
 </a>
 
 
@@ -428,7 +488,7 @@
   
     <div class="article-meta">
       <a href="/2019/05/19/Exceptional-Control-Flow/" class="article-date">
-      <time datetime="2019-05-19T11:48:53.000Z" itemprop="datePublished">2019-05-19</time>
+      <time datetime="2019-05-19T13:48:53.000Z" itemprop="datePublished">2019-05-19</time>
 </a>
 
 
@@ -491,7 +551,7 @@
   
     <div class="article-meta">
       <a href="/2019/05/18/关于Linking/" class="article-date">
-      <time datetime="2019-05-18T06:36:01.000Z" itemprop="datePublished">2019-05-18</time>
+      <time datetime="2019-05-18T08:36:01.000Z" itemprop="datePublished">2019-05-18</time>
 </a>
 
 
@@ -533,63 +593,6 @@
         <p class="article-more-link">
           <a href="/2019/05/18/关于Linking/#more">阅读全文 >></a>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-coding杂记" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/01/20/coding杂记/" class="article-date">
-      <time datetime="2019-01-20T01:15:45.000Z" itemprop="datePublished">2019-01-20</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/20/coding杂记/">coding杂记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>最近一直在看关于基础算法，目前看的这些书不是什么高深的编程工具书籍或者是高深的计算机原理，而是能够让我体会到其中精妙的一本关于算法的书籍，在看这本书的过程当中，我始终在反思C语言实现的算法与Python与Java之间的或多或少的区别，我发现区别其实不是太大，但是有一些C语言的粗糙的可爱存在，比如C中的数组实际上就是一段连续的内存，数组名其实是代表数组第一个元素的所在地址，数组可以用索引来取值，也可以用数组名加相应的数来取值，这个是一个非常有意思的地方。</p>
-<p>关于哈希算法，这种算法的神奇之处在于用元素值作为数组的索引，去统计关于元素值的一些东西。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
       
       <div class="clearfix"></div>
     </div>
