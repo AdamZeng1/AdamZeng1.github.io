@@ -1,3 +1,1 @@
-http://adamzeng.site/2019/06/08/Kafka基础概念/
-http://adamzeng.site/2019/05/22/Signal-and-Nonlocal-Jumps/
-http://adamzeng.site/2019/05/19/Exceptional-Control-Flow/
+http://adamzeng.site/2019/10/15/C-fundamental-1/
